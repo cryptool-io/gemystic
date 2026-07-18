@@ -61,5 +61,26 @@ services:
     command:
       - 'while true; do node scripts/backup.mjs || echo "backup failed"; sleep 86400; done'
 
+  # PostgreSQL — the platform database. Enable with: docker compose --profile db up -d
+  # Then run migrations: npm run db:migrate
+  db:
+    image: postgres:16-alpine
+    profiles: ['db']
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-gem}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-gem}
+      POSTGRES_DB: ${POSTGRES_DB:-gemystic}
+    ports:
+      - '${POSTGRES_PORT:-5432}:5432'
+    volumes:
+      - gemystic-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-gem} -d ${POSTGRES_DB:-gemystic}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   gemystic-var:
+  gemystic-db:

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { IBM_Plex_Sans, IBM_Plex_Serif } from 'next/font/google';
+import { Inter, Fraunces } from 'next/font/google';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import './globals.css';
@@ -15,18 +15,25 @@ import { Logo } from '@/components/Logo';
 import { AccountMenu } from '@/components/auth/AccountMenu';
 import { currentUser } from '@/lib/auth/session';
 
-// IBM Plex is the typeface used on gemysticgems.com; self-hosted by next/font.
-const plex = IBM_Plex_Sans({
+/**
+ * Type pairing: Fraunces — a high-contrast editorial serif with an optical axis,
+ * built for luxury headlines — over Inter for UI and body. Self-hosted by
+ * next/font. Because every component reads the semantic font tokens
+ * (font-display / font-sans), swapping the brand typeface is exactly this block.
+ */
+const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
   variable: '--font-plex',
   display: 'swap',
 });
-const plexSerif = IBM_Plex_Serif({
+const fraunces = Fraunces({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: 'variable',
   variable: '--font-display',
   display: 'swap',
+  // Optical-size axis: Fraunces renders softer at text sizes, sharper at
+  // display sizes — the point of choosing it.
+  axes: ['opsz'],
 });
 
 export const viewport: Viewport = {
@@ -69,7 +76,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const user = await currentUser();
 
   return (
-    <html lang="en" className={`${plex.variable} ${plexSerif.variable}`}>
+    <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
       <body>
         <JsonLd data={organizationJsonLd()} />
 

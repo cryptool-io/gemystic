@@ -71,6 +71,9 @@ export interface Query {
   gender?: string;
   minPrice?: number;
   maxPrice?: number;
+  minCarat?: number;
+  maxCarat?: number;
+  origin?: string;
   search?: string;
   sort?: 'featured' | 'price-asc' | 'price-desc' | 'carat-desc';
 }
@@ -87,6 +90,9 @@ export function queryProducts(q: Query): Product[] {
   if (q.gender) out = out.filter((p) => p.gender === q.gender);
   if (q.minPrice != null) out = out.filter((p) => p.priceUsd >= q.minPrice!);
   if (q.maxPrice != null) out = out.filter((p) => p.priceUsd <= q.maxPrice!);
+  if (q.minCarat != null) out = out.filter((p) => (p.caratWeight ?? 0) >= q.minCarat!);
+  if (q.maxCarat != null) out = out.filter((p) => p.caratWeight != null && p.caratWeight <= q.maxCarat!);
+  if (q.origin) out = out.filter((p) => p.origin.startsWith(q.origin!));
 
   if (q.search) {
     const terms = q.search.toLowerCase().split(/\s+/).filter(Boolean);

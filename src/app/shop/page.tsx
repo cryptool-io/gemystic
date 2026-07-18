@@ -2,14 +2,15 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ProductCard } from '@/components/ProductCard';
 import { JsonLd } from '@/components/JsonLd';
-import { queryProducts, facets, stockedSpecies } from '@/lib/catalog';
+import { queryProducts, facets, stockedSpecies, allProducts } from '@/lib/catalog';
 import { itemListJsonLd } from '@/lib/seo';
 import { FilterPanel } from '@/components/FilterPanel';
+import { SortSelect } from '@/components/SortSelect';
 
 export const metadata: Metadata = {
   title: 'Shop All Natural Gemstones',
   description:
-    'Browse every natural gemstone in stock — loose faceted stones, mineral specimens, rough crystals and handmade silver jewellery, hand-cut in Peshawar, Pakistan.',
+    'Browse every natural gemstone in stock — filter by stone, price, carat weight, colour, cut and origin. Hand-cut in Peshawar, Pakistan.',
   alternates: { canonical: '/shop' },
 };
 
@@ -25,15 +26,21 @@ const SORTS = [
 export default async function ShopPage({ searchParams }: { searchParams: SearchParams }) {
   const sp = await searchParams;
 
+  const num = (v?: string) => (v && !Number.isNaN(Number(v)) ? Number(v) : undefined);
+
   const query = {
     species: sp.species,
     form: sp.form,
     color: sp.color,
+    cut: sp.cut,
+    origin: sp.origin,
     category: sp.category,
     gender: sp.gender,
     search: sp.q,
-    minPrice: sp.min ? Number(sp.min) : undefined,
-    maxPrice: sp.max ? Number(sp.max) : undefined,
+    minPrice: num(sp.min),
+    maxPrice: num(sp.max),
+    minCarat: num(sp.minct),
+    maxCarat: num(sp.maxct),
     sort: (sp.sort as 'featured' | 'price-asc' | 'price-desc' | 'carat-desc') ?? 'featured',
   };
 
@@ -41,13 +48,25 @@ export default async function ShopPage({ searchParams }: { searchParams: SearchP
   const f = facets();
   const species = stockedSpecies();
 
+  // Origin facet computed from live stock (not precomputed in the catalogue).
+  const originCounts = new Map<string, number>();
+  for (const p of allProducts()) {
+    const key = p.origin.split(',')[0];
+    originCounts.set(key, (originCounts.get(key) ?? 0) + 1);
+  }
+
   const active = Object.entries({
     species: sp.species,
     form: sp.form,
     color: sp.color,
-    gender: sp.gender,
+    cut: sp.cut,
+    origin: sp.origin,
     q: sp.q,
-  }).filter(([, v]) => v);
+    min: sp.min && `min $${sp.min}`,
+    max: sp.max && `max $${sp.max}`,
+    minct: sp.minct && `min ${sp.minct}ct`,
+    maxct: sp.maxct && `max ${sp.maxct}ct`,
+  }).filter(([, v]) => v) as [string, string][];
 
   /** Preserves the other filters when toggling one of them. */
   const withParam = (key: string, value: string | undefined) => {
@@ -58,24 +77,33 @@ export default async function ShopPage({ searchParams }: { searchParams: SearchP
     return `/shop${qs ? `?${qs}` : ''}`;
   };
 
+  /** Hidden inputs that keep the current filters when the range form submits. */
+  const carried = Object.entries(sp).filter(
+    ([k, v]) => v && !['min', 'max', 'minct', 'maxct'].includes(k),
+  ) as [string, string][];
+
   return (
     <>
       <JsonLd data={itemListJsonLd(results, 'Gemystic gemstone catalogue', '/shop')} />
 
       <div className="wrap">
-        <header className="mb-8">
-          <h1 className="font-display text-3xl">
-            {sp.q ? `Results for “${sp.q}”` : 'All gemstones'}
-          </h1>
-          <p className="mt-2 text-sm text-muted">
-            {results.length} {results.length === 1 ? 'stone' : 'stones'} · every piece unique and
-            photographed as received
-          </p>
+        {/* Compact header: on a phone this block is ~3 short rows, not half the
+            screen — title+count share a line, chips appear only when filters are
+            active, and sort lives inside the Filters row below lg. */}
+        <header className="mb-4 sm:mb-6">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <h1 className="font-display text-2xl sm:text-3xl">
+              {sp.q ? `Results for “${sp.q}”` : 'All gemstones'}
+            </h1>
+            <p className="text-xs text-muted sm:text-sm">
+              {results.length} {results.length === 1 ? 'stone' : 'stones'}
+            </p>
+          </div>
 
           {active.length > 0 && (
-            <div className="mt-4 flex flex-wrap items-center gap-2">
+            <div className="mt-2 flex flex-wrap items-center gap-1.5">
               {active.map(([k, v]) => (
-                <Link key={k} href={withParam(k, undefined)} className="chip hover:border-brand/60">
+                <Link key={k} href={withParam(k, undefined)} className="chip hover:border-brand-ring">
                   {v} ×
                 </Link>
               ))}
@@ -86,9 +114,35 @@ export default async function ShopPage({ searchParams }: { searchParams: SearchP
           )}
         </header>
 
-        <div className="grid gap-8 lg:grid-cols-[230px_1fr]">
-          {/* Filters — collapsed behind a toggle on phones, sidebar on desktop */}
-          <FilterPanel activeCount={active.length}>
+        <div className="grid gap-6 lg:grid-cols-[230px_1fr] lg:gap-8">
+          <FilterPanel
+            activeCount={active.length}
+            sortSlot={<SortSelect current={sp.sort ?? 'featured'} options={SORTS} />}
+          >
+            {/* Price & carat ranges — one form so both apply together */}
+            <form action="/shop" method="get">
+              {carried.map(([k, v]) => (
+                <input key={k} type="hidden" name={k} value={v} />
+              ))}
+              <FilterGroup title="Price (USD)">
+                <div className="flex items-center gap-2">
+                  <input name="min" type="number" min={0} placeholder="Min" defaultValue={sp.min} className="field py-1.5 text-sm" aria-label="Minimum price" />
+                  <span className="text-subtle">–</span>
+                  <input name="max" type="number" min={0} placeholder="Max" defaultValue={sp.max} className="field py-1.5 text-sm" aria-label="Maximum price" />
+                </div>
+              </FilterGroup>
+              <FilterGroup title="Carat weight">
+                <div className="flex items-center gap-2">
+                  <input name="minct" type="number" min={0} step="0.1" placeholder="Min ct" defaultValue={sp.minct} className="field py-1.5 text-sm" aria-label="Minimum carat" />
+                  <span className="text-subtle">–</span>
+                  <input name="maxct" type="number" min={0} step="0.1" placeholder="Max ct" defaultValue={sp.maxct} className="field py-1.5 text-sm" aria-label="Maximum carat" />
+                </div>
+                <button type="submit" className="btn-ghost mt-2 w-full py-1.5 text-xs">
+                  Apply ranges
+                </button>
+              </FilterGroup>
+            </form>
+
             <FilterGroup title="Stone">
               {species.map((s) => (
                 <FilterLink
@@ -97,18 +151,6 @@ export default async function ShopPage({ searchParams }: { searchParams: SearchP
                   active={sp.species === s.key}
                   label={s.species.name}
                   count={s.count}
-                />
-              ))}
-            </FilterGroup>
-
-            <FilterGroup title="Type">
-              {Object.entries(f.form).map(([form, n]) => (
-                <FilterLink
-                  key={form}
-                  href={withParam('form', sp.form === form ? undefined : form)}
-                  active={sp.form === form}
-                  label={form}
-                  count={n}
                 />
               ))}
             </FilterGroup>
@@ -124,19 +166,56 @@ export default async function ShopPage({ searchParams }: { searchParams: SearchP
                 />
               ))}
             </FilterGroup>
+
+            <FilterGroup title="Cut">
+              {Object.entries(f.cut).map(([cut, n]) => (
+                <FilterLink
+                  key={cut}
+                  href={withParam('cut', sp.cut === cut ? undefined : cut)}
+                  active={sp.cut === cut}
+                  label={cut}
+                  count={n}
+                />
+              ))}
+            </FilterGroup>
+
+            <FilterGroup title="Origin">
+              {[...originCounts.entries()]
+                .sort((a, b) => b[1] - a[1])
+                .map(([origin, n]) => (
+                  <FilterLink
+                    key={origin}
+                    href={withParam('origin', sp.origin === origin ? undefined : origin)}
+                    active={sp.origin === origin}
+                    label={origin}
+                    count={n}
+                  />
+                ))}
+            </FilterGroup>
+
+            <FilterGroup title="Type">
+              {Object.entries(f.form).map(([form, n]) => (
+                <FilterLink
+                  key={form}
+                  href={withParam('form', sp.form === form ? undefined : form)}
+                  active={sp.form === form}
+                  label={form}
+                  count={n}
+                />
+              ))}
+            </FilterGroup>
           </FilterPanel>
 
           {/* Results */}
           <div>
-            <div className="mb-5 flex flex-wrap gap-2">
+            {/* Desktop sort chips; below lg sorting lives inside the Filters row */}
+            <div className="mb-5 hidden flex-wrap gap-2 lg:flex">
               {SORTS.map(([value, label]) => (
                 <Link
                   key={value}
                   href={withParam('sort', value)}
                   className={`chip transition ${
-                    (sp.sort ?? 'featured') === value
-                      ? 'border-brand/60 text-brand-dark'
-                      : 'hover:border-brand/40'
+                    (sp.sort ?? 'featured') === value ? 'chip-brand' : 'hover:border-brand-ring'
                   }`}
                 >
                   {label}
@@ -170,8 +249,8 @@ export default async function ShopPage({ searchParams }: { searchParams: SearchP
 
 function FilterGroup({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div>
-      <div className="label mb-3">{title}</div>
+    <div className="mb-6">
+      <div className="label mb-2.5">{title}</div>
       <div className="space-y-1.5">{children}</div>
     </div>
   );
@@ -184,11 +263,11 @@ function FilterLink({
     <Link
       href={href}
       className={`flex items-center justify-between text-sm capitalize transition ${
-        active ? 'text-brand' : 'text-muted hover:text-brand-dark'
+        active ? 'font-medium text-brand' : 'text-muted hover:text-brand-dark'
       }`}
     >
       <span>{label}</span>
-      <span className="text-xs text-muted/50">{count}</span>
+      <span className="text-xs text-subtle">{count}</span>
     </Link>
   );
 }
