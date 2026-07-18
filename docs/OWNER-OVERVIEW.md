@@ -44,9 +44,9 @@ never run, because no AI key has ever been configured.
 
 ## The 12 things only you can do
 
-1. **Start Docker Desktop** on the machine, then run:
-   `docker compose --profile db up -d` and `npm run db:migrate`.
-   This single step unblocks orders, payments, invoices, shipping docs, importer.
+1. ~~Database~~ **Done for you**: you already run PostgreSQL natively for
+   Trust-Agent, so the gemystic database was created on it and all 24 tables
+   migrated. No Docker anywhere, matching how you host everything else.
 2. **Pick an AI provider** and put its key in `.env.local`: free route =
    Groq/OpenRouter (AI_OPENAI_*), backup = AWS Bedrock, direct = Anthropic.
 3. **Create a GA4 property** and set NEXT_PUBLIC_GA_ID.

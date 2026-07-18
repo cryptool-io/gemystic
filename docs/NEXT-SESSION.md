@@ -54,7 +54,7 @@ account becomes owner. Admin under `/admin`, internal tooling under `/studio`.
 
 | # | Item | Needed action |
 |---|---|---|
-| B1 | **Postgres** | Start Docker Desktop, then `docker compose --profile db up -d` and `npm run db:migrate`. Unblocks M1+ below |
+| B1 | ~~Postgres~~ **DONE** | Native PostgreSQL 17 found running on the machine (same server Trust-Agent uses). Database `gemystic` created, all 24 tables migrated (`prisma/migrations/20260718200618_init`). DATABASE_URL is in .env.local. Docker was only ever the fallback for machines without Postgres; the compose `db` profile remains for deployment elsewhere |
 | B2 | **AI credentials** | Any of: `ANTHROPIC_API_KEY`, or `BEDROCK_MODEL_ID`+AWS creds, or `AI_OPENAI_BASE_URL/MODEL/API_KEY` (Groq/OpenRouter free tier/Ollama). The chat assistant, auto-lister and finance analyst have NEVER executed at runtime |
 | B3 | **Google Analytics** | Create GA4 property, set `NEXT_PUBLIC_GA_ID`. Events already wired |
 | B4 | **Etsy developer app** | Apply at etsy.com/developers. Unlocks true instant sold-sync both directions and listing write-back. Until then: `npm run etsy:sync -- --watch 10` |
@@ -70,9 +70,9 @@ account becomes owner. Admin under `/admin`, internal tooling under `/studio`.
 ## 4. Milestones (work in this order)
 
 ### M1: Database live + auth/store migration
-Prereq: B1. ~1 session.
-1. `docker compose --profile db up -d` → `npm run db:migrate` (prisma migrate dev,
-   name it `init`). Verify all tables exist via `npm run db:studio`.
+Prereq: none (B1 completed: schema is migrated and live on native Postgres 17).
+1. DONE: database `gemystic` exists with all tables; verify anytime with
+   `npm run db:studio`.
 2. Swap `src/lib/auth/store.ts` JsonUserStore → PrismaUserStore (interface already
    defined; implement against `db()` from src/lib/db.ts). One-shot import script for
    existing var/auth/users.json accounts.
