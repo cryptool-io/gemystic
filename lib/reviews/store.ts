@@ -88,6 +88,19 @@ function toReview(r: {
  */
 let dbSeeded = false;
 
+/**
+ * Reads must not take the shop down. Reviews are supporting content, so a
+ * database that is unreachable (or out of connection slots mid-build) falls
+ * back to the seed set rather than failing the page or the build.
+ */
+async function safeRead<T>(run: () => Promise<T>, fallback: T): Promise<T> {
+  try {
+    return await run();
+  } catch {
+    return fallback;
+  }
+}
+
 async function ensureSeeded(): Promise<void> {
   if (dbSeeded) return;
   dbSeeded = true;
@@ -142,12 +155,14 @@ export async function createReview(
 
 export async function approvedForProduct(productSlug: string): Promise<Review[]> {
   if (hasDatabase()) {
-    await ensureSeeded();
-    const rows = await prisma.review.findMany({
-      where: { status: 'approved', productSlug },
-      orderBy: { createdAt: 'desc' },
-    });
-    return rows.map(toReview);
+    return safeRead(async () => {
+      await ensureSeeded();
+      const rows = await prisma.review.findMany({
+        where: { status: 'approved', productSlug },
+        orderBy: { createdAt: 'desc' },
+      });
+      return rows.map(toReview);
+    }, SEED.filter((r) => r.status === 'approved' && r.productSlug === productSlug));
   }
 
   const db = await read();
@@ -158,12 +173,14 @@ export async function approvedForProduct(productSlug: string): Promise<Review[]>
 
 export async function approvedShopReviews(): Promise<Review[]> {
   if (hasDatabase()) {
-    await ensureSeeded();
-    const rows = await prisma.review.findMany({
-      where: { status: 'approved' },
-      orderBy: { createdAt: 'desc' },
-    });
-    return rows.map(toReview);
+    return safeRead(async () => {
+      await ensureSeeded();
+      const rows = await prisma.review.findMany({
+        where: { status: 'approved' },
+        orderBy: { createdAt: 'desc' },
+      });
+      return rows.map(toReview);
+    }, SEED.filter((r) => r.status === 'approved'));
   }
 
   const db = await read();
@@ -174,9 +191,11 @@ export async function approvedShopReviews(): Promise<Review[]> {
 
 export async function allReviews(): Promise<Review[]> {
   if (hasDatabase()) {
-    await ensureSeeded();
-    const rows = await prisma.review.findMany({ orderBy: { createdAt: 'desc' } });
-    return rows.map(toReview);
+    return safeRead(async () => {
+      await ensureSeeded();
+      const rows = await prisma.review.findMany({ orderBy: { createdAt: 'desc' } });
+      return rows.map(toReview);
+    }, [...SEED]);
   }
 
   const db = await read();

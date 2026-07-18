@@ -76,8 +76,15 @@ async function read(): Promise<{ campaigns: Campaign[] }> {
   if (cache && Date.now() - cache.at < 3000) return cache.db;
   let db: { campaigns: Campaign[] };
   if (hasDatabase()) {
-    const rows = await prisma.campaign.findMany();
-    db = { campaigns: rows.map(toCampaign) };
+    try {
+      const rows = await prisma.campaign.findMany();
+      db = { campaigns: rows.map(toCampaign) };
+    } catch {
+      // A discount is a nicety; the shop must render without the database.
+      // This also keeps a production build from failing when the database is
+      // briefly unreachable or out of connection slots.
+      db = { campaigns: [] };
+    }
   } else {
     try {
       db = JSON.parse(await readFile(DB_PATH, 'utf8'));
