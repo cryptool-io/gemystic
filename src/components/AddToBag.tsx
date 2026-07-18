@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { SITE } from '@/lib/seo';
+import { gaEvent } from '@/components/Analytics';
 
 /**
  * MVP checkout stub. Holds the bag in localStorage so the flow is demonstrable
@@ -23,6 +24,13 @@ export function AddToBag({
     } catch {
       // A blocked localStorage shouldn't break the button.
     }
+    // Same-tab listeners (header cart badge) and analytics.
+    window.dispatchEvent(new Event('gem:bag'));
+    gaEvent('add_to_cart', {
+      currency: 'USD',
+      value: product.price,
+      items: [{ item_id: product.slug, item_name: product.title, price: product.price }],
+    });
     setState('added');
   }
 

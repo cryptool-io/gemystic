@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+import { gaEvent } from '@/components/Analytics';
 
 /**
  * Submits to /shop, where the existing relevance ranking does the work. Kept as a
@@ -23,6 +24,7 @@ export function SearchBox({
       action="/shop"
       onSubmit={(e) => {
         e.preventDefault();
+        if (q.trim()) gaEvent('search', { search_term: q.trim() });
         router.push(q.trim() ? `/shop?q=${encodeURIComponent(q.trim())}` : '/shop');
         onNavigate?.();
       }}

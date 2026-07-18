@@ -18,6 +18,7 @@ type SearchParams = Promise<Record<string, string | undefined>>;
 
 const SORTS = [
   ['featured', 'Featured'],
+  ['newest', 'Just listed'],
   ['price-asc', 'Price: low to high'],
   ['price-desc', 'Price: high to low'],
   ['carat-desc', 'Largest carat'],
@@ -41,7 +42,7 @@ export default async function ShopPage({ searchParams }: { searchParams: SearchP
     maxPrice: num(sp.max),
     minCarat: num(sp.minct),
     maxCarat: num(sp.maxct),
-    sort: (sp.sort as 'featured' | 'price-asc' | 'price-desc' | 'carat-desc') ?? 'featured',
+    sort: (sp.sort as 'featured' | 'price-asc' | 'price-desc' | 'carat-desc' | 'newest') ?? 'featured',
   };
 
   const results = queryProducts(query);

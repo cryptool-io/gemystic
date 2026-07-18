@@ -81,24 +81,31 @@ export function SupportWidget({
         </div>
       )}
 
+      {/* Labeled pill, not a bare icon — "Support" says exactly what it is,
+          which an ambiguous chat bubble did not. */}
       <button
         onClick={() => setOpen((o) => !o)}
-        aria-label={open ? 'Close support' : 'Get help'}
         aria-expanded={open}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-surface text-brand shadow-lift ring-1 ring-line transition hover:ring-brand-ring"
+        className="flex h-12 items-center gap-2 rounded-full bg-surface px-4 text-sm font-medium text-brand shadow-lift ring-1 ring-line transition hover:ring-brand-ring"
       >
         {open ? (
-          <span className="text-xl">×</span>
+          <>
+            <span aria-hidden="true" className="text-lg leading-none">×</span>
+            Close
+          </>
         ) : (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path
-              d="M12 3C7 3 3 6.6 3 11c0 2.5 1.3 4.7 3.4 6.1L6 21l4.2-2.1c.6.1 1.2.2 1.8.2 5 0 9-3.6 9-8s-4-8-9-8z"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinejoin="round"
-            />
-            <path d="M9 10.5h6M9 13h4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-          </svg>
+          <>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M4 12a8 8 0 1116 0v3a2 2 0 01-2 2h-1a1 1 0 01-1-1v-4a1 1 0 011-1h2M4 12v3a2 2 0 002 2h1a1 1 0 001-1v-4a1 1 0 00-1-1H5"
+                stroke="currentColor"
+                strokeWidth="1.7"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            Support
+          </>
         )}
       </button>
     </div>

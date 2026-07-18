@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 import './globals.css';
 import { SITE, organizationJsonLd, moneyWhole } from '@/lib/seo';
 import { JsonLd } from '@/components/JsonLd';
-import { stockedSpecies, allProducts } from '@/lib/catalog';
+import { stockedSpecies } from '@/lib/catalog';
 import { categoryTree } from '@/lib/taxonomy';
 import { AssistantLauncher } from '@/components/AssistantLauncher';
 import { SupportWidget } from '@/components/SupportWidget';
@@ -14,6 +14,13 @@ import { SearchBox } from '@/components/SearchBox';
 import { Logo } from '@/components/Logo';
 import { AccountMenu } from '@/components/auth/AccountMenu';
 import { currentUser } from '@/lib/auth/session';
+import { cookies, headers } from 'next/headers';
+import { CurrencyProvider } from '@/components/currency/CurrencyProvider';
+import { LocaleSwitcher } from '@/components/currency/LocaleSwitcher';
+import { CartIcon } from '@/components/CartIcon';
+import { MobileSearch } from '@/components/MobileSearch';
+import { Analytics } from '@/components/Analytics';
+import { CURRENCY_COOKIE, detectCurrency, isSupported } from '@/lib/currency';
 
 /**
  * Type pairing: Fraunces — a high-contrast editorial serif with an optical axis,
@@ -69,15 +76,23 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const species = stockedSpecies();
-  const total = allProducts().length;
   const tree = categoryTree(
     Object.fromEntries(species.map((s) => [s.key, s.species.name])),
   );
   const user = await currentUser();
 
+  // Currency: explicit cookie choice wins; otherwise geo/locale detection.
+  const jar = await cookies();
+  const cookieCurrency = jar.get(CURRENCY_COOKIE)?.value;
+  const currency = isSupported(cookieCurrency)
+    ? cookieCurrency
+    : detectCurrency(await headers());
+
   return (
     <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
       <body>
+        <CurrencyProvider initial={currency}>
+        <Analytics />
         <JsonLd data={organizationJsonLd()} />
 
         <a
@@ -99,7 +114,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </div>
         </div>
 
-        <header className="sticky top-0 z-40 border-b border-line bg-surface/90 backdrop-blur">
+        <header className="relative sticky top-0 z-40 border-b border-line bg-surface/90 backdrop-blur">
           <div className="wrap flex h-16 items-center gap-3">
             <Link href="/" className="shrink-0" aria-label="Gemystic Gems home">
               <Logo />
@@ -113,11 +128,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <SearchBox />
             </Suspense>
 
+            <MobileSearch />
+            <LocaleSwitcher />
+            <CartIcon />
             <AccountMenu user={user} />
-
-            <Link href="/shop" className="btn-primary hidden shrink-0 2xl:inline-flex">
-              All {total} stones
-            </Link>
           </div>
         </header>
 
@@ -229,6 +243,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           whatsapp={SITE.whatsapp}
         />
         <AssistantLauncher />
+        </CurrencyProvider>
       </body>
     </html>
   );

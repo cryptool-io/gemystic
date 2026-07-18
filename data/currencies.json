@@ -1,0 +1,9 @@
+{
+  "$comment": "Display currencies. Base is USD — every stored price is USD and conversion happens only at display time, so there is exactly one source of truth and calculations can never drift between currencies. Rates are edited here (admin UI later; this file is the same shape the seo_settings/currency table will hold). rate = how many units of the currency equal 1 USD.",
+  "base": "USD",
+  "currencies": {
+    "USD": { "label": "US Dollar", "symbol": "$", "rate": 1, "locale": "en-US" },
+    "EUR": { "label": "Euro", "symbol": "€", "rate": 0.855, "locale": "de-DE" }
+  },
+  "ratesUpdatedAt": "2026-07-18"
+}

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
-import { anthropic, hasApiKey, MODEL } from '@/lib/ai';
+import { aiMessage, hasApiKey, MODEL } from '@/lib/ai';
 import { queryProducts, getSpecies, allSpecies, priceStats, allProducts } from '@/lib/catalog';
 import type { Product } from '@/lib/types';
 
@@ -133,8 +133,7 @@ export async function POST(req: NextRequest) {
     messages: { role: 'user' | 'assistant'; content: string }[];
   };
 
-  const client = anthropic();
-  const convo: Anthropic.MessageParam[] = messages.slice(-12).map((m) => ({
+    const convo: Anthropic.MessageParam[] = messages.slice(-12).map((m) => ({
     role: m.role,
     content: m.content,
   }));
@@ -147,7 +146,7 @@ export async function POST(req: NextRequest) {
     // Agentic loop: the model searches, reads results, and may search again
     // before it answers. Bounded so a confused turn cannot spin.
     for (let hop = 0; hop < 5; hop++) {
-      const res = await client.messages.create({
+      const res = await aiMessage({
         model: MODEL,
         max_tokens: 1200,
         system: SYSTEM,

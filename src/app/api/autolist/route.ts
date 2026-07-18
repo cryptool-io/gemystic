@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
-import { anthropic, hasApiKey, MODEL, extractJson } from '@/lib/ai';
+import { aiMessage, hasApiKey, MODEL, extractJson } from '@/lib/ai';
 import { allProducts, allSpecies, getSpecies } from '@/lib/catalog';
 
 export const runtime = 'nodejs';
@@ -149,7 +149,7 @@ Return JSON exactly matching:
   content.push({ type: 'text', text: instruction });
 
   try {
-    const res = await anthropic().messages.create({
+    const res = await aiMessage({
       model: MODEL,
       max_tokens: 2500,
       system: SYSTEM,

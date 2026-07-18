@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Product } from '@/lib/types';
-import { money } from '@/lib/seo';
 import { getSpecies } from '@/lib/catalog';
+import { effectivePrice } from '@/lib/campaigns/store';
+import { Price, PricePerCarat } from '@/components/currency/Price';
 
 /**
  * Product tile.
@@ -17,7 +18,7 @@ import { getSpecies } from '@/lib/catalog';
  * `compact` drops the spec grid for dense contexts (assistant results, related
  * items) where the tile is a pointer rather than a comparison.
  */
-export function ProductCard({
+export async function ProductCard({
   p,
   priority = false,
   compact = false,
@@ -28,7 +29,9 @@ export function ProductCard({
 }) {
   const species = getSpecies(p.species);
   const weight = p.caratWeight ? `${p.caratWeight} ct` : p.gramWeight ? `${p.gramWeight} g` : null;
-  const perCarat = p.caratWeight ? p.priceUsd / p.caratWeight : null;
+  // Campaign-aware price in USD; conversion to the visitor's currency happens
+  // in the <Price> client component so one code path owns both calculations.
+  const pricing = await effectivePrice(p);
 
   // "Heat treated" and "Unheated" matter to buyers; the species-default boilerplate
   // is too long for a tile, so only show treatment when it is a short, real answer.
@@ -56,6 +59,12 @@ export function ProductCard({
           <span className="absolute bottom-2 left-2 rounded bg-surface/90 px-2 py-0.5 text-[10px] font-medium text-brand-deep backdrop-blur">
             1 of 1
           </span>
+
+          {pricing.campaign && (
+            <span className="absolute right-2 top-2 rounded bg-brand px-2 py-0.5 text-[10px] font-semibold text-white shadow-sm">
+              −{pricing.campaign.percentOff}%
+            </span>
+          )}
         </div>
 
         <div className="flex flex-1 flex-col p-3 sm:p-4">
@@ -82,8 +91,12 @@ export function ProductCard({
 
           {/* Price pinned to the bottom so it aligns across a row of uneven tiles. */}
           <div className="mt-auto flex items-end justify-between gap-2 pt-3">
-            <span className="font-display text-lg text-brand">{money(p.priceUsd)}</span>
-            {perCarat && <span className="text-[11px] text-muted">{money(perCarat)}/ct</span>}
+            <Price
+              usd={pricing.priceUsd}
+              original={pricing.originalUsd}
+              className="font-display text-lg text-brand"
+            />
+            {p.caratWeight && <PricePerCarat usd={pricing.priceUsd} carat={p.caratWeight} />}
           </div>
         </div>
       </Link>

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
-import { anthropic, hasApiKey, MODEL } from '@/lib/ai';
+import { aiMessage, hasApiKey, MODEL } from '@/lib/ai';
 import { inventorySummary, bySpecies, pricingFlags, economics, FEES } from '@/lib/finance';
 import { allProducts } from '@/lib/catalog';
 
@@ -76,7 +76,7 @@ Computed figures:
 ${JSON.stringify(data, null, 1)}`;
 
   try {
-    const res = await anthropic().messages.create({
+    const res = await aiMessage({
       model: MODEL,
       max_tokens: 1600,
       system: SYSTEM,

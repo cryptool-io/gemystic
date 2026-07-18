@@ -75,7 +75,7 @@ export interface Query {
   maxCarat?: number;
   origin?: string;
   search?: string;
-  sort?: 'featured' | 'price-asc' | 'price-desc' | 'carat-desc';
+  sort?: 'featured' | 'price-asc' | 'price-desc' | 'carat-desc' | 'newest';
 }
 
 export function queryProducts(q: Query): Product[] {
@@ -113,6 +113,9 @@ export function queryProducts(q: Query): Product[] {
       return [...out].sort((a, b) => b.priceUsd - a.priceUsd);
     case 'carat-desc':
       return [...out].sort((a, b) => (b.caratWeight ?? 0) - (a.caratWeight ?? 0));
+    case 'newest':
+      // Etsy listing ids are chronological — highest id is the latest listing.
+      return [...out].sort((a, b) => Number(b.etsyId) - Number(a.etsyId));
     default:
       return out;
   }
@@ -154,6 +157,13 @@ export function relatedProducts(p: Product, limit = 4): Product[] {
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)
     .map((r) => r.o);
+}
+
+/** The latest additions — Etsy ids are chronological. */
+export function justListed(limit = 12): Product[] {
+  return [...catalog.products]
+    .sort((a, b) => Number(b.etsyId) - Number(a.etsyId))
+    .slice(0, limit);
 }
 
 export function priceStats() {

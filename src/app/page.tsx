@@ -2,15 +2,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ProductCard } from '@/components/ProductCard';
 import { JsonLd } from '@/components/JsonLd';
-import { allProducts, stockedSpecies, priceStats, facets } from '@/lib/catalog';
+import { allProducts, stockedSpecies, facets } from '@/lib/catalog';
 import { itemListJsonLd, money } from '@/lib/seo';
-import { CountUp } from '@/components/CountUp';
+import { ShowcaseMarquee } from '@/components/ShowcaseMarquee';
 
 export default function HomePage() {
   const products = allProducts();
   const featured = [...products].sort((a, b) => b.priceUsd - a.priceUsd).slice(0, 8);
   const species = stockedSpecies();
-  const stats = priceStats();
   const f = facets();
 
   return (
@@ -27,9 +26,9 @@ export default function HomePage() {
               <span className="text-brand">cut by the people who mined them</span>
             </h1>
             <p className="mt-5 max-w-lg leading-relaxed text-muted">
-              {products.length} single-piece stones — Swat Valley emeralds, pigeon blood
-              rubies, tourmaline in every colour, and mineral specimens exactly as they came
-              out of the ground. No stock photography. No second identical stone.
+              Swat Valley emeralds, pigeon-blood rubies, tourmaline in every colour —
+              mined, cut and set in our own workshops, photographed exactly as they ship.
+              When a stone finds its owner, it is gone for good.
             </p>
 
             <div className="mt-7 flex flex-wrap gap-3">
@@ -37,26 +36,23 @@ export default function HomePage() {
               <Link href="/learn" className="btn-ghost">Learn about the stones</Link>
             </div>
 
-            <dl className="mt-10 grid grid-cols-3 gap-6 border-t border-line pt-6">
-              <div>
-                <dt className="label">Stones in stock</dt>
-                <dd className="mt-1 font-display text-2xl text-brand">
-                  <CountUp value={products.length} />
-                </dd>
-              </div>
-              <div>
-                <dt className="label">Species</dt>
-                <dd className="mt-1 font-display text-2xl text-brand">
-                  <CountUp value={species.length} />
-                </dd>
-              </div>
-              <div>
-                <dt className="label">From</dt>
-                <dd className="mt-1 font-display text-2xl text-brand">
-                  <CountUp value={stats.min} prefix="$" decimals={0} />
-                </dd>
-              </div>
-            </dl>
+            {/* Standing promises, not stock counters — counts change daily and
+                read as noise; these are the things that stay true. */}
+            <ul className="mt-10 grid grid-cols-1 gap-3 border-t border-line pt-6 text-sm sm:grid-cols-3">
+              {[
+                ['Every stone 1 of 1', 'the photo is the stone you receive'],
+                ['Treatment disclosed', 'on every listing, in plain words'],
+                ['Insured worldwide', 'tracked from our workshop to you'],
+              ].map(([h, sub]) => (
+                <li key={h} className="flex gap-2.5">
+                  <span aria-hidden="true" className="mt-0.5 text-brand">◆</span>
+                  <span>
+                    <span className="block font-medium text-fg">{h}</span>
+                    <span className="text-muted">{sub}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -66,6 +62,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <ShowcaseMarquee />
 
       {/* Shop by species */}
       <section className="wrap mt-20 reveal">

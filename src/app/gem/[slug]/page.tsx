@@ -9,6 +9,9 @@ import { allProducts, getProduct, getSpecies, relatedProducts } from '@/lib/cata
 import { approvedForProduct, summarise } from '@/lib/reviews/store';
 import { RatingHeadline, ReviewList } from '@/components/reviews/ReviewList';
 import { ReviewForm } from '@/components/reviews/ReviewForm';
+import { effectivePrice } from '@/lib/campaigns/store';
+import { Price, PricePerCarat } from '@/components/currency/Price';
+import { ProductAnalytics } from '@/components/Analytics';
 import { Stars } from '@/components/reviews/Stars';
 import {
   SITE, money, productJsonLd, faqJsonLd, breadcrumbJsonLd, stripMarkdown,
@@ -52,6 +55,7 @@ export default async function GemPage({ params }: { params: Params }) {
   const s = getSpecies(p.species);
   const related = relatedProducts(p);
   const reviews = await approvedForProduct(p.slug);
+  const pricing = await effectivePrice(p);
   const ratingSummary = summarise(reviews);
   const weight = p.caratWeight ? `${p.caratWeight} ct` : p.gramWeight ? `${p.gramWeight} g` : '—';
 
@@ -122,14 +126,27 @@ export default async function GemPage({ params }: { params: Params }) {
             <div className="label">{p.formLabel}</div>
             <h1 className="mt-2 font-display text-3xl leading-tight">{p.title}</h1>
 
-            <div className="mt-5 flex items-baseline gap-4">
-              <span className="font-display text-3xl text-brand">{money(p.priceUsd)}</span>
-              {p.caratWeight && (
-                <span className="text-sm text-muted">
-                  {money(p.priceUsd / p.caratWeight)} per carat
+            <div className="mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+              <Price
+                usd={pricing.priceUsd}
+                original={pricing.originalUsd}
+                className="font-display text-3xl text-brand"
+              />
+              {p.caratWeight && <PricePerCarat usd={pricing.priceUsd} carat={p.caratWeight} />}
+              {pricing.campaign && (
+                <span className="chip-brand">
+                  {pricing.campaign.name} · −{pricing.campaign.percentOff}%
                 </span>
               )}
             </div>
+
+            <ProductAnalytics
+              slug={p.slug}
+              title={p.title}
+              priceUsd={pricing.priceUsd}
+              species={p.species}
+              category={p.category}
+            />
 
             <div className="mt-4 flex flex-wrap gap-2">
               <span className="chip">{p.color}</span>
@@ -141,7 +158,7 @@ export default async function GemPage({ params }: { params: Params }) {
               <span className="chip border-brand-ring/50 text-brand">1 of 1 — no duplicate</span>
             </div>
 
-            <AddToBag product={{ slug: p.slug, title: p.title, price: p.priceUsd }} />
+            <AddToBag product={{ slug: p.slug, title: p.title, price: pricing.priceUsd }} />
 
             <div className="prose-gem mt-8">
               {stripMarkdown(p.description)
