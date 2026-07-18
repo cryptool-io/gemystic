@@ -7,7 +7,7 @@ import { PrismaPg } from '@prisma/adapter-pg';
  * a driver adapter; PrismaPg reads the pool config here so the connection URL
  * lives in the environment, never in code.
  *
- * Not yet imported by the runtime code paths — the JSON stores remain the
+ * Not yet imported by the runtime code paths, the JSON stores remain the
  * drivers until Postgres is up (`docker compose --profile db up -d`) and the
  * migration has run. Swapping a store to Prisma is then a one-file change.
  */
@@ -20,7 +20,7 @@ export function db(): PrismaClient {
   if (!url) {
     throw new Error(
       'DATABASE_URL is not set. Start Postgres (docker compose --profile db up -d) ' +
-        'and add DATABASE_URL to .env.local — see .env.example.',
+        'and add DATABASE_URL to .env.local, see .env.example.',
     );
   }
 

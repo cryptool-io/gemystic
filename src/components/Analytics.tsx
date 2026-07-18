@@ -18,10 +18,10 @@ declare global {
  * and self-hosted installs without a GA property send nothing.
  *
  * Events wired so results are attributable, not just traffic:
- *   page_view    — every route change (App Router doesn't reload the page)
- *   search       — SearchBox submits (search_term)
- *   view_item    — product pages (ProductAnalytics on the PDP)
- *   add_to_cart  — AddToBag
+ *   page_view, every route change (App Router doesn't reload the page)
+ *   search. SearchBox submits (search_term)
+ *   view_item, product pages (ProductAnalytics on the PDP)
+ *   add_to_cart. AddToBag
  * When checkout lands, purchase closes the loop from source → sale.
  */
 export function gaEvent(name: string, params: Record<string, unknown> = {}) {

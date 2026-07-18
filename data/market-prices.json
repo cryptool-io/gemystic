@@ -1,0 +1,259 @@
+{
+  "generatedAt": "2026-07-18",
+  "methodology": "Ranges compiled July 2026 from web research across dealer sites and price-guide references: IGS/gemsociety.org price articles, GemSelect price guides, Gem Rock Auctions listings, gemval.com retail charts, thenaturalsapphirecompany.com and naturalgemstones.com pricing charts, ajsgem.com, gemstock.org dealer listings, rubyglint.com and gemdaia.com 2025-26 price guides, and specialty sources (folkmarketgems.com for Pakistani material, Sotheby's and veerasakgems.com for pigeon-blood ruby). For each variety the low end reflects commercial-grade faceted stones, typical reflects mid good-quality retail in the 0.5-5ct range, and high reflects fine (not auction/world-class) quality; the big four (emerald, ruby, sapphire, peridot) were cross-checked against at least two independent sources each and figures rounded to avoid false precision.",
+  "disclaimer": "Indicative retail ranges only - color, clarity, treatment, origin certification and size drive per-carat price far more than species, so individual stones can fall well outside these bands.",
+  "entries": [
+    {
+      "key": "emerald",
+      "variety": null,
+      "lowUsdPerCt": 100,
+      "typicalUsdPerCt": 500,
+      "highUsdPerCt": 3000,
+      "qualityNote": "Pale or heavily-oiled commercial stones sit at the bottom; vivid green with only minor oil triples the price, and fine Colombian color goes far beyond this band.",
+      "sources": ["gemsociety.org", "gemdaia.com", "rubyglint.com", "gemval.com"]
+    },
+    {
+      "key": "emerald",
+      "variety": "Swat Emerald",
+      "lowUsdPerCt": 150,
+      "typicalUsdPerCt": 800,
+      "highUsdPerCt": 3000,
+      "qualityNote": "Commercial transparent Swat material trades at $50-250/ct, but the deep saturated slightly bluish-green top color with good clarity fetches $1,500-3,000+/ct and rivals Colombian stones.",
+      "sources": ["jewelfields.com", "gemrockauctions.com", "folkmarketgems.com", "1stdibs.com"]
+    },
+    {
+      "key": "ruby",
+      "variety": "Heated (commercial)",
+      "lowUsdPerCt": 200,
+      "typicalUsdPerCt": 700,
+      "highUsdPerCt": 2500,
+      "qualityNote": "Dark or purplish heated stones stay under $500/ct; a clean open red moves toward $2,000+/ct, and per-carat rates jump sharply above 2ct.",
+      "sources": ["rubyglint.com", "gemdaia.com", "gemval.com"]
+    },
+    {
+      "key": "ruby",
+      "variety": "Pigeon Blood (certified unheated)",
+      "lowUsdPerCt": 3000,
+      "typicalUsdPerCt": 12000,
+      "highUsdPerCt": 40000,
+      "qualityNote": "Premium only exists with a lab report (GIA/GRS/Gubelin) stating no heat and pigeon-blood color; Burmese origin and sizes over 1ct multiply the rate, with sub-1ct Burmese stones alone at $15,000-40,000/ct.",
+      "sources": ["sothebys.com", "veerasakgems.com", "thaigems.com", "rubyglint.com"]
+    },
+    {
+      "key": "sapphire",
+      "variety": "Blue (heated)",
+      "lowUsdPerCt": 200,
+      "typicalUsdPerCt": 800,
+      "highUsdPerCt": 3000,
+      "qualityNote": "Very dark or greenish blues stay commercial; a velvety royal/cornflower blue at 1ct brings $800-1,200/ct and roughly doubles per carat at 2ct.",
+      "sources": ["gemsociety.org", "ajsgem.com", "thenaturalsapphirecompany.com", "thesapphirebank.com"]
+    },
+    {
+      "key": "sapphire",
+      "variety": "Yellow",
+      "lowUsdPerCt": 100,
+      "typicalUsdPerCt": 400,
+      "highUsdPerCt": 1500,
+      "qualityNote": "Saturation is everything - pale lemon stones sit near $50-150/ct while vivid golden-yellow Ceylon stones over 2ct reach $1,000-1,600/ct.",
+      "sources": ["thenaturalsapphirecompany.com", "rockchasing.com", "gemval.com"]
+    },
+    {
+      "key": "sapphire",
+      "variety": "Purple",
+      "lowUsdPerCt": 150,
+      "typicalUsdPerCt": 450,
+      "highUsdPerCt": 1500,
+      "qualityNote": "Grayish or overly dark purples stay commercial; a vivid medium violet-purple, especially unheated, pushes past $750/ct and fine stones well beyond.",
+      "sources": ["thenaturalsapphirecompany.com", "rockchasing.com", "gemval.com"]
+    },
+    {
+      "key": "tourmaline",
+      "variety": "Green / Teal",
+      "lowUsdPerCt": 50,
+      "typicalUsdPerCt": 200,
+      "highUsdPerCt": 600,
+      "qualityNote": "Commercial dark greens open at $25-150/ct; open bluish-green teal color without a closed dark axis is what carries stones to $300-600/ct.",
+      "sources": ["gemsociety.org", "ajsgem.com", "rubyglint.com", "folkmarketgems.com"]
+    },
+    {
+      "key": "tourmaline",
+      "variety": "Indicolite",
+      "lowUsdPerCt": 100,
+      "typicalUsdPerCt": 400,
+      "highUsdPerCt": 1000,
+      "qualityNote": "True blue without heavy gray or over-darkness is rare; clean saturated blue over 1-2ct is what moves stones from $100-300/ct to $600-1,000/ct.",
+      "sources": ["gemstock.org", "ajsgem.com", "alifgems.com"]
+    },
+    {
+      "key": "tourmaline",
+      "variety": "Rubellite",
+      "lowUsdPerCt": 100,
+      "typicalUsdPerCt": 400,
+      "highUsdPerCt": 1000,
+      "qualityNote": "Pure red to raspberry-red with acceptable clarity commands the top; brownish or heavily included pink-reds fall to commercial levels.",
+      "sources": ["ajsgem.com", "rubyglint.com", "venus-in-libra.com"]
+    },
+    {
+      "key": "tourmaline",
+      "variety": "Black (specimen grade)",
+      "lowUsdPerCt": 2,
+      "typicalUsdPerCt": 10,
+      "highUsdPerCt": 30,
+      "qualityNote": "Schorl is abundant, so value is mostly cutting labor and finish; only intricate custom cuts or fine crystal specimens exceed $30/ct.",
+      "sources": ["gemselect.com", "healing-sounds.com", "gempundit.com"]
+    },
+    {
+      "key": "garnet",
+      "variety": "Spessartine (Fanta)",
+      "lowUsdPerCt": 100,
+      "typicalUsdPerCt": 300,
+      "highUsdPerCt": 1200,
+      "qualityNote": "Brownish-orange stones stay near the bottom; the pure vivid 'Fanta' mandarin orange with eye-clean clarity is what reaches $500-1,500/ct.",
+      "sources": ["rockchasing.com", "fineanflux.com", "naturalgemstones.com"]
+    },
+    {
+      "key": "garnet",
+      "variety": "Rhodolite",
+      "lowUsdPerCt": 30,
+      "typicalUsdPerCt": 80,
+      "highUsdPerCt": 300,
+      "qualityNote": "Raspberry purplish-red without over-darkness drives value; clean stones over 3ct with fine color climb toward $150-300/ct.",
+      "sources": ["gemsociety.org", "gemstock.org", "gemval.com"]
+    },
+    {
+      "key": "garnet",
+      "variety": "Hessonite",
+      "lowUsdPerCt": 20,
+      "typicalUsdPerCt": 60,
+      "highUsdPerCt": 200,
+      "qualityNote": "Cinnamon-orange with good transparency tops out around $200/ct; the typical treacly, heavily-included material stays cheap.",
+      "sources": ["gemsociety.org", "gemval.com", "gemstock.org"]
+    },
+    {
+      "key": "peridot",
+      "variety": null,
+      "lowUsdPerCt": 15,
+      "typicalUsdPerCt": 50,
+      "highUsdPerCt": 250,
+      "qualityNote": "Yellowish-green commercial material is $15-50/ct; a clean vivid green in 1-3ct sizes brings $50-100/ct, and per-carat rates roughly triple by 5-10ct.",
+      "sources": ["gemsociety.org", "gemselect.com", "rockchasing.com", "withclarity.com"]
+    },
+    {
+      "key": "peridot",
+      "variety": "Pakistani (fine grass green)",
+      "lowUsdPerCt": 50,
+      "typicalUsdPerCt": 150,
+      "highUsdPerCt": 500,
+      "qualityNote": "Supat Valley stones with pure grass-green color and no brown carry a strong origin premium; large 10ct+ vivid stones reach $300-900/ct.",
+      "sources": ["folkmarketgems.com", "rubyglint.com", "ajluxe.com", "juwelo.com"]
+    },
+    {
+      "key": "topaz",
+      "variety": "Sky Blue",
+      "lowUsdPerCt": 3,
+      "typicalUsdPerCt": 8,
+      "highUsdPerCt": 20,
+      "qualityNote": "Irradiated blue topaz is one of the cheapest fine gems; only large sizes and precision cutting lift the rate.",
+      "sources": ["gemselect.com", "naturalgemstones.com", "luxuria.diamonds"]
+    },
+    {
+      "key": "topaz",
+      "variety": "London Blue",
+      "lowUsdPerCt": 10,
+      "typicalUsdPerCt": 25,
+      "highUsdPerCt": 60,
+      "qualityNote": "The deepest treated blue commands the top of the blue-topaz market; fancy cuts and 5ct+ sizes push toward $60-120/ct at retail.",
+      "sources": ["angara.com", "gemselect.com", "naturalgemstones.com"]
+    },
+    {
+      "key": "topaz",
+      "variety": "Imperial",
+      "lowUsdPerCt": 200,
+      "typicalUsdPerCt": 800,
+      "highUsdPerCt": 3500,
+      "qualityNote": "Genuine untreated orange-to-pinkish 'imperial' color from Ouro Preto, Brazil is a different market entirely; the pinker and more saturated, the closer to $3,500/ct.",
+      "sources": ["gemselect.com", "exoticdiamondsa.com", "rubyglint.com"]
+    },
+    {
+      "key": "citrine",
+      "variety": "Honey / Madeira",
+      "lowUsdPerCt": 20,
+      "typicalUsdPerCt": 50,
+      "highUsdPerCt": 140,
+      "qualityNote": "The deep reddish-orange Madeira color is the top of the citrine market; ordinary honey tones sit near $20-30/ct.",
+      "sources": ["naturalgemstones.com", "gemselect.com", "gemval.com"]
+    },
+    {
+      "key": "citrine",
+      "variety": "Lemon",
+      "lowUsdPerCt": 5,
+      "typicalUsdPerCt": 15,
+      "highUsdPerCt": 40,
+      "qualityNote": "Pale lemon-yellow quartz is abundant; value comes almost entirely from clean material and good cutting rather than the color itself.",
+      "sources": ["gemselect.com", "rockchasing.com", "gemval.com"]
+    },
+    {
+      "key": "amethyst",
+      "variety": "Deep Purple",
+      "lowUsdPerCt": 20,
+      "typicalUsdPerCt": 40,
+      "highUsdPerCt": 100,
+      "qualityNote": "Deep royal purple with red/blue flashes ('Siberian' color) tops out near $100/ct; lighter lilac drops under $10/ct.",
+      "sources": ["rockchasing.com", "rockseeker.com", "naturalgemstones.com"]
+    },
+    {
+      "key": "prasiolite",
+      "variety": null,
+      "lowUsdPerCt": 5,
+      "typicalUsdPerCt": 20,
+      "highUsdPerCt": 50,
+      "qualityNote": "Almost all prasiolite is heat-treated amethyst; a saturated mint-green in large clean sizes is the only thing that lifts it toward $50/ct.",
+      "sources": ["rockchasing.com", "gemval.com"]
+    },
+    {
+      "key": "aquamarine",
+      "variety": null,
+      "lowUsdPerCt": 50,
+      "typicalUsdPerCt": 200,
+      "highUsdPerCt": 900,
+      "qualityNote": "Pale silvery-blue is plentiful under $100/ct; saturated 'Santa Maria' deep blue, especially over 3ct, brings $300-900/ct.",
+      "sources": ["gemval.com", "giliarto.com", "moregems.com", "rubyglint.com"]
+    },
+    {
+      "key": "spinel",
+      "variety": "Pink / Red",
+      "lowUsdPerCt": 200,
+      "typicalUsdPerCt": 800,
+      "highUsdPerCt": 5000,
+      "qualityNote": "Almost always untreated, which supports strong prices; vivid hot pink (Mahenge) and pure red over 1ct escalate fast, with fine reds exceeding $5,000-8,000/ct.",
+      "sources": ["gia.edu", "gemval.com", "naturalgemstones.com", "alifgems.com"]
+    },
+    {
+      "key": "ametrine",
+      "variety": null,
+      "lowUsdPerCt": 5,
+      "typicalUsdPerCt": 10,
+      "highUsdPerCt": 25,
+      "qualityNote": "Value hinges on a sharp 50/50 purple-yellow zone boundary with strong color on both sides; per-carat price barely rises with size.",
+      "sources": ["gemsociety.org", "naturalgemstones.com", "gemval.com"]
+    },
+    {
+      "key": "fluorite",
+      "variety": "Collector (faceted)",
+      "lowUsdPerCt": 5,
+      "typicalUsdPerCt": 20,
+      "highUsdPerCt": 100,
+      "qualityNote": "Too soft for jewelry, so it prices as a collector stone; rare colors (pink, color-change) and large precision-faceted clean stones reach $50-100/ct.",
+      "sources": ["naturalgemstones.com", "rockchasing.com", "facetedcabochons.com"]
+    },
+    {
+      "key": "smoky quartz",
+      "variety": null,
+      "lowUsdPerCt": 3,
+      "typicalUsdPerCt": 10,
+      "highUsdPerCt": 25,
+      "qualityNote": "Abundant in large clean sizes, so price is nearly all cutting quality; precision or fantasy cuts fetch $10-25/ct while ordinary goods sit near $3-5/ct.",
+      "sources": ["naturalgemstones.com", "rockchasing.com"]
+    }
+  ]
+}

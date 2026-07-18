@@ -39,7 +39,7 @@ export async function register(input: {
   }
 
   // First account to register on a fresh install becomes the owner. This is how
-  // you get your first admin without a seeding step — see docs. Every later
+  // you get your first admin without a seeding step, see docs. Every later
   // signup is a customer, and roles are changed from the admin portal.
   const isFirst = (await store.countUsers()) === 0;
   const role: Role = isFirst ? 'owner' : 'customer';

@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react';
  * Human-support launcher, distinct from the AI assistant orb.
  *
  * The assistant answers gemmology and stock questions; this is the "talk to a
- * person" path — WhatsApp, email, phone and the contact form. Keeping them
+ * person" path. WhatsApp, email, phone and the contact form. Keeping them
  * separate matters: a customer with a payment or delivery problem wants a human,
  * and a single ambiguous chat bubble hides that. Positioned above the assistant
  * so both are reachable and clearly different.
@@ -46,7 +46,7 @@ export function SupportWidget({
           <div className="border-b border-line bg-brand-tint p-4">
             <div className="font-display text-base text-brand-deep">Need a hand?</div>
             <p className="mt-0.5 text-xs text-muted">
-              Talk to a person — we reply within a working day, faster on WhatsApp.
+              Talk to a person, we reply within a working day, faster on WhatsApp.
             </p>
           </div>
 
@@ -81,7 +81,7 @@ export function SupportWidget({
         </div>
       )}
 
-      {/* Labeled pill, not a bare icon — "Support" says exactly what it is,
+      {/* Labeled pill, not a bare icon, "Support" says exactly what it is,
           which an ambiguous chat bubble did not. */}
       <button
         onClick={() => setOpen((o) => !o)}

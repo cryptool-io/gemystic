@@ -7,7 +7,7 @@ export const runtime = 'nodejs';
 /**
  * Contact enquiries. Goes through the mailer abstraction, so this handler is
  * identical whether the deployment sends via local file outbox, an SMTP relay,
- * or AWS SES — only the env changes.
+ * or AWS SES, only the env changes.
  */
 
 // Crude in-process rate limit. Enough to stop a bored script; a real deployment
@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'That email address does not look right.' }, { status: 400 });
   }
   if (message.length > 5000) {
-    return NextResponse.json({ error: 'Message is too long — please keep it under 5000 characters.' }, { status: 400 });
+    return NextResponse.json({ error: 'Message is too long, please keep it under 5000 characters.' }, { status: 400 });
   }
 
   try {

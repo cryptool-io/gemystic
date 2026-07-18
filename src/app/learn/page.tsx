@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { stockedSpecies } from '@/lib/catalog';
 
 export const metadata: Metadata = {
-  title: 'Gemstone Guides — How to Buy, Judge and Care for Natural Stones',
+  title: 'Gemstone Guides. How to Buy, Judge and Care for Natural Stones',
   description:
     'Practical buying guides written by working gem cutters: what drives value in each species, which treatments are normal, how durable each stone really is, and how to care for it.',
   alternates: { canonical: '/learn' },
@@ -20,7 +20,7 @@ export default function LearnIndex() {
         <p className="mt-4 leading-relaxed text-muted">
           Written from the cutting bench rather than a marketing desk. Each guide covers
           what actually drives price in that species, which treatments are standard, how the
-          stone behaves in daily wear, and the questions worth asking any seller — including us.
+          stone behaves in daily wear, and the questions worth asking any seller, including us.
         </p>
       </header>
 

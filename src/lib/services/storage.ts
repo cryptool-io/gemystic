@@ -24,7 +24,7 @@ export interface Storage {
 /**
  * Writes into the local `var/uploads` tree, served back through a route handler.
  *
- * Deliberately not `public/` — Next only picks up `public/` at build time, so
+ * Deliberately not `public/`. Next only picks up `public/` at build time, so
  * runtime uploads written there would be invisible until the next deploy.
  */
 class LocalStorage implements Storage {
@@ -42,7 +42,7 @@ class LocalStorage implements Storage {
   }
 }
 
-/** S3 for media. Phase 3 — only worth it once traffic or multi-node hosting demands it. */
+/** S3 for media. Phase 3, only worth it once traffic or multi-node hosting demands it. */
 class S3Storage implements Storage {
   readonly name = 's3';
 

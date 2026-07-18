@@ -18,7 +18,7 @@ export default async function CampaignsPage() {
         <h1 className="font-display text-2xl">Discount campaigns</h1>
         <p className="mt-1 max-w-2xl text-sm text-muted">
           Run time-boxed offers on selected stone types or whole categories. Discounts are
-          applied at display and checkout from one calculation — base prices are never
+          applied at display and checkout from one calculation, base prices are never
           edited, so ending a campaign restores everything automatically. If several
           campaigns match a stone, the single best discount applies; they never stack.
         </p>

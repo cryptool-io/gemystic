@@ -15,6 +15,7 @@ const NAV: [string, string][] = [
   ['/admin/orders', 'Orders'],
   ['/admin/etsy-sync', 'Etsy sync'],
   ['/admin/campaigns', 'Campaigns'],
+  ['/admin/market', 'Market check'],
   ['/admin/reviews', 'Reviews'],
   ['/admin/team', 'Team'],
   ['/admin/seo', 'SEO'],

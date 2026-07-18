@@ -8,7 +8,7 @@ import { Price, PricePerCarat } from '@/components/currency/Price';
 /**
  * Product tile.
  *
- * Gemstone buyers compare on specifications, not on a name and a price — the
+ * Gemstone buyers compare on specifications, not on a name and a price, the
  * questions that decide a purchase are weight, cut, origin and treatment, and a
  * tile that omits them forces a round trip to the detail page for every
  * candidate. So the tile carries the full comparison set:
@@ -43,7 +43,7 @@ export async function ProductCard({
         <div className="sheen relative aspect-square overflow-hidden bg-surface-2">
           <Image
             src={p.image}
-            alt={`${p.title} — natural ${p.color.toLowerCase()} ${species?.name.toLowerCase() ?? ''} from ${p.origin}`}
+            alt={`${p.title}, natural ${p.color.toLowerCase()} ${species?.name.toLowerCase() ?? ''} from ${p.origin}`}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1280px) 25vw, 260px"
             className="object-cover transition duration-500 group-hover:scale-[1.04]"
@@ -57,7 +57,7 @@ export async function ProductCard({
           )}
 
           <span className="absolute bottom-2 left-2 rounded bg-surface/90 px-2 py-0.5 text-[10px] font-medium text-brand-deep backdrop-blur">
-            1 of 1
+            One of a kind
           </span>
 
           {pricing.campaign && (
@@ -80,6 +80,7 @@ export async function ProductCard({
               {p.cut && <Spec label="Cut" value={p.cut} />}
               <Spec label="Colour" value={p.color} />
               <Spec label="Origin" value={p.origin.split(',')[0]} />
+              <Spec label="Ships from" value={p.shipsFrom === 'TH' ? 'Thailand' : 'Pakistan'} />
             </dl>
           )}
 

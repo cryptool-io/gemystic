@@ -6,7 +6,7 @@ export const SITE = {
   legalName: 'Gemystic Gems',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://gemysticgems.com',
   description:
-    'Natural cut and uncut gemstones — emerald, ruby, sapphire, tourmaline and rare collector minerals, sourced and hand-cut in Peshawar, Pakistan.',
+    'Natural cut and uncut gemstones, emerald, ruby, sapphire, tourmaline and rare collector minerals, sourced and hand-cut in Peshawar, Pakistan.',
   city: 'Peshawar',
   country: 'PK',
   email: 'Info@gemysticgems.com',
@@ -30,7 +30,7 @@ export function money(n: number, currency = SITE.currency) {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(n);
 }
 
-/** For round marketing figures — "$500", not "$500.00". */
+/** For round marketing figures, "$500", not "$500.00". */
 export function moneyWhole(n: number, currency = SITE.currency) {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',

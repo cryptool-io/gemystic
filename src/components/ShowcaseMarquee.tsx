@@ -5,7 +5,7 @@ import { effectivePrices } from '@/lib/campaigns/store';
 import { Price } from '@/components/currency/Price';
 
 /**
- * "Just listed" showcase — a slow, continuous film-strip of the newest stones.
+ * "Just listed" showcase, a slow, continuous film-strip of the newest stones.
  *
  * The reference is the recent-sales carousels on established dealer sites: what
  * signals professionalism there is motion that is calm and continuous, not a
@@ -63,7 +63,7 @@ export async function ShowcaseMarquee() {
         <div>
           <h2 className="font-display text-2xl">Just listed</h2>
           <p className="mt-1 text-sm text-muted">
-            The newest stones out of the workshop — every one a single piece.
+            The newest stones out of the workshop, every one a single piece.
           </p>
         </div>
         <Link href="/shop?sort=newest" className="text-sm text-brand hover:text-brand-dark">

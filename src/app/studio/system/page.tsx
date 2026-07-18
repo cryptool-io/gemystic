@@ -3,7 +3,7 @@ import { allProducts, GENERATED_AT } from '@/lib/catalog';
 
 /**
  * Operational view. Shows which capabilities are local and which have been moved
- * to AWS, plus any misconfiguration — so "is this box actually set up right?" is
+ * to AWS, plus any misconfiguration, so "is this box actually set up right?" is
  * answerable without SSHing in and reading env vars.
  */
 export default function SystemPage() {
@@ -23,7 +23,7 @@ export default function SystemPage() {
       name: 'Catalogue data',
       driver: 'local files',
       local: true,
-      detail: `${allProducts().length} products from data/catalog.json — no database required at this scale.`,
+      detail: `${allProducts().length} products from data/catalog.json, no database required at this scale.`,
     },
     {
       name: 'Transactional email',
@@ -60,7 +60,7 @@ export default function SystemPage() {
       local: false,
       detail: config.ai.enabled
         ? 'Assistant, auto-listing and financial analysis are live.'
-        : 'No API key — these three features are off. Everything else works.',
+        : 'No API key, these three features are off. Everything else works.',
     },
   ];
 
@@ -70,12 +70,12 @@ export default function SystemPage() {
         <div className="flex flex-wrap items-center gap-3">
           <h2 className="font-display text-xl">Deployment</h2>
           <span className={`chip ${profile.fullyLocal ? 'chip-brand' : ''}`}>
-            {profile.fullyLocal ? 'Fully self-hosted' : `Hybrid — AWS: ${profile.aws.join(', ')}`}
+            {profile.fullyLocal ? 'Fully self-hosted' : `Hybrid. AWS: ${profile.aws.join(', ')}`}
           </span>
         </div>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted">
           Every capability below can run on our own hardware. AWS is opt-in per capability
-          via a driver name in the environment — moving one does not touch application code,
+          via a driver name in the environment, moving one does not touch application code,
           and nothing here requires an AWS account to operate.
         </p>
       </section>
@@ -88,7 +88,7 @@ export default function SystemPage() {
           <ul className="mt-2 space-y-1.5 text-sm text-accent-dark">
             {errors.map((e, i) => (
               <li key={i}>
-                <span className="font-medium uppercase">{e.area}</span> — {e.message}
+                <span className="font-medium uppercase">{e.area}</span>, {e.message}
               </li>
             ))}
           </ul>
@@ -115,7 +115,7 @@ export default function SystemPage() {
                   </td>
                   <td className="p-4">
                     <span className={c.local ? 'text-brand' : 'text-muted'}>
-                      {c.local ? 'On our hardware' : c.driver === 'disabled' ? '—' : 'External'}
+                      {c.local ? 'On our hardware' : c.driver === 'disabled' ? ',' : 'External'}
                     </span>
                   </td>
                   <td className="p-4 text-muted">{c.detail}</td>
@@ -134,7 +134,7 @@ export default function SystemPage() {
               <li key={i} className="flex gap-2">
                 <span className="text-accent">·</span>
                 <span>
-                  <span className="font-medium uppercase text-fg">{w.area}</span> — {w.message}
+                  <span className="font-medium uppercase text-fg">{w.area}</span>, {w.message}
                 </span>
               </li>
             ))}

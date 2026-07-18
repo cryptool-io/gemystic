@@ -5,7 +5,7 @@ import { allProducts, getSpecies } from '@/lib/catalog';
 import { money } from '@/lib/seo';
 
 /**
- * Catalogue list — real data, read-only. Full CRUD (create, edit, image upload,
+ * Catalogue list, real data, read-only. Full CRUD (create, edit, image upload,
  * publish/unpublish) is the product-management milestone that follows the DB
  * migration. Shown as a real inventory view so the admin is useful today.
  */
@@ -65,7 +65,7 @@ export default async function AdminCatalogue({
                 <td className="p-3 capitalize text-muted">{getSpecies(p.species)?.name ?? p.species}</td>
                 <td className="p-3 text-muted">{p.category}</td>
                 <td className="p-3 text-right text-muted">
-                  {p.caratWeight ? `${p.caratWeight} ct` : p.gramWeight ? `${p.gramWeight} g` : '—'}
+                  {p.caratWeight ? `${p.caratWeight} ct` : p.gramWeight ? `${p.gramWeight} g` : ','}
                 </td>
                 <td className="p-3 text-right font-medium text-brand">{money(p.priceUsd)}</td>
                 <td className="p-3 text-muted">

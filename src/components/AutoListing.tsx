@@ -80,7 +80,7 @@ export function AutoListing({ species }: { species: { key: string; name: string 
           className="mt-2 w-full rounded-lg border border-line bg-canvas p-2.5 text-sm outline-none placeholder:text-muted/40 focus:border-brand/60"
         />
         <p className="mt-1.5 text-xs text-muted/60">
-          The model reads the photograph for colour, cut and clarity — and flags anything
+          The model reads the photograph for colour, cut and clarity, and flags anything
           it inferred rather than knew.
         </p>
 
@@ -118,7 +118,7 @@ export function AutoListing({ species }: { species: { key: string; name: string 
             <div>
               <div className="font-display text-2xl text-brand">◆</div>
               <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted">
-                The generated listing appears here — title, description, meta tags, Etsy tags
+                The generated listing appears here, title, description, meta tags, Etsy tags
                 and a priced recommendation with its reasoning.
               </p>
             </div>

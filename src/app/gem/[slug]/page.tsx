@@ -57,7 +57,7 @@ export default async function GemPage({ params }: { params: Params }) {
   const reviews = await approvedForProduct(p.slug);
   const pricing = await effectivePrice(p);
   const ratingSummary = summarise(reviews);
-  const weight = p.caratWeight ? `${p.caratWeight} ct` : p.gramWeight ? `${p.gramWeight} g` : '—';
+  const weight = p.caratWeight ? `${p.caratWeight} ct` : p.gramWeight ? `${p.gramWeight} g` : ',';
 
   const specs: [string, string | null][] = [
     ['Species', s?.name ?? p.species],
@@ -108,7 +108,7 @@ export default async function GemPage({ params }: { params: Params }) {
             <div className="card relative aspect-square overflow-hidden">
               <Image
                 src={p.imageLarge}
-                alt={`${p.title} — natural ${p.color.toLowerCase()} ${s?.name.toLowerCase() ?? ''} from ${p.origin}, ${weight}`}
+                alt={`${p.title}, natural ${p.color.toLowerCase()} ${s?.name.toLowerCase() ?? ''} from ${p.origin}, ${weight}`}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
@@ -155,10 +155,19 @@ export default async function GemPage({ params }: { params: Params }) {
               {p.certified && (
                 <span className="chip border-brand/60 text-brand-dark">Lab certified</span>
               )}
-              <span className="chip border-brand-ring/50 text-brand">1 of 1 — no duplicate</span>
+              <span className="chip border-brand-ring/50 text-brand">One of a kind</span>
             </div>
 
             <AddToBag product={{ slug: p.slug, title: p.title, price: pricing.priceUsd }} />
+
+            {/* The guarantee sits beside the buy action, not buried in a policy
+                page: the single highest-leverage trust move for an unknown
+                seller of high-value items (docs/CONVERSION-REVIEW.md). */}
+            <p className="mt-3 text-xs leading-relaxed text-muted">
+              <span className="font-medium text-fg">Our guarantee:</span> 30-day returns,
+              full refund, insured and tracked from our workshop to your door. Payment is
+              covered by PayPal Buyer Protection.
+            </p>
 
             <div className="prose-gem mt-8">
               {stripMarkdown(p.description)
@@ -172,7 +181,7 @@ export default async function GemPage({ params }: { params: Params }) {
                 .map((para, i) => <p key={i}>{para}</p>)}
             </div>
 
-            {/* Specification table — heavily weighted by answer engines */}
+            {/* Specification table, heavily weighted by answer engines */}
             <div className="card mt-8 overflow-hidden">
               <div className="border-b border-line px-5 py-3">
                 <h2 className="font-display text-base">Specification</h2>
@@ -189,8 +198,9 @@ export default async function GemPage({ params }: { params: Params }) {
 
             <div className="mt-6 space-y-3 text-sm text-muted">
               <p>
-                <strong className="text-fg">Shipping.</strong> Dispatched from Peshawar within
-                1–3 working days, tracked and insured. Free worldwide over $500.
+                <strong className="text-fg">Ships from {p.shipsFrom === 'TH' ? 'Thailand' : 'Peshawar, Pakistan'}.</strong>{' '}
+                Dispatched within 1–3 working days, tracked and insured. Free worldwide
+                over $500.
               </p>
               <p>
                 <strong className="text-fg">Returns.</strong> 30 days, unworn and in original
@@ -200,7 +210,7 @@ export default async function GemPage({ params }: { params: Params }) {
           </div>
         </div>
 
-        {/* Buying guidance — genuine expertise, the thing that earns links */}
+        {/* Buying guidance, genuine expertise, the thing that earns links */}
         {s && (
           <section className="mt-16 grid gap-6 md:grid-cols-2">
             <div className="card p-6">
@@ -238,7 +248,7 @@ export default async function GemPage({ params }: { params: Params }) {
           </section>
         )}
 
-        {/* FAQ — emits FAQPage schema above */}
+        {/* FAQ, emits FAQPage schema above */}
         {s && (
           <section className="mt-16">
             <h2 className="mb-6 font-display text-2xl">
@@ -282,7 +292,7 @@ export default async function GemPage({ params }: { params: Params }) {
               <ReviewList reviews={reviews} />
             ) : (
               <p className="text-sm text-muted">
-                No reviews on this stone yet. Bought it? Be the first to review — every stone
+                No reviews on this stone yet. Bought it? Be the first to review, every stone
                 here is unique, so your review is the only one it will ever have.
               </p>
             )}

@@ -28,6 +28,7 @@ export interface Product {
   image: string;
   imageLarge: string;
   stock: number;
+  shipsFrom: 'PK' | 'TH';
   keywords: string[];
   metaTitle: string;
   metaDescription: string;

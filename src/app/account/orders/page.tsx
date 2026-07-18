@@ -24,11 +24,11 @@ export default async function OrdersPage() {
         <p className="font-display text-lg">No orders yet</p>
         <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">
           When checkout opens, every order will appear here with its payment status,
-          shipping progress, tracking number and downloadable invoice — the same view the
+          shipping progress, tracking number and downloadable invoice, the same view the
           admin sees, from your side.
         </p>
         <p className="mx-auto mt-2 max-w-md text-sm text-muted">
-          Bought from us on Etsy? Those orders live in your Etsy account — we cannot see
+          Bought from us on Etsy? Those orders live in your Etsy account, we cannot see
           or import them.
         </p>
         <Link href="/shop" className="btn-primary mt-6">Browse the stones</Link>

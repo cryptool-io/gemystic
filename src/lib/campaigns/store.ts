@@ -7,7 +7,7 @@ import type { Product } from '../types';
  * Discount campaigns. Local-first JSON store (same pattern as auth/reviews);
  * shape mirrors a future `campaigns` table.
  *
- * A campaign targets stones by species and/or category — "15% off all peridot",
+ * A campaign targets stones by species and/or category, "15% off all peridot",
  * "10% off specimens in August". Discounts are display-side: the base USD price
  * in the catalogue is never mutated, so ending a campaign restores prices by
  * definition and two campaigns can never compound by accident (the single best
@@ -16,7 +16,7 @@ import type { Product } from '../types';
 export interface Campaign {
   id: string;
   name: string;
-  /** 1–90. Bounded because a fat-fingered 99 on one-of-a-kind stock is a real loss. */
+  /** 0–90 (0 = free-shipping-only offer). Capped: a fat-fingered 99 on one-of-a-kind stock is a real loss. */
   percentOff: number;
   /** Empty arrays = matches all. */
   species: string[];
@@ -24,6 +24,13 @@ export interface Campaign {
   startsAt: string; // ISO date
   endsAt: string;   // ISO date, inclusive
   active: boolean;
+  /**
+   * If set, the discount is NOT applied automatically on the storefront, the
+   * customer must enter this code in the cart. Uppercased, unique per store.
+   */
+  code: string | null;
+  /** The offer can also (or only) grant free shipping below the threshold. */
+  freeShipping: boolean;
   createdAt: string;
 }
 
@@ -62,7 +69,9 @@ export async function createCampaign(
   const db = await read();
   const campaign: Campaign = {
     ...input,
-    percentOff: Math.min(90, Math.max(1, Math.round(input.percentOff))),
+    code: input.code ? input.code.trim().toUpperCase() : null,
+    freeShipping: Boolean(input.freeShipping),
+    percentOff: Math.min(90, Math.max(0, Math.round(input.percentOff))),
     id: globalThis.crypto.randomUUID(),
     createdAt: new Date().toISOString(),
   };
@@ -77,7 +86,7 @@ export async function updateCampaign(id: string, patch: Partial<Campaign>): Prom
   if (c) {
     Object.assign(c, patch, { id: c.id, createdAt: c.createdAt });
     if (patch.percentOff !== undefined) {
-      c.percentOff = Math.min(90, Math.max(1, Math.round(patch.percentOff)));
+      c.percentOff = Math.min(90, Math.max(0, Math.round(patch.percentOff)));
     }
     await write(db);
   }
@@ -107,19 +116,19 @@ function matches(c: Campaign, p: Product): boolean {
 export interface EffectivePrice {
   /** What the customer pays, USD. */
   priceUsd: number;
-  /** Set only when discounted — the pre-campaign price for the strikethrough. */
+  /** Set only when discounted, the pre-campaign price for the strikethrough. */
   originalUsd: number | null;
   campaign: { name: string; percentOff: number } | null;
 }
 
 /**
  * The one place discount arithmetic lives. Rounds half-up to whole cents on the
- * discounted amount — never on intermediate values — so the shown price, the
+ * discounted amount, never on intermediate values, so the shown price, the
  * charged price and the invoice line can never disagree by a cent.
  */
 export async function effectivePrice(p: Product): Promise<EffectivePrice> {
   const now = new Date();
-  const live = (await read()).campaigns.filter((c) => isLive(c, now) && matches(c, p));
+  const live = (await read()).campaigns.filter((c) => isLive(c, now) && !c.code && matches(c, p));
 
   if (live.length === 0) {
     return { priceUsd: p.priceUsd, originalUsd: null, campaign: null };
@@ -136,10 +145,25 @@ export async function effectivePrice(p: Product): Promise<EffectivePrice> {
   };
 }
 
+/**
+ * Validates a promo code the customer typed in the cart. Returns the live
+ * campaign or null; matching is case-insensitive.
+ */
+export async function campaignByCode(code: string): Promise<Campaign | null> {
+  const now = new Date();
+  const wanted = code.trim().toUpperCase();
+  if (!wanted) return null;
+  return (
+    (await read()).campaigns.find(
+      (c) => isLive(c, now) && c.code && c.code.toUpperCase() === wanted,
+    ) ?? null
+  );
+}
+
 /** Batch variant so a grid of 40 tiles reads the store once, not 40 times. */
 export async function effectivePrices(products: Product[]): Promise<Map<string, EffectivePrice>> {
   const now = new Date();
-  const campaigns = (await read()).campaigns.filter((c) => isLive(c, now));
+  const campaigns = (await read()).campaigns.filter((c) => isLive(c, now) && !c.code);
   const out = new Map<string, EffectivePrice>();
 
   for (const p of products) {

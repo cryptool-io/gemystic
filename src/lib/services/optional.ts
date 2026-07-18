@@ -3,7 +3,7 @@ import { createRequire } from 'node:module';
 /**
  * Loads a package that is only needed for one deployment mode.
  *
- * `nodemailer` and the AWS SDKs are deliberately NOT dependencies — a self-hosted
+ * `nodemailer` and the AWS SDKs are deliberately NOT dependencies, a self-hosted
  * install should not have to download the AWS SDK to send a contact form. Using
  * `createRequire` at runtime rather than a static import keeps the bundler from
  * trying to resolve these at build time, so the project compiles whether or not

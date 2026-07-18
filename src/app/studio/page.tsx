@@ -22,8 +22,8 @@ export default function StudioOverview() {
             Add <code className="rounded bg-canvas px-1.5 py-0.5 text-brand-dark">ANTHROPIC_API_KEY</code> to{' '}
             <code className="rounded bg-canvas px-1.5 py-0.5 text-brand-dark">.env.local</code> and restart
             the dev server to switch on the customer assistant, auto-listing and the written
-            financial analysis. Everything else — the storefront, the catalogue, and every figure
-            on this page — is computed locally and works without it.
+            financial analysis. Everything else, the storefront, the catalogue, and every figure
+            on this page, is computed locally and works without it.
           </p>
         </div>
       )}
@@ -107,7 +107,7 @@ export default function StudioOverview() {
         <Link href="/studio/listings" className="card p-6 transition hover:border-brand/50">
           <h2 className="font-display text-lg text-brand">Auto-listing</h2>
           <p className="mt-2 text-sm leading-relaxed text-muted">
-            Photograph a stone, add a line of notes, and get a full listing back — title,
+            Photograph a stone, add a line of notes, and get a full listing back, title,
             description, SEO metadata, 13 Etsy tags and a price anchored to what comparable
             stock in this shop actually sells for.
           </p>

@@ -5,7 +5,7 @@
  * buyer recognises, with a table, crown facets and a highlight so it reads as a
  * cut stone rather than a generic diamond outline. Built as inline SVG (not an
  * image file) so it inherits `currentColor`, scales without blur on any display,
- * and adds no network request. Emerald cut chosen deliberately — it is the
+ * and adds no network request. Emerald cut chosen deliberately, it is the
  * signature cut of this shop's flagship Swat emeralds.
  */
 export function GemMark({ className = 'h-7 w-7' }: { className?: string }) {

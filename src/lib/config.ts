@@ -3,7 +3,7 @@
  *
  * The deployment story is local-first: everything runs on our own box with no
  * cloud account required. Individual capabilities can then be moved to AWS one
- * at a time by changing a driver name in the environment — never by editing
+ * at a time by changing a driver name in the environment, never by editing
  * application code. Nothing here imports an AWS SDK; the adapters load theirs
  * lazily so an install without AWS packages still builds and runs.
  */
@@ -115,7 +115,7 @@ export function validateConfig(): ConfigIssue[] {
   }
 
   if (!config.ai.enabled) {
-    issues.push({ level: 'warning', area: 'ai', message: 'ANTHROPIC_API_KEY is not set — assistant, auto-listing and written analysis are disabled.' });
+    issues.push({ level: 'warning', area: 'ai', message: 'ANTHROPIC_API_KEY is not set, assistant, auto-listing and written analysis are disabled.' });
   }
 
   if (config.site.env === 'production' && config.site.url.includes('localhost')) {
@@ -123,7 +123,7 @@ export function validateConfig(): ConfigIssue[] {
   }
 
   if (config.site.env === 'production' && config.mail.driver === 'file') {
-    issues.push({ level: 'warning', area: 'mail', message: 'MAIL_DRIVER=file in production — enquiries are written to disk and never delivered.' });
+    issues.push({ level: 'warning', area: 'mail', message: 'MAIL_DRIVER=file in production, enquiries are written to disk and never delivered.' });
   }
 
   return issues;

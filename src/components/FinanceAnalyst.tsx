@@ -42,7 +42,7 @@ export function FinanceAnalyst() {
     <section>
       <h2 className="font-display text-xl">Ask the analyst</h2>
       <p className="mt-1.5 max-w-2xl text-sm text-muted">
-        Questions are answered against the figures on this page — the same computed
+        Questions are answered against the figures on this page, the same computed
         numbers, not a general opinion about the gem trade.
       </p>
 

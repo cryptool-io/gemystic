@@ -6,8 +6,7 @@ import { CURRENCIES } from '@/lib/currency';
 import { useCurrency } from './CurrencyProvider';
 
 /**
- * Language + currency switcher (globe control). Currency is fully functional —
- * USD/EUR today, more by adding entries to data/currencies.json. Language lists
+ * Language + currency switcher (globe control). Currency is fully functional, * USD/EUR today, more by adding entries to data/currencies.json. Language lists
  * English only until translations exist; showing the control now fixes the
  * expectation and gives the i18n rollout a home.
  */
@@ -34,7 +33,9 @@ export function LocaleSwitcher() {
         className="btn-ghost gap-1.5 px-2.5 py-2 text-xs"
       >
         <GlobeIcon />
-        <span className="font-medium">{currency}</span>
+        <span className="font-medium">
+          {CURRENCIES[currency]?.symbol} {currency}
+        </span>
       </button>
 
       {open && (

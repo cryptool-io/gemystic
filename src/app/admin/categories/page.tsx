@@ -66,7 +66,7 @@ export default async function AdminCategories() {
       </div>
 
       <div className="card border-dashed border-line-strong p-5 text-center text-sm text-muted">
-        + Add category — available once the catalogue moves to Postgres. The form will post to
+        + Add category, available once the catalogue moves to Postgres. The form will post to
         <code className="mx-1 rounded bg-surface-2 px-1.5 py-0.5 text-brand-dark">/api/admin/categories</code>
         and write the same fields shown above.
       </div>

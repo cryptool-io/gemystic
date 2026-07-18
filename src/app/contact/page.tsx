@@ -7,7 +7,7 @@ import { ContactForm } from '@/components/ContactForm';
 export const metadata: Metadata = {
   title: 'Contact Us',
   description:
-    'Talk to the cutters directly. Questions about a stone, custom cutting, wholesale parcels or a bespoke setting — email, WhatsApp or call our Peshawar workshop.',
+    'Talk to the cutters directly. Questions about a stone, custom cutting, wholesale parcels or a bespoke setting, email, WhatsApp or call our Peshawar workshop.',
   alternates: { canonical: '/contact' },
 };
 

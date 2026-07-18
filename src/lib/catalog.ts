@@ -24,7 +24,7 @@ export function allSpecies(): [string, Species][] {
   return Object.entries(speciesMap);
 }
 
-/** Species that actually have stock — the nav should never link to an empty shelf. */
+/** Species that actually have stock, the nav should never link to an empty shelf. */
 export function stockedSpecies(): {
   key: string;
   species: Species;
@@ -38,7 +38,7 @@ export function stockedSpecies(): {
 }
 
 /**
- * The single best photo to represent a species on a category tile — the
+ * The single best photo to represent a species on a category tile, the
  * "specialist's pick", chosen by a rule rather than by hand so it stays correct
  * as stock turns over. Preference order: a faceted stone (shows colour and cut
  * best), then the most valuable piece (usually the most photogenic), avoiding
@@ -114,7 +114,7 @@ export function queryProducts(q: Query): Product[] {
     case 'carat-desc':
       return [...out].sort((a, b) => (b.caratWeight ?? 0) - (a.caratWeight ?? 0));
     case 'newest':
-      // Etsy listing ids are chronological — highest id is the latest listing.
+      // Etsy listing ids are chronological, highest id is the latest listing.
       return [...out].sort((a, b) => Number(b.etsyId) - Number(a.etsyId));
     default:
       return out;
@@ -159,7 +159,7 @@ export function relatedProducts(p: Product, limit = 4): Product[] {
     .map((r) => r.o);
 }
 
-/** The latest additions — Etsy ids are chronological. */
+/** The latest additions. Etsy ids are chronological. */
 export function justListed(limit = 12): Product[] {
   return [...catalog.products]
     .sort((a, b) => Number(b.etsyId) - Number(a.etsyId))

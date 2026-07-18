@@ -9,7 +9,7 @@ import type { CategoryNode } from '@/lib/taxonomy';
 /**
  * Navigation is generated from the taxonomy, not hardcoded. Adding a category in
  * data/taxonomy.json (later, the admin portal) puts it in the menu with its live
- * stock count — no code change, and no link to a shelf that has nothing on it.
+ * stock count, no code change, and no link to a shelf that has nothing on it.
  *
  * Hover dropdowns above `md`; the same tree collapses into a drawer below, because
  * a hover menu is unusable on a touch device.
@@ -123,7 +123,7 @@ export function MainNav({ categories }: { categories: CategoryNode[] }) {
         </svg>
       </button>
 
-      {/* Mobile drawer — portalled to <body> so it escapes the header's
+      {/* Mobile drawer, portalled to <body> so it escapes the header's
           backdrop-filter, which otherwise becomes the containing block for
           position:fixed and traps the drawer inside the 64px header. */}
       {mounted &&

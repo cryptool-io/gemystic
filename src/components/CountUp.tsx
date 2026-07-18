@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 /**
  * Counts a number up when it first scrolls into view. Honours reduced-motion by
- * showing the final value immediately. Kept tiny and dependency-free — this is
+ * showing the final value immediately. Kept tiny and dependency-free, this is
  * the "smooth number counter" touch from the research, nothing more.
  */
 export function CountUp({

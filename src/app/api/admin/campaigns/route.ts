@@ -26,8 +26,12 @@ export async function POST(req: NextRequest) {
   const endsAt = String(body.endsAt ?? '');
 
   if (!name) return NextResponse.json({ error: 'Campaign name is required.' }, { status: 400 });
-  if (!Number.isFinite(percentOff) || percentOff < 1 || percentOff > 90) {
-    return NextResponse.json({ error: 'Discount must be between 1% and 90%.' }, { status: 400 });
+  const freeShipping = Boolean(body.freeShipping);
+  if (!Number.isFinite(percentOff) || percentOff < 0 || percentOff > 90) {
+    return NextResponse.json({ error: 'Discount must be between 0% and 90%.' }, { status: 400 });
+  }
+  if (percentOff === 0 && !freeShipping) {
+    return NextResponse.json({ error: 'A 0% campaign must at least grant free shipping.' }, { status: 400 });
   }
   if (!startsAt || !endsAt || new Date(endsAt) < new Date(startsAt)) {
     return NextResponse.json({ error: 'End date must not be before the start date.' }, { status: 400 });
@@ -41,6 +45,8 @@ export async function POST(req: NextRequest) {
     startsAt,
     endsAt,
     active: body.active !== false,
+    code: body.code ? String(body.code) : null,
+    freeShipping: Boolean(body.freeShipping),
   });
 
   return NextResponse.json({ ok: true, campaign });

@@ -20,7 +20,7 @@ const TYPES: Record<string, string> = {
  *
  * `public/` is not usable for this: Next only indexes it at build time, so files
  * written after a deploy would 404 until the next build. On S3 this route is
- * bypassed entirely — storage.urlFor() returns the bucket URL directly.
+ * bypassed entirely, storage.urlFor() returns the bucket URL directly.
  */
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ key: string[] }> }) {
   const { key } = await params;

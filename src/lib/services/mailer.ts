@@ -44,7 +44,7 @@ interface SesModule {
 /**
  * Default driver. Writes a real RFC-822 message to var/outbox instead of sending.
  *
- * This is not a stub — it is the correct behaviour for local development and for
+ * This is not a stub, it is the correct behaviour for local development and for
  * a self-hosted install that has not yet been given a relay. Nothing is silently
  * dropped, every enquiry is on disk and openable in any mail client, and no
  * credentials are required to run the site.
@@ -78,7 +78,7 @@ class FileMailer implements Mailer {
       driver: this.name,
       id,
       delivered: false,
-      note: `Written to ${join(dir, `${id}.eml`)} — no relay configured.`,
+      note: `Written to ${join(dir, `${id}.eml`)}, no relay configured.`,
     };
   }
 }
@@ -113,7 +113,7 @@ class SmtpMailer implements Mailer {
 }
 
 /**
- * AWS SES v2. Intentionally the last thing to switch on — the site is fully
+ * AWS SES v2. Intentionally the last thing to switch on, the site is fully
  * functional on `file` or `smtp` first, and moving here is a one-line env change.
  *
  * Credentials come from the standard AWS chain (instance role, env, or profile);

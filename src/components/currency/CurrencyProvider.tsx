@@ -12,7 +12,7 @@ const CurrencyContext = createContext<Ctx>({ currency: DEFAULT_CURRENCY, setCurr
 
 /**
  * Client currency state, hydrated from the server-read cookie so the first
- * paint already shows the right currency — no USD flash for EU visitors.
+ * paint already shows the right currency, no USD flash for EU visitors.
  */
 export function CurrencyProvider({
   initial,

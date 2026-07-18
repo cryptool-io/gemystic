@@ -22,7 +22,7 @@ export default async function SavedPage() {
       <h1 className="font-display text-3xl">Saved stones</h1>
       <p className="mt-2 max-w-xl text-sm text-muted">
         Stones you have added to your bag or saved for later. Every piece is one of a
-        kind — a saved stone can still be bought by someone else, so do not sit on the
+        kind, a saved stone can still be bought by someone else, so do not sit on the
         one you want.
       </p>
       <div className="mt-6">

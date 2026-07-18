@@ -6,9 +6,9 @@ import { MONTHS, productsForBirthstone, allSpecies } from '@/lib/catalog';
 import { faqJsonLd, money } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  title: 'Birthstones by Month — Natural Birthstone Gems for Every Month',
+  title: 'Birthstones by Month. Natural Birthstone Gems for Every Month',
   description:
-    'The full birthstone calendar with natural stones in stock for each month. January garnet through December topaz — genuine gems, hand-cut in Pakistan, with treatment disclosed.',
+    'The full birthstone calendar with natural stones in stock for each month. January garnet through December topaz, genuine gems, hand-cut in Pakistan, with treatment disclosed.',
   keywords: [
     'birthstones by month', 'birthstone chart', 'january birthstone garnet',
     'may birthstone emerald', 'july birthstone ruby', 'september birthstone sapphire',
@@ -24,7 +24,7 @@ const FAQ: [string, string][] = [
   ],
   [
     'Why do some months have more than one birthstone?',
-    'The modern list was standardised by the American National Retail Jewelers Association in 1912 and revised several times since, while older traditional and Ayurvedic lists never went away. Months gained alternates as new stones reached commercial supply — spinel was added to August in 2016, for example.',
+    'The modern list was standardised by the American National Retail Jewelers Association in 1912 and revised several times since, while older traditional and Ayurvedic lists never went away. Months gained alternates as new stones reached commercial supply, spinel was added to August in 2016, for example.',
   ],
   [
     'Does a birthstone have to be set in jewellery?',
@@ -51,7 +51,7 @@ export default function BirthstonesPage() {
           <h1 className="mt-2 font-display text-4xl">Birthstones by month</h1>
           <p className="mt-4 leading-relaxed text-muted">
             The complete calendar, with what we actually have in stock for each month.
-            Where a month has several traditional stones we list every one we cut — and
+            Where a month has several traditional stones we list every one we cut, and
             where we hold nothing, we say so rather than substituting something unrelated.
           </p>
         </header>
@@ -90,7 +90,7 @@ export default function BirthstonesPage() {
                 <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted">
                   {species[0].metaphysical}{' '}
                   <span className="text-muted/70">
-                    Mohs {species[0].hardness} — {species[0].care.split('.')[0]}.
+                    Mohs {species[0].hardness}, {species[0].care.split('.')[0]}.
                   </span>
                 </p>
               )}

@@ -31,7 +31,7 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
 
       // Honest about the outbox case rather than claiming delivery.
       if (data.delivery && data.delivery.delivered === false) {
-        setNote('Saved to the local outbox — no mail relay is configured on this deployment yet.');
+        setNote('Saved to the local outbox, no mail relay is configured on this deployment yet.');
       }
       setState('sent');
     } catch {
@@ -77,7 +77,7 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
 
       <div className="mt-4">
         <label htmlFor="subject" className="label mb-1.5 block">Subject</label>
-        <input id="subject" name="subject" className="field" placeholder="e.g. 1.2ct Swat emerald — more photos?" />
+        <input id="subject" name="subject" className="field" placeholder="e.g. 1.2ct Swat emerald, more photos?" />
       </div>
 
       <div className="mt-4">
@@ -85,7 +85,7 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
         <textarea id="message" name="message" required rows={6} className="field" />
       </div>
 
-      {/* Honeypot — visually and programmatically hidden from people. */}
+      {/* Honeypot, visually and programmatically hidden from people. */}
       <div aria-hidden="true" className="absolute left-[-9999px]">
         <label htmlFor="website">Website</label>
         <input id="website" name="website" tabIndex={-1} autoComplete="off" />

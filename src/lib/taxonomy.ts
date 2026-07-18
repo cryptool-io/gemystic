@@ -38,7 +38,7 @@ export function getCategory(slug: string): Category | undefined {
 
 export interface CategoryNode extends Category {
   count: number;
-  /** Species actually held in this category — never links to an empty shelf. */
+  /** Species actually held in this category, never links to an empty shelf. */
   species: { key: string; name: string; count: number }[];
 }
 

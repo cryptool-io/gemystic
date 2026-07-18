@@ -26,6 +26,7 @@ function serialise(p: Product) {
     availability: p.stock > 0 ? 'in_stock' : 'sold',
     quantity: p.stock,
     unique: true,
+    shipsFrom: p.shipsFrom === 'TH' ? 'Thailand' : 'Pakistan',
     image: p.imageLarge,
     gem: {
       species: p.species,

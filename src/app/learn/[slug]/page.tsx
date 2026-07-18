@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   if (!s) return {};
 
   return {
-    title: `${s.name} Buying Guide — Value, Treatment, Durability & Care`,
+    title: `${s.name} Buying Guide. Value, Treatment, Durability & Care`,
     description: `How to judge ${s.name.toLowerCase()}: what drives price, which treatments are standard, how it holds up in daily wear, and how to care for it. Written by working gem cutters in Pakistan.`,
     keywords: [
       `${s.name.toLowerCase()} buying guide`,

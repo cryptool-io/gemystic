@@ -142,7 +142,7 @@ export function bySpecies(overrides: CostOverrides = {}) {
 
 /**
  * Flags stones whose price sits far from what comparable stock in the same
- * species and form is asking. Deliberately rule-based and explainable — the AI
+ * species and form is asking. Deliberately rule-based and explainable, the AI
  * layer narrates these findings rather than inventing them.
  */
 export interface PricingFlag {
@@ -162,11 +162,11 @@ export function pricingFlags(threshold = 35): PricingFlag[] {
   for (const p of products) {
     // Two corrections that decide whether these flags are signal or noise:
     //
-    // Weight — per-carat rates fall steeply with size, so a 2ct stone measured
+    // Weight, per-carat rates fall steeply with size, so a 2ct stone measured
     // against a 29ct one produces nonsense like "+1000% overpriced". Peers are
     // restricted to a half-to-double weight band.
     //
-    // Variety — imperial topaz is worth several times sky blue topaz despite both
+    // Variety, imperial topaz is worth several times sky blue topaz despite both
     // being "topaz". Compare within variety where the sample supports it, and only
     // fall back to species level when it doesn't.
     const inBand = (o: Product) =>
@@ -203,7 +203,7 @@ export function pricingFlags(threshold = 35): PricingFlag[] {
       rationale:
         deltaPct < 0
           ? `Asking ${money(actual)}/ct against a ${money(median)}/ct median across ${peers.length} ${basis} ${p.form} stones of similar weight. If the colour and clarity are in line with that group, there is room to move up.`
-          : `Asking ${money(actual)}/ct against a ${money(median)}/ct median across ${peers.length} ${basis} ${p.form} stones of similar weight. Justified only if this stone is visibly better than the group — otherwise it will sit.`,
+          : `Asking ${money(actual)}/ct against a ${money(median)}/ct median across ${peers.length} ${basis} ${p.form} stones of similar weight. Justified only if this stone is visibly better than the group, otherwise it will sit.`,
     });
   }
 
@@ -234,7 +234,7 @@ export function landedCost(price: number, destination: 'EU' | 'US' | 'UK' | 'OTH
         ? 'Gemstones are duty-free within the EU but import VAT applies at the destination rate.'
         : destination === 'UK'
         ? 'Duty-free under UK Global Tariff; import VAT at 20% applies above the consignment threshold.'
-        : 'Duty and tax vary by destination — this is an indicative estimate only.',
+        : 'Duty and tax vary by destination, this is an indicative estimate only.',
   };
 }
 

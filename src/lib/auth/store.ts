@@ -7,12 +7,12 @@ import { config } from '../config';
  *
  * This is the local-first driver: a JSON file on disk, the same pattern the
  * mailer and storage adapters use. It exists so the platform has real,
- * working authentication TODAY without a database — you can sign up, log in,
+ * working authentication TODAY without a database, you can sign up, log in,
  * and reach the admin. The `UserStore` interface is what the rest of the app
  * depends on, so swapping this for the Postgres `users`/`sessions` tables
  * (db/migrations/001_init.sql) is a one-file change with no caller impact.
  *
- * It is deliberately NOT for high write concurrency — a busy production shop
+ * It is deliberately NOT for high write concurrency, a busy production shop
  * belongs on Postgres. For a single-operator local deploy it is correct.
  */
 

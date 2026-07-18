@@ -20,7 +20,7 @@ export default async function AdminOverview() {
       <div>
         <h1 className="font-display text-2xl">Overview</h1>
         <p className="mt-1 text-sm text-muted">
-          Everything you can manage. This portal is gated by role — customers never see it.
+          Everything you can manage. This portal is gated by role, customers never see it.
         </p>
       </div>
 

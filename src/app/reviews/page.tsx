@@ -8,7 +8,7 @@ import { SITE } from '@/lib/seo';
 export const metadata: Metadata = {
   title: 'Customer Reviews',
   description:
-    'What customers say about buying natural gemstones from Gemystic Gems — quality, communication, packaging and delivery, in their own words.',
+    'What customers say about buying natural gemstones from Gemystic Gems, quality, communication, packaging and delivery, in their own words.',
   alternates: { canonical: '/reviews' },
 };
 
@@ -40,8 +40,18 @@ export default async function ReviewsPage() {
         <div className="label">Reviews</div>
         <h1 className="mt-2 font-display text-4xl">What customers say</h1>
         <p className="mt-3 leading-relaxed text-muted">
-          Every review is from a verified buyer and checked before it appears. We do not edit
-          or cherry-pick — the rating you see is the rating we have earned.
+          Every review is from a verified buyer and checked before it appears. We do not
+          edit or cherry-pick. Our first reviews came through Etsy, where they remain
+          publicly verifiable on{' '}
+          <a
+            href="https://www.etsy.com/shop/GemysticGemsStudio"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand underline hover:text-brand-dark"
+          >
+            our Etsy shop profile
+          </a>
+          .
         </p>
       </header>
 

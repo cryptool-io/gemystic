@@ -325,7 +325,7 @@ function buildDescription(p) {
     faceted: `Hand-selected for colour and life rather than paper grades. ${s.buyingNotes}`,
     cabochon: `Polished as a cabochon to show body colour and any internal character. ${s.buyingNotes}`,
     specimen: `Presented as found, on its natural matrix. Specimens are valued for crystal form and undamaged terminations rather than facetable clarity.`,
-    rough: `Untouched rough exactly as it came out of the ground — for cutters, wire wrappers and collectors who want the crystal habit intact.`,
+    rough: `Untouched rough exactly as it came out of the ground, for cutters, wire wrappers and collectors who want the crystal habit intact.`,
     parcel: `A mixed parcel priced per lot, sorted for usable colour. Ideal for designers who need matched-tone material across several pieces.`,
     ring: `Hand-fabricated in sterling silver in our Peshawar workshop. Every ring is made around its individual stone, so no two are identical.`,
     pendant: `Hand-fabricated in sterling silver and set to show the stone from both sides where the design allows.`,
@@ -397,6 +397,7 @@ function main() {
       image: `https://i.etsystatic.com/58902225/${imgPath}`,
       imageLarge: `https://i.etsystatic.com/58902225/${imgPath.replace('il_340x270', 'il_794xN')}`,
       stock: 1,
+      shipsFrom: 'PK',
     };
 
     p.treatment = detectTreatment(title, speciesKey);
@@ -413,7 +414,7 @@ function main() {
     p.keywords = buildKeywords(p);
     // The Next metadata template appends " | Gemystic", so the brand must not be
     // baked in here — budget 48 chars and let the template use the rest of the 60.
-    p.metaTitle = truncateWords(`${p.title} — ${p.origin.split(',')[0]}`, 48);
+    p.metaTitle = truncateWords(`${p.title} | ${p.origin.split(',')[0]}`, 48);
     p.metaDescription = buildMetaDescription(p, SPECIES[speciesKey]);
 
     products.push(p);

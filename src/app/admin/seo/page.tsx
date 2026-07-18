@@ -20,8 +20,8 @@ export default async function AdminSeo() {
     ['Sitemap', 'Generated at /sitemap.xml, refreshed on each build', true],
     ['Answer-engine feed', 'llms.txt and /api/catalog published for AI crawlers', true],
     ['Meta descriptions', missingSeoDesc === 0 ? 'Every product has a complete meta description' : `${missingSeoDesc} products missing a description`, missingSeoDesc === 0],
-    ['Editable global SEO', 'Title templates, default OG image and verification tags — pending the seo_settings table', false],
-    ['Redirect manager', '301 map for the WordPress → new-URL migration — pending', false],
+    ['Editable global SEO', 'Title templates, default OG image and verification tags, pending the seo_settings table', false],
+    ['Redirect manager', '301 map for the WordPress → new-URL migration, pending', false],
   ] as const;
 
   return (

@@ -26,8 +26,7 @@ export default function HomePage() {
               <span className="text-brand">cut by the people who mined them</span>
             </h1>
             <p className="mt-5 max-w-lg leading-relaxed text-muted">
-              Swat Valley emeralds, pigeon-blood rubies, tourmaline in every colour —
-              mined, cut and set in our own workshops, photographed exactly as they ship.
+              Swat Valley emeralds, pigeon-blood rubies, tourmaline in every colour, mined, cut and set in our own workshops, photographed exactly as they ship.
               When a stone finds its owner, it is gone for good.
             </p>
 
@@ -36,11 +35,11 @@ export default function HomePage() {
               <Link href="/learn" className="btn-ghost">Learn about the stones</Link>
             </div>
 
-            {/* Standing promises, not stock counters — counts change daily and
+            {/* Standing promises, not stock counters, counts change daily and
                 read as noise; these are the things that stay true. */}
             <ul className="mt-10 grid grid-cols-1 gap-3 border-t border-line pt-6 text-sm sm:grid-cols-3">
               {[
-                ['Every stone 1 of 1', 'the photo is the stone you receive'],
+                ['One of a kind', 'the photo is the stone you receive'],
                 ['Treatment disclosed', 'on every listing, in plain words'],
                 ['Insured worldwide', 'tracked from our workshop to you'],
               ].map(([h, sub]) => (
@@ -90,7 +89,7 @@ export default function HomePage() {
                 {s.heroImage && (
                   <Image
                     src={s.heroImage}
-                    alt={`${s.species.name} — representative stone`}
+                    alt={`${s.species.name}, representative stone`}
                     fill
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                     className="object-cover transition duration-500 group-hover:scale-105"
@@ -117,7 +116,7 @@ export default function HomePage() {
           {[
             {
               h: 'Disclosed, always',
-              p: 'Every listing states its treatment in plain language — heated, oiled, glass-filled or untouched. The trade norm is disclosure, and we hold to it even when it costs us a sale.',
+              p: 'Every listing states its treatment in plain language, heated, oiled, glass-filled or untouched. The trade norm is disclosure, and we hold to it even when it costs us a sale.',
             },
             {
               h: 'One stone, one listing',
@@ -146,7 +145,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Browse by colour — high-intent SEO entry */}
+      {/* Browse by colour, high-intent SEO entry */}
       <section className="wrap mt-20 reveal">
         <h2 className="mb-6 font-display text-2xl">Browse by colour</h2>
         <div className="flex flex-wrap gap-2">

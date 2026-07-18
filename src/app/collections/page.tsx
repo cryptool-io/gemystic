@@ -5,7 +5,7 @@ import { stockedSpecies, facets, MONTHS } from '@/lib/catalog';
 export const metadata: Metadata = {
   title: 'Gemstone Collections',
   description:
-    'Browse natural gemstones by species, colour, cut and birthstone month. Emerald, ruby, sapphire, tourmaline, garnet and more — hand-cut in Pakistan.',
+    'Browse natural gemstones by species, colour, cut and birthstone month. Emerald, ruby, sapphire, tourmaline, garnet and more, hand-cut in Pakistan.',
   alternates: { canonical: '/collections' },
 };
 
@@ -17,7 +17,7 @@ export default function CollectionsPage() {
     <div className="wrap">
       <h1 className="font-display text-3xl">Collections</h1>
       <p className="mt-2 max-w-2xl text-muted">
-        Every route into the catalogue — by stone, by colour, by cut, or by the month
+        Every route into the catalogue, by stone, by colour, by cut, or by the month
         someone was born.
       </p>
 

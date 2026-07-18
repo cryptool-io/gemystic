@@ -7,7 +7,7 @@ import { useCurrency } from './CurrencyProvider';
  * The only way money is rendered on the storefront. Takes the stored USD value
  * and formats in the visitor's currency; when `original` is present (campaign
  * discount) it renders the strikethrough pair. Admin and finance screens stay
- * hard-USD on purpose — the business books in one currency.
+ * hard-USD on purpose, the business books in one currency.
  */
 export function Price({
   usd,
@@ -33,7 +33,7 @@ export function Price({
   );
 }
 
-/** Per-carat helper — converts the rate, not just the total, so units agree. */
+/** Per-carat helper, converts the rate, not just the total, so units agree. */
 export function PricePerCarat({ usd, carat }: { usd: number; carat: number }) {
   const { currency } = useCurrency();
   if (!carat) return null;

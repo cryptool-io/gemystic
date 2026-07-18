@@ -10,7 +10,7 @@ import { SortSelect } from '@/components/SortSelect';
 export const metadata: Metadata = {
   title: 'Shop All Natural Gemstones',
   description:
-    'Browse every natural gemstone in stock — filter by stone, price, carat weight, colour, cut and origin. Hand-cut in Peshawar, Pakistan.',
+    'Browse every natural gemstone in stock, filter by stone, price, carat weight, colour, cut and origin. Hand-cut in Peshawar, Pakistan.',
   alternates: { canonical: '/shop' },
 };
 
@@ -89,7 +89,7 @@ export default async function ShopPage({ searchParams }: { searchParams: SearchP
 
       <div className="wrap">
         {/* Compact header: on a phone this block is ~3 short rows, not half the
-            screen — title+count share a line, chips appear only when filters are
+            screen, title+count share a line, chips appear only when filters are
             active, and sort lives inside the Filters row below lg. */}
         <header className="mb-4 sm:mb-6">
           <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
@@ -120,7 +120,7 @@ export default async function ShopPage({ searchParams }: { searchParams: SearchP
             activeCount={active.length}
             sortSlot={<SortSelect current={sp.sort ?? 'featured'} options={SORTS} />}
           >
-            {/* Price & carat ranges — one form so both apply together */}
+            {/* Price & carat ranges, one form so both apply together */}
             <form action="/shop" method="get">
               {carried.map(([k, v]) => (
                 <input key={k} type="hidden" name={k} value={v} />
@@ -229,7 +229,7 @@ export default async function ShopPage({ searchParams }: { searchParams: SearchP
                 <p className="font-display text-lg">Nothing matches those filters</p>
                 <p className="mt-2 text-sm text-muted">
                   Every stone is one of a kind, so the catalogue is narrower than a mass
-                  retailer&rsquo;s. Try loosening a filter — or ask the assistant and it will
+                  retailer&rsquo;s. Try loosening a filter, or ask the assistant and it will
                   find the nearest thing we have.
                 </p>
                 <Link href="/shop" className="btn-ghost mt-5">Reset filters</Link>

@@ -16,7 +16,7 @@ export default async function LoginPage({
   const { next } = await searchParams;
   const target = next && next.startsWith('/') ? next : '/account';
 
-  // Already signed in — no reason to show the form.
+  // Already signed in, no reason to show the form.
   if (await currentUser()) redirect(target);
 
   return (

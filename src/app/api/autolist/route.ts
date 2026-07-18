@@ -65,7 +65,7 @@ Hard rules:
 - Price in USD. It must sit inside the range implied by the comparable stones provided. Explain the per-carat logic in priceRationale.
 
 SEO requirements:
-- title: 60-90 chars, front-loaded with the words a buyer actually searches — species, weight, cut. No pipes or emoji.
+- title: 60-90 chars, front-loaded with the words a buyer actually searches, species, weight, cut. No pipes or emoji.
 - metaTitle: max 60 chars. metaDescription: 140-158 chars, with a concrete reason to click.
 - keywords: 10-14 real search phrases, mixing head terms ("natural emerald") and long-tail ("1ct swat emerald for engagement ring").
 - etsyTags: exactly 13 tags, each max 20 characters, no repeats.
@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
 
   const instruction = `Draft a listing for this stone.
 
-${notes ? `Cutter's notes:\n${notes}` : 'No written notes — work from the photograph.'}
+${notes ? `Cutter's notes:\n${notes}` : 'No written notes, work from the photograph.'}
 
 ${speciesRef ? `The cutter identified this as ${speciesRef.name}. Reference data:\n${JSON.stringify({
     hardness: speciesRef.hardness,
@@ -108,7 +108,7 @@ ${speciesRef ? `The cutter identified this as ${speciesRef.name}. Reference data
     birthstone: speciesRef.birthstone,
   })}` : ''}
 
-Comparable stones currently listed in this shop (use these to anchor the price — our per-carat rates, not global market rates):
+Comparable stones currently listed in this shop (use these to anchor the price, our per-carat rates, not global market rates):
 ${JSON.stringify(comparables(speciesHint), null, 1)}
 
 Valid species keys: ${allSpecies().map(([k]) => k).join(', ')}
@@ -136,7 +136,7 @@ Return JSON exactly matching:
   "warnings": string[]
 }
 
-"warnings" must list anything you assumed rather than knew — unconfirmed treatment, weight estimated from the photo, origin inferred. Be strict with yourself here; the cutter checks this field before publishing.`;
+"warnings" must list anything you assumed rather than knew, unconfirmed treatment, weight estimated from the photo, origin inferred. Be strict with yourself here; the cutter checks this field before publishing.`;
 
   const content: Anthropic.ContentBlockParam[] = [];
 
@@ -163,7 +163,7 @@ Return JSON exactly matching:
 
     const draft = extractJson<DraftListing>(text);
 
-    // The model is good but not authoritative on our own constraints — enforce
+    // The model is good but not authoritative on our own constraints, enforce
     // the Etsy tag limit here rather than trusting the prompt.
     draft.etsyTags = (draft.etsyTags ?? [])
       .map((t) => t.slice(0, 20))

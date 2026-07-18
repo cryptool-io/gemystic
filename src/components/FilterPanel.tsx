@@ -7,7 +7,7 @@ import { createPortal } from 'react-dom';
  * Filter shell for the shop.
  *
  * Below `lg`, filters open as a slide-over popup OVER the results (portalled to
- * <body>, backdrop behind) rather than expanding inline — the product grid
+ * <body>, backdrop behind) rather than expanding inline, the product grid
  * never gets pushed off screen, and closing returns you to exactly where you
  * were. Above `lg` the same children render as a plain sidebar.
  *

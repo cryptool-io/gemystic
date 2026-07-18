@@ -36,6 +36,8 @@ export function CampaignManager({
       body: JSON.stringify({
         name: f.get('name'),
         percentOff: Number(f.get('percentOff')),
+        code: String(f.get('code') || '').trim() || null,
+        freeShipping: f.get('freeShipping') === 'on',
         startsAt: f.get('startsAt'),
         endsAt: f.get('endsAt'),
         species: f.getAll('species').map(String),
@@ -91,7 +93,9 @@ export function CampaignManager({
               <div>
                 <div className="flex items-center gap-2">
                   <span className="font-display text-lg">{c.name}</span>
-                  <span className="chip-brand">−{c.percentOff}%</span>
+                  {c.percentOff > 0 && <span className="chip-brand">−{c.percentOff}%</span>}
+                  {c.code && <span className="chip">code: {c.code}</span>}
+                  {c.freeShipping && <span className="chip">free shipping</span>}
                   <span
                     className={`chip ${
                       running ? 'chip-brand' : ended ? '' : 'border-accent/40 text-accent-dark'
@@ -144,7 +148,7 @@ export function CampaignManager({
             </div>
             <div>
               <label htmlFor="c-pct" className="label mb-1.5 block">Discount %</label>
-              <input id="c-pct" name="percentOff" type="number" min={1} max={90} required className="field" />
+              <input id="c-pct" name="percentOff" type="number" min={0} max={90} required className="field" />
             </div>
             <div>
               <label htmlFor="c-start" className="label mb-1.5 block">Starts</label>
@@ -153,6 +157,22 @@ export function CampaignManager({
             <div>
               <label htmlFor="c-end" className="label mb-1.5 block">Ends (inclusive)</label>
               <input id="c-end" name="endsAt" type="date" required className="field" />
+            </div>
+            <div>
+              <label htmlFor="c-code" className="label mb-1.5 block">
+                Promo code (optional)
+              </label>
+              <input id="c-code" name="code" placeholder="SUMMER15" className="field uppercase" />
+              <p className="mt-1 text-xs text-subtle">
+                With a code, the discount only applies when the customer enters it at the
+                cart. Without one, prices drop automatically on the storefront.
+              </p>
+            </div>
+            <div className="flex items-end pb-1">
+              <label className="flex items-center gap-2 text-sm text-muted">
+                <input type="checkbox" name="freeShipping" className="accent-brand" />
+                Also grants free shipping
+              </label>
             </div>
           </div>
 

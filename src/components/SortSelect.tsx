@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 /**
  * Mobile sort control. On a phone, four sort chips cost a full row of prime
- * screen space — a native <select> costs half a row, is familiar, and gets the
+ * screen space, a native <select> costs half a row, is familiar, and gets the
  * OS picker for free.
  */
 export function SortSelect({

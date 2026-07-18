@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const from = prices.length ? Math.min(...prices) : 0;
 
   return {
-    title: `Natural ${s.name} for Sale — ${items.length} Loose Stones from $${from.toFixed(0)}`,
+    title: `Natural ${s.name} for Sale, ${items.length} Loose Stones from $${from.toFixed(0)}`,
     description: `Buy natural ${s.name.toLowerCase()} direct from our Peshawar cutting workshop. ${items.length} unique stones in stock from $${from.toFixed(0)}. ${s.priceDriver}. Full treatment disclosure on every listing.`,
     keywords: [
       `natural ${s.name.toLowerCase()}`,
@@ -103,7 +103,7 @@ export default async function CollectionPage({ params }: { params: Params }) {
           ))}
         </div>
 
-        {/* Reference block — the substance answer engines quote */}
+        {/* Reference block, the substance answer engines quote */}
         <section className="mt-16 grid gap-4 md:grid-cols-3">
           <div className="card p-6">
             <h2 className="font-display text-lg text-brand">Gemmology</h2>

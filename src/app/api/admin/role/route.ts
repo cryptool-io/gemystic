@@ -11,7 +11,7 @@ const ROLES: Role[] = ['customer', 'staff', 'admin', 'owner'];
  *
  * Guard rails, because role escalation is the most abused admin action:
  *   - only admin+ may call it at all
- *   - only the owner may grant or revoke owner or admin — staff cannot mint peers
+ *   - only the owner may grant or revoke owner or admin, staff cannot mint peers
  *   - nobody can change their own role (no self-promotion, no self-lockout)
  *   - the last owner cannot be demoted, so the site can never be left ownerless
  */

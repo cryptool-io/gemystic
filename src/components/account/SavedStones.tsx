@@ -13,7 +13,7 @@ interface SavedItem {
 }
 
 /**
- * Reads the local bag/saved store and reconciles it against live stock — a
+ * Reads the local bag/saved store and reconciles it against live stock, a
  * saved one-of-a-kind stone may have sold, and pretending otherwise would be a
  * broken promise at checkout. Persisted client-side until the DB migration.
  */

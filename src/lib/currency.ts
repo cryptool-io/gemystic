@@ -4,7 +4,7 @@ import currenciesJson from '../../data/currencies.json';
  * Multi-currency display.
  *
  * Design rule: prices are STORED in USD only. Conversion happens at the last
- * moment, in one function, from one rates table — so "all calcs must be
+ * moment, in one function, from one rates table, so "all calcs must be
  * correct" reduces to one auditable code path. Adding a currency is a new entry
  * in data/currencies.json (admin UI later), nothing else.
  */
@@ -64,11 +64,16 @@ export function detectCurrency(headers: Headers): string {
     headers.get('cf-ipcountry') ??
     headers.get('x-vercel-ip-country') ??
     headers.get('x-country-code');
-  if (country && EUR_COUNTRIES.has(country.toUpperCase())) return 'EUR';
-  if (country) return 'USD';
+  if (country) {
+    const c = country.toUpperCase();
+    if (EUR_COUNTRIES.has(c)) return 'EUR';
+    if (c === 'PK') return 'PKR';
+    return 'USD';
+  }
 
   const lang = headers.get('accept-language') ?? '';
   const region = lang.match(/[a-z]{2}-([A-Z]{2})/)?.[1];
   if (region && EUR_COUNTRIES.has(region)) return 'EUR';
+  if (region === 'PK') return 'PKR';
   return DEFAULT_CURRENCY;
 }

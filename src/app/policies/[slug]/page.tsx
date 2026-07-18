@@ -16,14 +16,13 @@ interface Policy {
 }
 
 /**
- * Policy copy is written to be genuinely informative rather than defensive —
- * international gemstone buyers have real questions about customs, insurance and
+ * Policy copy is written to be genuinely informative rather than defensive, * international gemstone buyers have real questions about customs, insurance and
  * what happens when a stone looks different in person. These pages answer them.
  */
 const POLICIES: Record<string, Policy> = {
   shipping: {
     title: 'Shipping & Delivery',
-    metaTitle: 'Shipping & Delivery — Worldwide Gemstone Shipping',
+    metaTitle: 'Shipping & Delivery. Worldwide Gemstone Shipping',
     metaDescription:
       'Free worldwide shipping over $500, fully tracked and insured from Peshawar. Delivery times, customs duties and import VAT explained by destination.',
     intro:
@@ -32,7 +31,7 @@ const POLICIES: Record<string, Policy> = {
       {
         h: 'Cost and free shipping',
         p: [
-          `Shipping is free worldwide on orders over ${SITE.policy.freeShippingOver} US dollars. Below that, a flat insured rate is calculated at checkout based on destination — typically $18 to $32.`,
+          `Shipping is free worldwide on orders over ${SITE.policy.freeShippingOver} US dollars. Below that, a flat insured rate is calculated at checkout based on destination, typically $18 to $32.`,
           'Loose stones ship in sealed gem jars inside a padded box. Jewellery ships in a presentation box. Mineral specimens are packed individually in foam, since a bruised termination destroys most of a specimen\'s value.',
         ],
       },
@@ -48,9 +47,9 @@ const POLICIES: Record<string, Policy> = {
         p: [
           'Prices exclude destination taxes. What you owe on arrival depends entirely on where you are, and we would rather you knew before ordering than be surprised by the courier.',
           'United States: loose unmounted gemstones enter duty-free under HTS heading 7103, and there is no federal import VAT. Most US buyers pay nothing on arrival.',
-          'European Union: gemstones are duty-free, but import VAT applies at your national rate — commonly 19 to 25 percent — and the courier will collect it before delivery.',
+          'European Union: gemstones are duty-free, but import VAT applies at your national rate, commonly 19 to 25 percent, and the courier will collect it before delivery.',
           'United Kingdom: duty-free under the UK Global Tariff, with import VAT at 20 percent above the consignment threshold.',
-          'Elsewhere: duty and tax vary. We declare every parcel accurately at its true value. We will not under-declare a shipment or mark an order as a gift — it is customs fraud, it voids the insurance, and it leaves you unprotected if the parcel goes missing.',
+          'Elsewhere: duty and tax vary. We declare every parcel accurately at its true value. We will not under-declare a shipment or mark an order as a gift, it is customs fraud, it voids the insurance, and it leaves you unprotected if the parcel goes missing.',
         ],
       },
     ],
@@ -65,14 +64,14 @@ const POLICIES: Record<string, Policy> = {
       ],
       [
         'Is my parcel insured?',
-        'Yes, every shipment is insured for its full value at no extra cost. If a parcel is lost or damaged in transit, you are refunded in full or the piece is replaced where possible — though with one-of-a-kind stones, replacement usually is not.',
+        'Yes, every shipment is insured for its full value at no extra cost. If a parcel is lost or damaged in transit, you are refunded in full or the piece is replaced where possible, though with one-of-a-kind stones, replacement usually is not.',
       ],
     ],
   },
 
   returns: {
     title: 'Refunds & Returns',
-    metaTitle: 'Refunds & Returns — 30-Day Gemstone Return Policy',
+    metaTitle: 'Refunds & Returns, 30-Day Gemstone Return Policy',
     metaDescription:
       '30-day returns on all gemstones and jewellery. How to return, what is excluded, and what we do if a stone does not match its description.',
     intro:
@@ -89,7 +88,7 @@ const POLICIES: Record<string, Policy> = {
       {
         h: 'If a stone was misdescribed',
         p: [
-          'If a stone differs materially from its listing — wrong weight, undisclosed treatment, a fracture not shown in the photographs — that is our error, not a change of mind. We pay return shipping both ways and refund in full, or replace the stone if you would rather.',
+          'If a stone differs materially from its listing, wrong weight, undisclosed treatment, a fracture not shown in the photographs, that is our error, not a change of mind. We pay return shipping both ways and refund in full, or replace the stone if you would rather.',
           'Colour is the one genuine grey area. Every stone is photographed under daylight-balanced light without retouching, but gems shift under warm indoor lighting, and screens vary. A stone that looks different under your kitchen bulb has not been misdescribed. If you are unsure, ask for a video before ordering.',
         ],
       },
@@ -109,7 +108,7 @@ const POLICIES: Record<string, Policy> = {
       ],
       [
         'Who pays return shipping?',
-        'The buyer, for a change of mind. We pay both ways if the stone was misdescribed — wrong weight, undisclosed treatment, or damage not shown in the listing photographs.',
+        'The buyer, for a change of mind. We pay both ways if the stone was misdescribed, wrong weight, undisclosed treatment, or damage not shown in the listing photographs.',
       ],
       [
         'What if the colour looks different than the photos?',

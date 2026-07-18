@@ -18,7 +18,7 @@ What you are:
 Rules:
 - ALWAYS call search_catalog before recommending or pricing anything. Never guess at what is in stock or what it costs.
 - Prices are in USD. Our catalogue runs from $${stats.min.toFixed(0)} to $${stats.max.toFixed(0)}.
-- Every stone is a single unique piece. Once sold, it is gone — there is no "another one like it".
+- Every stone is a single unique piece. Once sold, it is gone, there is no "another one like it".
 - Use gem_facts for gemmological questions so your numbers are ours, not remembered approximations.
 - For durability questions, lead with the practical answer: Mohs hardness plus whether the stone has cleavage, and what that means for daily wear.
 - Do not give investment advice or promise that a stone will appreciate.
@@ -125,7 +125,7 @@ export async function POST(req: NextRequest) {
   if (!hasApiKey()) {
     return NextResponse.json({
       error:
-        'The assistant needs an Anthropic API key. Add ANTHROPIC_API_KEY to .env.local and restart the dev server — everything else on the site works without it.',
+        'The assistant needs an Anthropic API key. Add ANTHROPIC_API_KEY to .env.local and restart the dev server, everything else on the site works without it.',
     });
   }
 
@@ -186,7 +186,7 @@ export async function POST(req: NextRequest) {
         .join('\n')
         .trim();
 
-      // Only show cards for stones the reply actually names — a broad search can
+      // Only show cards for stones the reply actually names, a broad search can
       // surface ten stones while the answer discusses two.
       const mentioned = [...surfaced.values()].filter(
         (p) =>
@@ -208,7 +208,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({
-      reply: 'That turned into a longer search than expected — could you narrow it down a little?',
+      reply: 'That turned into a longer search than expected, could you narrow it down a little?',
     });
   } catch (err) {
     console.error('[chat]', err);

@@ -8,7 +8,7 @@ import type { SessionUser } from '@/lib/auth/session';
 /**
  * Header account affordance. Signed-out shows a plain "Sign in" link; signed-in
  * shows an avatar button with a dropdown. Kept a client component only for the
- * dropdown open/close and logout call — the signed-in state itself comes from
+ * dropdown open/close and logout call, the signed-in state itself comes from
  * the server via props, so there is no auth flicker on load.
  */
 export function AccountMenu({ user }: { user: SessionUser | null }) {

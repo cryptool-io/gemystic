@@ -7,12 +7,11 @@ import { optionalRequire, MissingDependencyError } from './services/optional';
  * The platform's AI features run against whichever providers are configured,
  * in order, falling through on failure:
  *
- *   1. `anthropic`  — direct API            (ANTHROPIC_API_KEY)
- *   2. `bedrock`    — AWS Bedrock backup    (BEDROCK_MODEL_ID + AWS credentials;
+ *   1. `anthropic`, direct API            (ANTHROPIC_API_KEY)
+ *   2. `bedrock`. AWS Bedrock backup    (BEDROCK_MODEL_ID + AWS credentials;
  *                     npm i @aws-sdk/client-bedrock-runtime)
- *   3. `openai`     — any OpenAI-compatible endpoint, which is how "free models"
- *                     plug in: Groq, OpenRouter's free tier, a local Ollama —
- *                     (AI_OPENAI_BASE_URL, AI_OPENAI_API_KEY, AI_OPENAI_MODEL)
+ *   3. `openai`, any OpenAI-compatible endpoint, which is how "free models"
+ *                     plug in: Groq, OpenRouter's free tier, a local Ollama, *                     (AI_OPENAI_BASE_URL, AI_OPENAI_API_KEY, AI_OPENAI_MODEL)
  *
  * Order is set with AI_PROVIDER_CHAIN, e.g. `openai,bedrock` to run free models
  * first with Bedrock as the paid backup. Default: anthropic,bedrock,openai.
@@ -20,7 +19,7 @@ import { optionalRequire, MissingDependencyError } from './services/optional';
  * Capability honesty: the customer-chat route uses tool calls and the
  * auto-lister sends images. Anthropic and Bedrock (running Anthropic models)
  * support both; a generic OpenAI-compatible endpoint is only offered plain-text
- * requests — the chain SKIPS a provider that cannot handle the request rather
+ * requests, the chain SKIPS a provider that cannot handle the request rather
  * than sending it something it will mangle.
  */
 
@@ -63,7 +62,7 @@ export function anthropic(): Anthropic {
 
 export class MissingKeyError extends Error {
   constructor() {
-    super('No AI provider configured — set ANTHROPIC_API_KEY, BEDROCK_MODEL_ID or AI_OPENAI_* in .env.local');
+    super('No AI provider configured, set ANTHROPIC_API_KEY, BEDROCK_MODEL_ID or AI_OPENAI_* in .env.local');
     this.name = 'MissingKeyError';
   }
 }
@@ -113,7 +112,7 @@ export async function aiMessage(
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       errors.push(`${provider}: ${msg}`);
-      console.error(`[ai] ${provider} failed, trying next provider —`, msg);
+      console.error(`[ai] ${provider} failed, trying next provider ,`, msg);
     }
   }
 
@@ -157,7 +156,7 @@ async function bedrockMessage(
 }
 
 /**
- * Generic OpenAI-compatible /chat/completions — the adapter for free models.
+ * Generic OpenAI-compatible /chat/completions, the adapter for free models.
  * Text-only by contract (the chain never routes tool/image requests here).
  * Translates request and response so callers still see the Anthropic shape.
  */

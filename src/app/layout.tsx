@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Fraunces } from 'next/font/google';
+import { Inter, Sora } from 'next/font/google';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import './globals.css';
@@ -23,8 +23,8 @@ import { Analytics } from '@/components/Analytics';
 import { CURRENCY_COOKIE, detectCurrency, isSupported } from '@/lib/currency';
 
 /**
- * Type pairing: Fraunces — a high-contrast editorial serif with an optical axis,
- * built for luxury headlines — over Inter for UI and body. Self-hosted by
+ * Type pairing: Fraunces, a high-contrast editorial serif with an optical axis,
+ * built for luxury headlines, over Inter for UI and body. Self-hosted by
  * next/font. Because every component reads the semantic font tokens
  * (font-display / font-sans), swapping the brand typeface is exactly this block.
  */
@@ -33,14 +33,16 @@ const inter = Inter({
   variable: '--font-plex',
   display: 'swap',
 });
-const fraunces = Fraunces({
+/**
+ * Display face is now Sora: a modern geometric sans with a quiet luxury feel,
+ * replacing the serif the owner disliked. Because every heading reads the
+ * font-display token, this block is the entire change, nothing else moves.
+ */
+const sora = Sora({
   subsets: ['latin'],
-  weight: 'variable',
+  weight: ['400', '500', '600', '700'],
   variable: '--font-display',
   display: 'swap',
-  // Optical-size axis: Fraunces renders softer at text sizes, sharper at
-  // display sizes — the point of choosing it.
-  axes: ['opsz'],
 });
 
 export const viewport: Viewport = {
@@ -54,7 +56,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: 'Gemystic Gems — Natural Gemstones, Hand-Cut in Pakistan',
+    default: 'Gemystic Gems. Natural Gemstones, Hand-Cut in Pakistan',
     template: '%s | Gemystic Gems',
   },
   description: SITE.description,
@@ -66,7 +68,7 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: SITE.name,
     url: SITE.url,
-    title: 'Gemystic Gems — Natural Gemstones, Hand-Cut in Pakistan',
+    title: 'Gemystic Gems. Natural Gemstones, Hand-Cut in Pakistan',
     description: SITE.description,
   },
   twitter: { card: 'summary_large_image' },
@@ -89,7 +91,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     : detectCurrency(await headers());
 
   return (
-    <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
+    <html lang="en" className={`${inter.variable} ${sora.variable}`}>
       <body>
         <CurrencyProvider initial={currency}>
         <Analytics />
@@ -145,7 +147,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <Logo />
               <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted">
                 Natural cut and uncut gemstones, sourced and hand-cut in Peshawar, Pakistan.
-                Every stone is a single piece — what you see is the stone you receive.
+                Every stone is a single piece, what you see is the stone you receive.
               </p>
 
               <dl className="mt-5 space-y-2 text-sm">
@@ -207,6 +209,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <FooterCol
               title="Help"
               links={[
+                ['Customer help', '/help'],
                 ['Contact us', '/contact'],
                 ['Customer reviews', '/reviews'],
                 ['Shipping & delivery', '/policies/shipping'],
@@ -230,7 +233,23 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </div>
           </div>
 
-          <div className="wrap mt-10 border-t border-line pt-6 text-xs text-subtle">
+          {/* Accepted payment methods, the trust strip the current site shows */}
+          <div className="wrap mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
+            <div className="flex flex-wrap items-center gap-2" aria-label="Accepted payment methods">
+              <span className="text-xs text-muted">Secure payment:</span>
+              {['VISA', 'Mastercard', 'Maestro', 'PayPal', 'Discover'].map((m) => (
+                <span
+                  key={m}
+                  className="rounded border border-line bg-surface px-2.5 py-1 text-[11px] font-semibold tracking-wide text-fg"
+                >
+                  {m}
+                </span>
+              ))}
+            </div>
+            <span className="text-xs text-subtle">SSL encrypted checkout</span>
+          </div>
+
+          <div className="wrap mt-6 border-t border-line pt-6 text-xs text-subtle">
             © {new Date().getFullYear()} Gemystic Gems · Peshawar, Pakistan ·
             Every stone photographed as received, never stock imagery.
           </div>

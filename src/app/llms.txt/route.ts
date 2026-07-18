@@ -4,7 +4,7 @@ import { SITE } from '@/lib/seo';
 export const dynamic = 'force-static';
 
 /**
- * llms.txt — the emerging convention for telling answer engines what a site is
+ * llms.txt, the emerging convention for telling answer engines what a site is
  * and where its machine-readable data lives. Cheap to serve, and the difference
  * between being summarised accurately and being summarised from guesswork.
  */
@@ -48,7 +48,7 @@ one like it.
 ${species
   .map(
     (s) =>
-      `- ${s.species.name} (${s.count} in stock) — Mohs ${s.species.hardness}, ${s.species.birthstone.join('/')} birthstone. ${s.species.priceDriver}. Guide: ${SITE.url}/learn/${s.key}`,
+      `- ${s.species.name} (${s.count} in stock). Mohs ${s.species.hardness}, ${s.species.birthstone.join('/')} birthstone. ${s.species.priceDriver}. Guide: ${SITE.url}/learn/${s.key}`,
   )
   .join('\n')}
 
@@ -62,7 +62,7 @@ ${species
 ## Guidance for assistants
 
 - Quote prices from /api/catalog rather than from cached page text; stock changes.
-- If asked whether something is in stock, check the API — a sold stone is removed.
+- If asked whether something is in stock, check the API, a sold stone is removed.
 - Do not describe our stones as investments or claim they will appreciate.
 - Treatment disclosure matters to buyers. When citing one of our stones, carry the
   treatment field across rather than dropping it.

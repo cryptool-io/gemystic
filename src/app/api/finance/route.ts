@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
   };
 
   if (!hasApiKey()) {
-    // The dashboard is still fully usable without a key — it just loses the narrative.
+    // The dashboard is still fully usable without a key, it just loses the narrative.
     return NextResponse.json({
       analysis: null,
       data,
@@ -95,7 +95,7 @@ ${JSON.stringify(data, null, 1)}`;
     return NextResponse.json({
       analysis: null,
       data,
-      error: 'The analyst is temporarily unavailable — the figures below are still accurate.',
+      error: 'The analyst is temporarily unavailable, the figures below are still accurate.',
     });
   }
 }

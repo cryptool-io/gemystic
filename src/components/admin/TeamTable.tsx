@@ -17,7 +17,7 @@ const ROLES: Role[] = ['customer', 'staff', 'admin', 'owner'];
 const RANK: Record<Role, number> = { customer: 0, staff: 1, admin: 2, owner: 3 };
 
 /**
- * Team role editor. The server route is the real authority — these disabled
+ * Team role editor. The server route is the real authority, these disabled
  * states just avoid presenting an action that will be rejected. Every rule the
  * UI enforces here is also enforced server-side in /api/admin/role.
  */
@@ -92,7 +92,7 @@ export function TeamTable({
               return (
                 <tr key={row.id}>
                   <td className="p-4">
-                    <div className="font-medium text-fg">{row.fullName ?? '—'}</div>
+                    <div className="font-medium text-fg">{row.fullName ?? ','}</div>
                     <div className="text-xs text-muted">{row.email}</div>
                     {row.id === actorId && <span className="chip mt-1">You</span>}
                   </td>
@@ -135,8 +135,7 @@ export function TeamTable({
       </div>
 
       <p className="text-xs text-muted">
-        Demoting someone signs them out immediately. The last owner cannot be demoted —
-        promote a replacement first.
+        Demoting someone signs them out immediately. The last owner cannot be demoted, promote a replacement first.
       </p>
     </>
   );

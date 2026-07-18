@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
  * Liveness and readiness in one endpoint, used by the container healthcheck and
  * by whatever uptime monitor sits in front of the box.
  *
- * Readiness means the catalogue actually loaded — a process that is up but
+ * Readiness means the catalogue actually loaded, a process that is up but
  * serving an empty shop is not healthy, and a 200 here would hide that.
  */
 export async function GET() {

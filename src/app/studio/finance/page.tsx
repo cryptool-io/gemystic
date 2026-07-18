@@ -32,11 +32,11 @@ export default function FinancePage() {
         </div>
       </section>
 
-      {/* Channel economics — the case for leaving Etsy */}
+      {/* Channel economics, the case for leaving Etsy */}
       <section>
         <h2 className="font-display text-xl">Where the money goes on one sale</h2>
         <p className="mt-1.5 max-w-2xl text-sm text-muted">
-          Modelled on {median.title} at {money(median.priceUsd)} — the median-priced stone in
+          Modelled on {median.title} at {money(median.priceUsd)}, the median-priced stone in
           the catalogue.
         </p>
 
@@ -71,7 +71,7 @@ export default function FinancePage() {
 
         <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted">
           Across the whole shelf the difference is{' '}
-          <span className="text-brand">{money(summary.feeSavings)}</span> — roughly the
+          <span className="text-brand">{money(summary.feeSavings)}</span>, roughly the
           margin on {Math.round(summary.feeSavings / (summary.grossMargin / summary.units))} additional
           stones, earned without cutting a single new one. Etsy&rsquo;s fees buy discovery, so the
           honest way to read this number is as the marketing budget the direct store has to
@@ -131,7 +131,7 @@ export default function FinancePage() {
         <h2 className="font-display text-xl">Repricing candidates</h2>
         <p className="mt-1.5 max-w-2xl text-sm text-muted">
           Compared on price per carat against other stones of the same species and form.
-          A flag is a prompt to look at the stone, not an instruction — a genuinely better
+          A flag is a prompt to look at the stone, not an instruction, a genuinely better
           stone should price above its peers.
         </p>
 
@@ -165,7 +165,7 @@ export default function FinancePage() {
         <h2 className="font-display text-xl">Landed cost for buyers</h2>
         <p className="mt-1.5 max-w-2xl text-sm text-muted">
           What a customer actually pays on that same {money(median.priceUsd)} stone. Worth
-          quoting up front — surprise import VAT is a common cause of refused deliveries.
+          quoting up front, surprise import VAT is a common cause of refused deliveries.
         </p>
         <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {(['EU', 'US', 'UK', 'OTHER'] as const).map((dest) => {
