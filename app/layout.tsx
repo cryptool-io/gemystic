@@ -6,6 +6,9 @@ import './globals.css';
 import { SITE, organizationJsonLd, moneyWhole } from '@/lib/seo';
 import { JsonLd } from '@/components/JsonLd';
 import { stockedSpecies } from '@/lib/catalog';
+import { activeCurrencies } from '@/lib/currency-server';
+import { getSeoSettings } from '@/lib/seo-settings';
+import { PageTracker } from '@/components/PageTracker';
 import { categoryTree } from '@/lib/taxonomy';
 import { HelpHub } from '@/components/HelpHub';
 import { PaymentIcons } from '@/components/PaymentIcons';
@@ -50,45 +53,69 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE.url),
-  title: {
-    default: 'Gemystic Gems · Natural Gemstones, Hand-Cut in Pakistan',
-    template: '%s | Gemystic Gems',
-  },
-  description: SITE.description,
-  keywords: [
-    'natural gemstones', 'loose gemstones', 'swat emerald', 'pigeon blood ruby',
-    'buy sapphire online', 'mineral specimens', 'pakistan gemstones', 'ethically sourced gemstones',
-  ],
-  openGraph: {
-    type: 'website',
-    siteName: SITE.name,
-    url: SITE.url,
-    title: 'Gemystic Gems · Natural Gemstones, Hand-Cut in Pakistan',
-    description: SITE.description,
-  },
-  twitter: { card: 'summary_large_image' },
-  robots: { index: true, follow: true, 'max-image-preview': 'large' },
-  alternates: { canonical: '/' },
-};
+/**
+ * Built rather than declared, so the owner-editable pieces (title template,
+ * search-engine verification tokens, and the staging noindex switch) come from
+ * the SEO settings instead of needing a deploy to change.
+ */
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeoSettings();
+
+  return {
+    metadataBase: new URL(SITE.url),
+    title: {
+      default: 'Gemystic Gems · Natural Gemstones, Hand-Cut in Pakistan',
+      template: seo.titleTemplate || '%s | Gemystic Gems',
+    },
+    description: seo.defaultDescription || SITE.description,
+    keywords: [
+      'natural gemstones', 'loose gemstones', 'swat emerald', 'pigeon blood ruby',
+      'buy sapphire online', 'mineral specimens', 'pakistan gemstones', 'ethically sourced gemstones',
+    ],
+    openGraph: {
+      type: 'website',
+      siteName: SITE.name,
+      url: SITE.url,
+      title: 'Gemystic Gems · Natural Gemstones, Hand-Cut in Pakistan',
+      description: seo.defaultDescription || SITE.description,
+    },
+    twitter: { card: 'summary_large_image' },
+    robots: seo.noindexEverything
+      ? { index: false, follow: false }
+      : { index: true, follow: true, 'max-image-preview': 'large' },
+    verification: {
+      ...(seo.googleSiteVerification ? { google: seo.googleSiteVerification } : {}),
+      ...(seo.bingSiteVerification ? { other: { 'msvalidate.01': seo.bingSiteVerification } } : {}),
+    },
+    alternates: { canonical: '/' },
+  };
+}
 
 /**
  * Static by design: no cookies(), headers() or session reads here. Currency
  * resolves client-side in CurrencyProvider and the signed-in state via
  * /api/auth/me in AccountMenu, so every catalogue page can prerender.
  */
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const species = stockedSpecies();
-  const tree = categoryTree(
+  // Awaiting a database read does not opt the layout out of prerendering the
+  // way cookies() or headers() would: the nav is resolved at build time and
+  // refreshed by the revalidate calls the category editor issues.
+  const tree = await categoryTree(
     Object.fromEntries(species.map((s) => [s.key, s.species.name])),
   );
+  // Owner-managed rates, merged with the shipped table, handed to the client
+  // once so every price formats from the same set.
+  const currencies = await activeCurrencies();
 
   return (
     <html lang="en" className={`${inter.variable} ${sora.variable}`}>
       <body>
-        <CurrencyProvider>
+        <CurrencyProvider currencies={currencies}>
         <Analytics />
+        <Suspense fallback={null}>
+          <PageTracker />
+        </Suspense>
         <JsonLd data={organizationJsonLd()} />
 
         <a
@@ -217,6 +244,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div className="label mb-3">For machines</div>
               <ul className="space-y-2 text-sm text-muted">
                 <li><a href="/llms.txt" className="hover:text-brand-dark">llms.txt</a></li>
+                {/* A JSON endpoint, not a page: next/link would prefetch it as
+                    an RSC payload. The rule only fires because the redirect
+                    catch-all makes every path look like a route. */}
+                {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
                 <li><a href="/api/catalog" className="hover:text-brand-dark">Catalogue API</a></li>
                 <li><a href="/sitemap.xml" className="hover:text-brand-dark">Sitemap</a></li>
               </ul>

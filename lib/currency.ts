@@ -27,25 +27,48 @@ export const RATES_UPDATED_AT = file.ratesUpdatedAt;
 export const DEFAULT_CURRENCY = 'USD';
 export const CURRENCY_COOKIE = 'gem_currency';
 
-export function isSupported(code: string | undefined | null): code is string {
-  return !!code && code in CURRENCIES;
+export type CurrencyMap = Record<string, CurrencyDef>;
+
+export function isSupported(
+  code: string | undefined | null,
+  rates: CurrencyMap = CURRENCIES,
+): code is string {
+  return !!code && code in rates;
 }
 
 /**
  * Convert a USD amount for display. Half-up rounding to 2dp AFTER the multiply,
  * never on intermediates.
+ *
+ * `rates` defaults to the shipped table; the provider passes the owner-edited
+ * set from the database when one exists. Either way this stays the single
+ * conversion path, so an added currency cannot introduce a second rounding rule.
  */
-export function convert(usd: number, code: string): number {
-  const def = CURRENCIES[code] ?? CURRENCIES[DEFAULT_CURRENCY];
+export function convert(usd: number, code: string, rates: CurrencyMap = CURRENCIES): number {
+  const def = rates[code] ?? rates[DEFAULT_CURRENCY] ?? CURRENCIES[DEFAULT_CURRENCY];
   return Math.round(usd * def.rate * 100) / 100;
 }
 
-export function formatMoney(usd: number, code: string): string {
-  const def = CURRENCIES[code] ?? CURRENCIES[DEFAULT_CURRENCY];
+/**
+ * Currencies whose smallest unit is not worth showing. A rupee price with two
+ * decimals reads as a mistake to a Pakistani buyer: nothing costs Rs 284.36.
+ */
+const WHOLE_UNIT_CURRENCIES = new Set(['PKR', 'JPY', 'KRW', 'VND', 'IDR']);
+
+export function formatMoney(
+  usd: number,
+  code: string,
+  rates: CurrencyMap = CURRENCIES,
+): string {
+  const resolved = code in rates ? code : DEFAULT_CURRENCY;
+  const def = rates[resolved] ?? CURRENCIES[DEFAULT_CURRENCY];
+  const whole = WHOLE_UNIT_CURRENCIES.has(resolved);
+
   return new Intl.NumberFormat(def.locale, {
     style: 'currency',
-    currency: code in CURRENCIES ? code : DEFAULT_CURRENCY,
-  }).format(convert(usd, code));
+    currency: resolved,
+    ...(whole ? { minimumFractionDigits: 0, maximumFractionDigits: 0 } : {}),
+  }).format(convert(usd, code, rates));
 }
 
 /**

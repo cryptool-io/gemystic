@@ -100,9 +100,26 @@ Prereq: none (B1 completed: schema is migrated and live on native Postgres 17).
    roles work off the DB, test user landed in users table with role customer,
    JSON file untouched; reset email lands in var/outbox in dev.
 
-### M2: Checkout + orders (the revenue milestone)
-Prereq: M1, B7. ~2 sessions. Schema is fully designed, read `orders`/`order_items`/
-`payments` in prisma/schema.prisma first.
+### M2: Checkout + orders (BUILT 19 July 2026)
+
+Done and verified end to end. What exists now:
+checkout with name/address/phone and two delivery profiles; server-side pricing
+(lib/orders/store.ts priceCart is the only place money is calculated); orders
+with snapshotted items; a demo payment provider (lib/payments.ts) with success
+and decline cards and idempotent capture; stones marked sold on payment;
+confirmation and team emails, all logged to email_log; print-ready invoice;
+admin order pipeline with manual payment confirmation, prepare, dispatch and
+deliver, each emailing the customer; commercial invoice, packing list and
+certificate of origin; review request on delivery. `npm run seed:order` makes a
+demo order for walking the flow.
+
+**The one thing left here is the owner's**: Stripe and PayPal accounts. Swapping
+the demo provider for real rails means replacing the body of `demoCharge` with a
+PaymentIntent confirmation and moving the capture into a signed webhook; the
+order, payment row, stock, invoice and email side effects all stay exactly as
+they are, which is why they were built behind that boundary.
+
+Original plan kept below for the Stripe and PayPal steps:
 1. Server cart: promote localStorage cart to a server cart on login (keep guest flow).
 2. Checkout page: address (reuse AddressBook fields) → order draft (snapshot
    title/specs/image per order_item; copy address JSON) → payment.
@@ -145,31 +162,37 @@ Prereq: M1 (+ owner shares a sheet + service-account creds). ~1 session.
 4. Acceptance: a test sheet round-trips: add row → product draft appears; edit →
    updates; bad row → visible error, run marked partial.
 
-### M5: First-party analytics + admin dashboards
-Prereq: M1. ~1 session.
-1. Middleware/edge-safe tracker: anon cookie, visitor_sessions + page_views inserts
-   (batched), UTM capture on first touch, channel classification incl. AI referrers
-   (chat.openai, perplexity).
-2. order_attribution written at checkout (M2 hook).
-3. Replace /admin/analytics Pending page: traffic by channel, top products
-   views→sale, revenue by source, search terms.
-4. Acceptance: "where do buyers come from" answerable from admin with real rows.
+### M5: First-party analytics (BUILT 19 July 2026)
+Tracker at /api/track plus components/PageTracker.tsx writes visitor_sessions
+and page_views: anonymous browser id in localStorage, UTM capture, channel
+classification including AI assistants, admin and studio paths excluded.
+/admin/analytics reports visitors, page views, channel mix, most viewed pages
+and stones. Verified: a Google referrer classified as organic.
 
-### M6: Admin CRUD (self-service everything)
-Prereq: M1. ~1-2 sessions.
-1. Categories: move taxonomy.json → categories table (shape identical); CRUD UI on
-   /admin/categories (create/edit/reorder/SEO fields); nav reads DB.
-2. Products: CRUD with image upload through lib/services/storage.ts (presigned
-   pattern from Trust-Agent lib/object-storage.ts when on S3); draft→active flow;
-   AI auto-list output lands as draft with ai_reviewed_at gate.
-3. **Image ownership**: migration script downloads all i.etsystatic.com images into
-   storage (local or S3), rewrites catalog URLs. Do this before Etsy ever breaks
-   hotlinks.
-4. SEO settings + redirects tables → editable /admin/seo; wire redirects into
-   middleware (also solves the WordPress /product-category/* 301 map, B5 followup).
-5. Currency admin: rates editor writing the currencies table (replaces JSON).
-6. Acceptance: owner adds a category and a product with photos start-to-finish
-   without touching code.
+STILL OPEN here: order_attribution (joining a buyer's session to their order),
+and on-site search terms. Both are additive to what exists.
+
+### M6: Admin CRUD (mostly BUILT 19 July 2026)
+1. DONE: categories are editable and creatable at /admin/categories, stored as
+   overrides over data/taxonomy.json (CategoryOverride). New categories take
+   stock through formMapping. Nav and shop read the merged set.
+2. PARTLY DONE: listings are fully editable at /admin/listings/[slug] (copy,
+   price, treatment, per-stone SEO, Etsy tag set, channel, status, AI draft),
+   stored as ListingOverride so `npm run normalize` cannot erase them.
+   STILL OPEN: creating a brand new product from scratch and image upload.
+3. STILL OPEN, and now the most valuable remaining infrastructure job:
+   **image ownership**. Every product photo is still hotlinked from
+   i.etsystatic.com or gemysticgems.com. The legacy WordPress site is
+   compromised (see the local SECURITY file); if it is cleaned, taken down or
+   its media rewritten, those images break. Download all of them into
+   lib/services/storage.ts (local or S3) and rewrite the URLs.
+4. DONE: /admin/seo edits global SEO and the redirect map; redirects resolve
+   through the app/[...path] catch-all rather than middleware, because
+   middleware runs on the edge runtime and cannot reach Postgres.
+5. DONE: /admin/currencies edits rates and adds currencies (CurrencyRate),
+   merged over the shipped table and handed to the client once per request.
+6. Acceptance for what remains: the owner adds a product with photos
+   start-to-finish without touching code.
 
 ### M7: SEO/AEO execution (docs/SEO-STRATEGY.md is the source)
 No prereq, parallelisable. ~1-2 sessions.

@@ -93,8 +93,25 @@ tag set, an AI draft button, and a per-listing Etsy sync. Edits are stored as
 overrides layered over the generated catalogue, so `npm run normalize` no
 longer erases them, and they appear on the storefront immediately.
 
-Still open below: C1 category CRUD, C4 analytics dashboards, C5 currency admin.
-The remaining detail in each item stands.
+C1 (categories) is done too: /admin/categories can rename, reorder, re-map,
+hide and create categories, stored as overrides over data/taxonomy.json. A new
+category takes stock through its form mapping rather than per-stone tagging, so
+it fills itself. Verified: a rename appeared on /shop and the nav, then
+restored.
+
+C5 (currencies) is done: /admin/currencies edits rates and adds currencies,
+stored in the database and merged over the shipped table, handed to the client
+once per request so every price formats from the same set. Rupees now display
+as whole rupees (no paisa), covered by a test.
+
+C3 (SEO) and C4 (analytics) are done as well: /admin/seo edits global SEO,
+holds the Google and Bing verification tokens (which the site then serves as
+meta tags) and manages the redirect map for the WordPress migration;
+/admin/analytics reports first-party traffic, channel mix including AI
+assistants, and the most viewed pages and stones.
+
+Section C is therefore complete. What remains of the original list is the
+owner-blocked items in section D and the SEO gap pages in section E.
 
 ### C1. Category management
 > "I should be able to add categories myself inside an admin portal"

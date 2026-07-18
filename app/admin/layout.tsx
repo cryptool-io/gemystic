@@ -24,6 +24,7 @@ const PIPELINE: [string, string, string][] = [
 const TOOLS: [string, string][] = [
   ['/admin', 'Overview'],
   ['/admin/categories', 'Categories'],
+  ['/admin/currencies', 'Currencies'],
   ['/admin/etsy-sync', 'Etsy sync'],
   ['/admin/campaigns', 'Discounts'],
   ['/admin/market', 'Market check'],

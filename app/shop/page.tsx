@@ -58,8 +58,8 @@ export default async function ShopPage({ searchParams }: { searchParams: SearchP
     originCounts.set(key, (originCounts.get(key) ?? 0) + 1);
   }
 
-  const categories = allCategories();
-  const activeCategory = sp.category ? getCategory(sp.category) : undefined;
+  const categories = await allCategories();
+  const activeCategory = sp.category ? await getCategory(sp.category) : undefined;
   const activeSpecies = sp.species
     ? species.find((s) => s.key === sp.species)?.species.name
     : undefined;

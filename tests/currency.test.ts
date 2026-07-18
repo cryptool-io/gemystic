@@ -46,3 +46,11 @@ test('detectCurrency falls back to Accept-Language region, then USD', () => {
   assert.equal(detectCurrency(new Headers({ 'accept-language': 'fr-FR,fr;q=0.9' })), 'EUR');
   assert.equal(detectCurrency(new Headers()), DEFAULT_CURRENCY);
 });
+
+test('rupees are shown as whole units, dollars keep their cents', () => {
+  const pkr = formatMoney(100, 'PKR');
+  assert.ok(!pkr.includes('.'), `PKR should have no decimals, got ${pkr}`);
+
+  const usd = formatMoney(100.5, 'USD');
+  assert.ok(usd.includes('.'), `USD should keep cents, got ${usd}`);
+});

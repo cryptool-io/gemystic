@@ -40,7 +40,7 @@ export function CartContents() {
   const [promoInput, setPromoInput] = useState('');
   const [promoError, setPromoError] = useState<string | null>(null);
   const [promoBusy, setPromoBusy] = useState(false);
-  const { currency } = useCurrency();
+  const { currency, currencies } = useCurrency();
 
   useEffect(() => {
     let cancelled = false;
@@ -179,7 +179,7 @@ export function CartContents() {
               <Link href={`/gem/${item.slug}`} className="block truncate text-sm font-medium text-fg hover:text-brand">
                 {item.title}
               </Link>
-              <div className="mt-0.5 text-sm text-brand">{formatMoney(item.price, currency)}</div>
+              <div className="mt-0.5 text-sm text-brand">{formatMoney(item.price, currency, currencies)}</div>
               <div className="mt-0.5 text-xs text-muted">Ships from Pakistan</div>
               {item.available === false && (
                 <span className="chip mt-1 border-accent/40 text-accent-dark">
@@ -234,7 +234,7 @@ export function CartContents() {
             Subtotal ({availableItems.length} {availableItems.length === 1 ? 'stone' : 'stones'})
           </span>
           <span className={discountUsd > 0 ? 'text-muted' : 'font-display text-xl text-brand'}>
-            {formatMoney(subtotalUsd, currency)}
+            {formatMoney(subtotalUsd, currency, currencies)}
           </span>
         </div>
 
@@ -242,11 +242,11 @@ export function CartContents() {
           <>
             <div className="mt-1 flex items-center justify-between text-sm">
               <span className="text-muted">Discount ({promo?.code})</span>
-              <span className="text-brand">−{formatMoney(discountUsd, currency)}</span>
+              <span className="text-brand">−{formatMoney(discountUsd, currency, currencies)}</span>
             </div>
             <div className="mt-2 flex items-center justify-between border-t border-line pt-2 text-sm">
               <span className="text-muted">Total</span>
-              <span className="font-display text-xl text-brand">{formatMoney(totalUsd, currency)}</span>
+              <span className="font-display text-xl text-brand">{formatMoney(totalUsd, currency, currencies)}</span>
             </div>
           </>
         )}
@@ -254,7 +254,7 @@ export function CartContents() {
         <p className="mt-2 text-xs text-muted">
           {freeShipping
             ? 'Qualifies for free insured worldwide shipping.'
-            : `Free worldwide shipping from ${formatMoney(SITE.policy.freeShippingOver, currency)}. Below that, insured shipping is calculated at checkout.`}
+            : `Free worldwide shipping from ${formatMoney(SITE.policy.freeShippingOver, currency, currencies)}. Below that, insured shipping is calculated at checkout.`}
         </p>
 
         <div className="mt-4 space-y-2">
@@ -265,7 +265,7 @@ export function CartContents() {
               before committing four figures to a stone they cannot hold. */}
           <a
             href={`${SITE.whatsapp}?text=${encodeURIComponent(
-              `Hello! I'd like to buy: ${availableItems.map((i) => i.title).join(', ')} (total ${formatMoney(totalUsd, currency)}${promo ? `, code ${promo.code}` : ''})`,
+              `Hello! I'd like to buy: ${availableItems.map((i) => i.title).join(', ')} (total ${formatMoney(totalUsd, currency, currencies)}${promo ? `, code ${promo.code}` : ''})`,
             )}`}
             target="_blank"
             rel="noopener noreferrer"

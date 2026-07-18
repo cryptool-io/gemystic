@@ -40,7 +40,7 @@ export function CheckoutForm({
   defaults: { email: string; fullName: string } | null;
 }) {
   const router = useRouter();
-  const { currency } = useCurrency();
+  const { currency, currencies } = useCurrency();
 
   const [slugs, setSlugs] = useState<string[]>([]);
   const [promoCode, setPromoCode] = useState<string | null>(null);
@@ -174,7 +174,7 @@ export function CheckoutForm({
                     <span className="block text-xs text-muted">{opt?.days ?? ''}</span>
                   </span>
                   <span className="text-sm text-brand">
-                    {free ? 'Free' : formatMoney(opt?.usd ?? 0, currency)}
+                    {free ? 'Free' : formatMoney(opt?.usd ?? 0, currency, currencies)}
                   </span>
                 </label>
               );
@@ -203,7 +203,7 @@ export function CheckoutForm({
                 {quote.lines.map((l) => (
                   <li key={l.slug} className="flex items-baseline justify-between gap-3 text-sm">
                     <span className="min-w-0 flex-1 truncate text-muted">{l.title}</span>
-                    <span className="text-fg">{formatMoney(l.unitPrice, currency)}</span>
+                    <span className="text-fg">{formatMoney(l.unitPrice, currency, currencies)}</span>
                   </li>
                 ))}
               </ul>
@@ -216,22 +216,22 @@ export function CheckoutForm({
               )}
 
               <dl className="mt-4 space-y-1.5 border-t border-line pt-3 text-sm">
-                <Row label="Subtotal" value={formatMoney(quote.subtotal, currency)} />
+                <Row label="Subtotal" value={formatMoney(quote.subtotal, currency, currencies)} />
                 {quote.discount > 0 && (
                   <Row
                     label={`Discount${quote.promoName ? ` (${quote.promoName})` : ''}`}
-                    value={`−${formatMoney(quote.discount, currency)}`}
+                    value={`−${formatMoney(quote.discount, currency, currencies)}`}
                     accent
                   />
                 )}
                 <Row
                   label="Shipping"
-                  value={quote.shipping === 0 ? 'Free' : formatMoney(quote.shipping, currency)}
+                  value={quote.shipping === 0 ? 'Free' : formatMoney(quote.shipping, currency, currencies)}
                 />
                 <div className="flex items-baseline justify-between border-t border-line pt-2">
                   <dt className="text-muted">Total</dt>
                   <dd className="font-display text-xl text-brand">
-                    {formatMoney(quote.grandTotal, currency)}
+                    {formatMoney(quote.grandTotal, currency, currencies)}
                   </dd>
                 </div>
               </dl>

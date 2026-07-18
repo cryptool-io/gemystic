@@ -10,7 +10,7 @@ export default async function CampaignsPage() {
   await requireRole('admin', '/admin/campaigns');
   const campaigns = await allCampaigns();
   const species = stockedSpecies().map((s) => ({ key: s.key, name: s.species.name }));
-  const categories = allCategories().map((c) => ({ slug: c.slug, name: c.name }));
+  const categories = (await allCategories()).map((c) => ({ slug: c.slug, name: c.name }));
 
   return (
     <div className="space-y-6">

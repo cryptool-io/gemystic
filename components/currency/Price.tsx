@@ -20,14 +20,14 @@ export function Price({
   className?: string;
   suffix?: string;
 }) {
-  const { currency } = useCurrency();
+  const { currency, currencies } = useCurrency();
 
   return (
     <span className={className}>
       {original !== null && original > usd && (
-        <s className="mr-1.5 text-sm font-normal text-subtle">{formatMoney(original, currency)}</s>
+        <s className="mr-1.5 text-sm font-normal text-subtle">{formatMoney(original, currency, currencies)}</s>
       )}
-      {formatMoney(usd, currency)}
+      {formatMoney(usd, currency, currencies)}
       {suffix && <span className="ml-1 text-[11px] font-normal text-muted">{suffix}</span>}
     </span>
   );
@@ -35,7 +35,7 @@ export function Price({
 
 /** Per-carat helper, converts the rate, not just the total, so units agree. */
 export function PricePerCarat({ usd, carat }: { usd: number; carat: number }) {
-  const { currency } = useCurrency();
+  const { currency, currencies } = useCurrency();
   if (!carat) return null;
-  return <span className="text-[11px] text-muted">{formatMoney(usd / carat, currency)}/ct</span>;
+  return <span className="text-[11px] text-muted">{formatMoney(usd / carat, currency, currencies)}/ct</span>;
 }

@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { CURRENCIES } from '@/lib/currency';
 import { useCurrency } from './CurrencyProvider';
 
 /**
@@ -10,7 +9,7 @@ import { useCurrency } from './CurrencyProvider';
  * expectation and gives the i18n rollout a home.
  */
 export function LocaleSwitcher() {
-  const { currency, setCurrency } = useCurrency();
+  const { currency, setCurrency, currencies: CURRENCIES } = useCurrency();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 

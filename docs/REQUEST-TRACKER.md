@@ -175,6 +175,23 @@ Maintained from now on; last updated 18 July 2026.
 | Admin must be very clear | ✅ | Nav restructured to the owner's pipeline: Inventory (1), Listings (2 & 3), Orders (4 & 5), Shipping (6), Finances (7), with tools below |
 | Full buyer and admin walk | ✅ | Order GEM-2026-0001 taken from cart to delivered in the browser; see docs/HANDOVER-OPEN-ITEMS.md section B for the verified figures |
 
+## Turn 15: categories, currencies, rupee formatting
+
+| Request | Status | Notes |
+|---|---|---|
+| "I should be able to add categories myself inside an admin portal" | ✅ | /admin/categories renames, reorders, re-maps, hides and creates categories. Stored as overrides over data/taxonomy.json so a deploy cannot erase them. A new category takes stock through its form mapping, so it fills itself instead of needing 147 stones tagged. Verified: rename appeared on /shop and the nav, then restored |
+| "option to add more [currencies] in Admin view later all calcs must be correct" | ✅ | /admin/currencies edits rates and adds currencies, stored in the database and merged over the shipped table. The merged set is handed to the client once per request, so every price on the page formats from the same numbers and there is still exactly one conversion path |
+| PKR decimals | ✅ | Rupees display as whole rupees; dollars and euros keep their cents. Covered by a test |
+
+## Turn 16: SEO admin, redirects, first-party analytics
+
+| Request | Status | Notes |
+|---|---|---|
+| "IN admin i want a seo section" | ✅ | /admin/seo now edits the title template, fallback description and the staging noindex switch, and holds the Google and Bing verification tokens the site then serves as meta tags |
+| "SEO is useless if you don't have the sitemap uploaded on bing and google" | 🟡 | Everything code can do is done: tokens are editable, the tags are served, and the page links straight to Search Console and Bing Webmaster with the sitemap URL to paste. The verify-and-submit click is the owner's, it cannot be done from here |
+| Redirect manager (WordPress migration) | ✅ | Add a redirect by pasting an old URL or path; a hit counter shows which old addresses still pull traffic. Handled by a catch-all route rather than middleware, because middleware runs on the edge runtime and cannot reach Postgres. Verified: /product-category/emeralds/ lands on /shop?species=emerald, unknown paths still 404 |
+| "analytics section to track where visitors and buyers come from" | ✅ | First-party tracking (anonymous browser id, no fingerprinting, no third party) writing visitor_sessions and page_views, with channel classification that includes AI assistants. /admin/analytics reports visitors, page views, channel mix, most viewed pages and stones. Verified: a Google referrer classified as organic |
+
 ## The standing gap, one dependency, many features
 
 ~~A running Postgres~~ **Resolved.** The `gemystic` database is live on the

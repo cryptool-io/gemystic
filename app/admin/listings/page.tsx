@@ -52,7 +52,7 @@ export default async function AdminListings({
   if (sp.channel === 'site-only') products = products.filter((p) => !overrides.get(p.slug)?.listedOnEtsy);
   if (sp.edited === '1') products = products.filter((p) => overrides.has(p.slug));
 
-  const categories = allCategories();
+  const categories = await allCategories();
   const species = [...stockedSpecies()].sort((a, b) => a.species.name.localeCompare(b.species.name));
   const etsyCount = [...overrides.values()].filter((o) => o.listedOnEtsy).length;
 

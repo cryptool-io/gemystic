@@ -475,6 +475,51 @@ model ListingOverride {
   @@map("listing_overrides")
 }
 
+/**
+ * Owner-managed categories, layered over data/taxonomy.json the same way
+ * listing overrides layer over the generated catalogue. A row either edits a
+ * category the taxonomy file defines (same slug) or defines a new one entirely
+ * (isCustom), so the owner can add categories without a deploy.
+ *
+ * formMapping decides which product forms fall into the category, which is how
+ * a new category acquires stock without anyone tagging 147 stones by hand.
+ */
+model CategoryOverride {
+  id             String   @id @default(uuid()) @db.Uuid
+  slug           String   @unique
+  name           String?
+  description    String?
+  position       Int?
+  isActive       Boolean  @default(true) @map("is_active")
+  formMapping    String[] @default([]) @map("form_mapping")
+  seoTitle       String?  @map("seo_title")
+  seoDescription String?  @map("seo_description")
+  seoKeywords    String[] @default([]) @map("seo_keywords")
+  isCustom       Boolean  @default(false) @map("is_custom")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  @@map("category_overrides")
+}
+
+/**
+ * Display currencies, owner-editable. data/currencies.json ships the defaults;
+ * a row here overrides one of them or adds a new currency. Prices are always
+ * stored in USD and converted at display time, so a wrong rate changes what is
+ * shown, never what is charged or recorded.
+ */
+model CurrencyRate {
+  code      String   @id @db.Char(3)
+  label     String
+  symbol    String
+  rate      Decimal  @db.Decimal(14, 6) // units per 1 USD
+  locale    String
+  isActive  Boolean  @default(true) @map("is_active")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("currency_rates")
+}
+
 // ── Promotions ──────────────────────────────────────────────────────────────
 
 model Campaign {

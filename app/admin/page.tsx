@@ -27,7 +27,7 @@ export default async function AdminOverview() {
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Stat label="Live listings" value={String(products.length)} href="/admin/catalogue" />
         <Stat label="Retail value" value={money(summary.retailValue)} sub={`avg ${money(stats.avg)}`} href="/admin/catalogue" />
-        <Stat label="Categories" value={String(allCategories().length)} href="/admin/categories" />
+        <Stat label="Categories" value={String((await allCategories()).length)} href="/admin/categories" />
         <Stat label="Team members" value={String(users.length)} sub={`${admins} with admin`} href="/admin/team" />
       </section>
 
