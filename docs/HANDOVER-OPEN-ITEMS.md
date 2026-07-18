@@ -207,6 +207,62 @@ The concepts file Billah received does not open. Re-export the 10 concepts as
 a single PNG/PDF sheet (no HTML), get a pick, apply it (components/Logo.tsx is
 the one-block swap point).
 
+## H. The admin pipeline (owner spec, 18 July 2026) — THE build order for M2-M6
+
+The owner defined the admin flow step by step. This supersedes scattered
+requirements above where they overlap; every admin screen must make its place
+in this pipeline obvious ("admin section needs to be very clear").
+
+> Step 1 inventory + determining and adding measurements, color, sizes,
+> pricing, etc. (everything)
+> Step 2 is selecting what stone is going to be listed where Etsy plus our own
+> platform
+> Step 3 is content per listing (AI automated) based on info from inventory
+> Step 4a invoice and order receiving goes to clients automatically
+> Step 4 bis once sold to sync Etsy and platform and inventory is updated
+> Step 5 is to trigger admin of an order and create the invoices, documents,
+> check taxes, create transport order (to be determined where this is done)
+> Step 6 once package is gone information is entered and shared with client
+> automatically
+> Step 7 finances are updated
+
+Refinements agreed by analysis (each is an addition, not a change of intent):
+
+1. **Step 1 additions**: photos (and later video) at intake; COST price beside
+   selling price (step 7 margins are impossible without it, B8); stock
+   location PK|TH (drives step 5 export docs); certification details.
+   Inventory item states: in_stock → listed → reserved → sold → shipped →
+   delivered (reserved = a paying checkout in progress; one-of-a-kind stones
+   must not oversell during a payment race).
+2. **Step 2**: platform listing free/default, Etsy opt-in per stone (costs
+   money, G3), channel badges visible in the inventory list.
+3. **Step 3**: AI drafts fill BOTH tag sets (site SEO + Etsy's own taxonomy);
+   nothing publishes without human review (ai_reviewed_at gate already in the
+   schema).
+4. **Between order and step 4a there is an explicit PAYMENT step**: Stripe /
+   PayPal automatic, plus a manual "payment confirmed" action for bank-transfer
+   and WhatsApp concierge deals (G4). Invoice + confirmation email go out on
+   payment confirmation, automatically.
+5. **Step 4bis**: platform sale marks sold instantly; Etsy directions run on
+   the watch-mode poll until the Etsy developer app (B/D) unlocks true sync.
+6. **Step 5**: internal fulfilment pack: commercial invoice, packing list,
+   certificate of origin (HS 7103 default), tax/declared-value check (policy:
+   never under-declare); transport order booking stays a documented manual
+   step until a carrier is chosen ("to be determined" per owner).
+7. **Step 6**: entering carrier + tracking dispatches the customer email
+   automatically and flips status shipped.
+8. **Step 8 (missing from the owner list, from their own WhatsApp flow)**:
+   delivered → automatic review-request email after N days (ties into
+   CONVERSION-REVIEW acquisition flow). Also the returns/refunds lane: the
+   site promises 14-day returns, so the pipeline needs a return intake +
+   refund record (payments/refunds tables already exist).
+9. **Step 7**: finances update from real order rows (revenue, fees by channel
+   from lib/finance.ts model, margin from intake cost price).
+
+**Admin nav mirrors the pipeline**: Inventory → Listings → Orders →
+Shipping → Finances (+ the existing Reviews/Discounts/Team/SEO/Settings).
+Each screen states which step it is.
+
 ## F. How the next session starts
 
 1. Read this file, then docs/NEXT-SESSION.md sections 1 and 4.
