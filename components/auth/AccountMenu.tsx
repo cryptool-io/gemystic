@@ -2,19 +2,37 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import type { SessionUser } from '@/lib/auth/session';
 
 /**
  * Header account affordance. Signed-out shows a plain "Sign in" link; signed-in
- * shows an avatar button with a dropdown. Kept a client component only for the
- * dropdown open/close and logout call, the signed-in state itself comes from
- * the server via props, so there is no auth flicker on load.
+ * shows an avatar button with a dropdown. The signed-in state is fetched from
+ * /api/auth/me after mount so the root layout stays static and the catalogue
+ * prerenders; signed-out visitors (the majority) see the correct state
+ * immediately, signed-in visitors see the avatar appear right after hydration.
  */
-export function AccountMenu({ user }: { user: SessionUser | null }) {
+export function AccountMenu() {
+  const [user, setUser] = useState<SessionUser | null>(null);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const pathname = usePathname();
+
+  // Re-probe on every route change: the menu lives in the persistent layout,
+  // so this is what picks up a fresh login when AuthForm navigates away.
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/auth/me')
+      .then((r) => (r.ok ? r.json() : { user: null }))
+      .then((data) => {
+        if (!cancelled) setUser(data.user ?? null);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [pathname]);
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
@@ -45,6 +63,7 @@ export function AccountMenu({ user }: { user: SessionUser | null }) {
 
   async function logout() {
     await fetch('/api/auth/logout', { method: 'POST' });
+    setUser(null);
     setOpen(false);
     router.push('/');
     router.refresh();

@@ -127,3 +127,12 @@ Order management, invoices, shipping docs, payments, sheet import and finance-in
 all wait on the same thing: **a running Postgres.** Everything is designed and much is
 coded against it. Unblock: start Docker Desktop →
 `docker compose --profile db up -d` → `npm run db:migrate`.
+
+## Turn 10: static-first restored (layout de-dynamised)
+
+| Request | Status | Notes |
+|---|---|---|
+| Root layout made static | ✅ | Removed cookies()/headers()/currentUser() from app/layout.tsx. Currency now resolves fully client-side in CurrencyProvider (saved cookie first, then browser locale, USD default); signed-in state fetched from the new /api/auth/me route by AccountMenu after mount, re-probed on every route change so a fresh login updates the header without a reload |
+| Catalogue prerenders again | ✅ | Route table verified: / and /cart ○ Static, /gem/[slug] ● SSG 147 paths (1h revalidate), /collections/[slug], /learn/[slug], /policies/[slug] all ●. Only session pages (account, admin, login, register) and API routes remain ƒ Dynamic, which is correct |
+| Browser verification | 🟡 | Production build served via next start (new gemystic-prod launch config). Verified: USD default, switch to EUR updates prices and sets gem_currency cookie, EUR survives hard loads of prerendered pages, register/login/logout all update the header account menu correctly, dropdown shows name and admin link. Caveats: the in-app browser pane could not go below ~501px width (375px requested; no layout/CSS was touched so mobile rendering is unchanged) and its screenshot capture timed out, so checks were done through the accessibility tree and DOM instead |
+| Validate | ✅ | npm run validate green: 0 lint findings on changed files (pre-existing hex-literal warnings untouched), typecheck clean, 5/5 tests, build 231 static pages |
