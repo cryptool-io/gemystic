@@ -41,7 +41,8 @@ export async function ShowcaseMarquee() {
                 </span>
               </span>
               <span className="block p-3">
-                <span className="clamp-2 block text-xs font-medium leading-snug text-fg group-hover:text-brand">
+                {/* Reserve two title lines so every strip card is the same height. */}
+                <span className="clamp-2 block min-h-[2.75em] text-xs font-medium leading-snug text-fg group-hover:text-brand">
                   {p.title}
                 </span>
                 <Price

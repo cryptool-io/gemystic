@@ -29,7 +29,12 @@ const nextConfig: NextConfig = {
   },
 
   images: {
-    remotePatterns: [{ protocol: "https", hostname: "i.etsystatic.com" }],
+    remotePatterns: [
+      { protocol: "https", hostname: "i.etsystatic.com" },
+      // Original product photo sets from the legacy WooCommerce shop; the
+      // image-ownership migration (M6.3) moves these into our own storage.
+      { protocol: "https", hostname: "gemysticgems.com" },
+    ],
   },
 
   // `eslint` config key removed: the option moved to the separate next-lint

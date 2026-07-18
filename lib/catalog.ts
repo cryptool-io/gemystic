@@ -184,6 +184,15 @@ export function relatedProducts(p: Product, limit = 4): Product[] {
     .map((r) => r.o);
 }
 
+/**
+ * The landing-page selection, one definition shared by the homepage and the
+ * admin catalogue so "which stones are on the landing page" has a single
+ * answer. First 4 = the hero grid, all 8 = the "Fine and rare" section.
+ */
+export function featuredProducts(limit = 8): Product[] {
+  return [...allProducts()].sort((a, b) => b.priceUsd - a.priceUsd).slice(0, limit);
+}
+
 /** The latest additions. Etsy ids are chronological. */
 export function justListed(limit = 12): Product[] {
   return [...allProducts()]

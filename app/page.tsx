@@ -2,15 +2,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ProductCard } from '@/components/ProductCard';
 import { JsonLd } from '@/components/JsonLd';
-import { allProducts, stockedSpecies, facets } from '@/lib/catalog';
-import { itemListJsonLd, money } from '@/lib/seo';
+import { allProducts, stockedSpecies, featuredProducts } from '@/lib/catalog';
+import { itemListJsonLd } from '@/lib/seo';
 import { ShowcaseMarquee } from '@/components/ShowcaseMarquee';
 
 export default function HomePage() {
   const products = allProducts();
-  const featured = [...products].sort((a, b) => b.priceUsd - a.priceUsd).slice(0, 8);
+  const featured = featuredProducts();
   const species = stockedSpecies();
-  const f = facets();
 
   return (
     <>
@@ -54,9 +53,11 @@ export default function HomePage() {
             </ul>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          {/* Compact tiles: the hero is an invitation, not a comparison table,
+              and full spec cards at this size dwarf the headline. */}
+          <div className="grid grid-cols-2 gap-3 md:max-w-md md:justify-self-end">
             {featured.slice(0, 4).map((p, i) => (
-              <ProductCard key={p.slug} p={p} priority={i < 2} />
+              <ProductCard key={p.slug} p={p} priority={i < 2} compact />
             ))}
           </div>
         </div>
@@ -145,21 +146,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Browse by colour, high-intent SEO entry */}
-      <section className="wrap mt-20 reveal">
-        <h2 className="mb-6 font-display text-2xl">Browse by colour</h2>
-        <div className="flex flex-wrap gap-2">
-          {Object.entries(f.color).map(([colour, n]) => (
-            <Link
-              key={colour}
-              href={`/shop?color=${encodeURIComponent(colour)}`}
-              className="chip transition hover:border-brand/60 hover:text-brand-dark"
-            >
-              {colour} · {n}
-            </Link>
-          ))}
-        </div>
-      </section>
     </>
   );
 }

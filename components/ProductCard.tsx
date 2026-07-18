@@ -1,9 +1,10 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import type { Product } from '@/lib/types';
 import { getSpecies } from '@/lib/catalog';
+import { productImages } from '@/lib/galleries';
 import { effectivePrice } from '@/lib/campaigns/store';
 import { Price, PricePerCarat } from '@/components/currency/Price';
+import { RotatingImage } from '@/components/RotatingImage';
 
 /**
  * Product tile.
@@ -41,12 +42,10 @@ export async function ProductCard({
     <article className="card group flex h-full flex-col overflow-hidden transition hover:border-brand-ring hover:shadow-lift">
       <Link href={`/gem/${p.slug}`} className="flex h-full flex-col">
         <div className="sheen relative aspect-square overflow-hidden bg-surface-2">
-          <Image
-            src={p.image}
+          <RotatingImage
+            images={productImages(p)}
             alt={`${p.title}, natural ${p.color.toLowerCase()} ${species?.name.toLowerCase() ?? ''} from ${p.origin}`}
-            fill
             sizes="(max-width: 640px) 50vw, (max-width: 1280px) 25vw, 260px"
-            className="object-cover transition duration-500 group-hover:scale-[1.04]"
             priority={priority}
           />
 
@@ -76,26 +75,26 @@ export async function ProductCard({
         </div>
 
         <div className="flex flex-1 flex-col p-3 sm:p-4">
-          <div className="label">{p.formLabel}</div>
+          {/* Single line even on narrow tiles; a wrapped label breaks row alignment. */}
+          <div className="label truncate">{p.formLabel}</div>
 
-          <h3 className="clamp-2 mt-1 text-sm font-medium leading-snug text-fg group-hover:text-brand">
+          {/* Two lines are always reserved so one-line titles do not produce
+              shorter tiles; every card in a grid or strip lands the same height. */}
+          <h3 className="clamp-2 mt-1 min-h-[2.75em] text-sm font-medium leading-snug text-fg group-hover:text-brand">
             {p.title}
           </h3>
 
           {!compact && (
             <dl className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1.5 border-t border-line pt-3 text-xs">
-              {weight && <Spec label="Weight" value={weight} />}
-              {p.cut && <Spec label="Cut" value={p.cut} />}
+              {/* Every cell always renders (– when unknown): a constant six-cell
+                  grid is what keeps all tiles the same height. */}
+              <Spec label="Weight" value={weight ?? '–'} />
+              <Spec label="Cut" value={p.cut || '–'} />
               <Spec label="Colour" value={p.color} />
               <Spec label="Origin" value={p.origin.split(',')[0]} />
               <Spec label="Ships from" value={p.shipsFrom === 'TH' ? 'Thailand' : 'Pakistan'} />
+              <Spec label="Treatment" value={shortTreatment ?? 'See listing'} />
             </dl>
-          )}
-
-          {!compact && shortTreatment && (
-            <p className="mt-2 truncate text-[11px] text-muted" title={p.treatment}>
-              <span className="text-subtle">Treatment:</span> {shortTreatment}
-            </p>
           )}
 
           {/* Price pinned to the bottom so it aligns across a row of uneven tiles. */}

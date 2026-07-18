@@ -147,6 +147,16 @@ Maintained from now on; last updated 18 July 2026.
 | Sold + settings stores | 🟡 | Deliberately still JSON: their reads are synchronous inside the catalogue query path; swap scheduled as its own refactor (NEXT-SESSION M1.3) |
 | Live deploy | ✅ | gems.cryptool.io serving over HTTPS from ronserver2 (PM2 gem-main, nginx + LE cert, native Postgres on the server, ./deploy.sh for future releases) |
 
+## Turn 13: legacy-shop import, galleries, tile polish
+
+| Request | Status | Notes |
+|---|---|---|
+| gemysticgems.com products + images into inventory/DB | ✅ | scripts/gemysticgems-sync.mjs reads the public WooCommerce Store API: all 203 products snapshotted; 199 not in our catalogue imported into the products/product_images/categories tables with full photo sets (26 in stock as drafts for pipeline step 2, 177 as sold history). Visible in admin Catalogue under "Inventory (pipeline step 1)" |
+| Image galleries + rotation on marketplace tiles | ✅ | The two catalogues share almost no stock (0 weight matches, 4 title matches), so only honey-citrine gained a legacy gallery; every imported inventory stone carries its full set for when it is listed. Tiles with >1 photo cycle via pure-CSS crossfade (4.2s/slot, pause on hover, marquee-style reduced-motion exemption); PDP gains a thumbnail gallery. Verified via WAAPI time-stepping, the browser pane freezes animation clocks |
+| Equal tile heights everywhere | ✅ | Reserved 2-line titles, constant six-cell spec grid, single-line form label; hero 2x2, marquee strip and shop grid all measure uniform (349/291/531px rows) |
+| Remove Browse by colour from landing | ✅ | Section deleted |
+| Landing hero tiles smaller + indicated in admin | ✅ | Hero uses compact cards capped at max-w-md; admin Catalogue badges "Landing hero" (4) and "Fine & rare" (8), one featuredProducts() definition shared with the homepage |
+
 ## The standing gap — one dependency, many features
 
 ~~A running Postgres~~ **Resolved.** The `gemystic` database is live on the

@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ProductCard } from '@/components/ProductCard';
 import { JsonLd } from '@/components/JsonLd';
 import { AddToBag } from '@/components/AddToBag';
 import { allProductsIncludingSold, getProduct, getSpecies, relatedProducts } from '@/lib/catalog';
+import { productImages } from '@/lib/galleries';
+import { ProductGallery } from '@/components/ProductGallery';
 import { approvedForProduct, summarise } from '@/lib/reviews/store';
 import { RatingHeadline, ReviewList } from '@/components/reviews/ReviewList';
 import { ReviewForm } from '@/components/reviews/ReviewForm';
@@ -59,6 +60,7 @@ export default async function GemPage({ params }: { params: Params }) {
   const related = relatedProducts(p);
   const reviews = await approvedForProduct(p.slug);
   const pricing = await effectivePrice(p);
+  const gallery = productImages(p);
   const ratingSummary = summarise(reviews);
   const weight = p.caratWeight ? `${p.caratWeight} ct` : p.gramWeight ? `${p.gramWeight} g` : ',';
 
@@ -106,17 +108,12 @@ export default async function GemPage({ params }: { params: Params }) {
         </nav>
 
         <div className="grid gap-10 lg:grid-cols-2">
-          {/* Image */}
+          {/* Image gallery: every photo we have for this stone. */}
           <div>
-            <div className="card relative aspect-square overflow-hidden">
-              <Image
-                src={p.imageLarge}
-                alt={`${p.title}, natural ${p.color.toLowerCase()} ${s?.name.toLowerCase() ?? ''} from ${p.origin}, ${weight}`}
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-                priority
-              />
+            <ProductGallery
+              images={gallery.length > 1 ? gallery : [p.imageLarge]}
+              alt={`${p.title}, natural ${p.color.toLowerCase()} ${s?.name.toLowerCase() ?? ''} from ${p.origin}, ${weight}`}
+            >
               {p.stock === 0 && (
                 <span className="absolute inset-0 z-10 flex items-center justify-center bg-fg/35 backdrop-blur-[1px]">
                   <span className="rounded-md border-2 border-white/90 px-8 py-2 text-2xl font-bold uppercase tracking-[0.3em] text-white shadow-pop">
@@ -124,7 +121,7 @@ export default async function GemPage({ params }: { params: Params }) {
                   </span>
                 </span>
               )}
-            </div>
+            </ProductGallery>
             <p className="mt-3 text-xs text-muted/60">
               Photographed under daylight-balanced light without retouching. Colour may shift
               slightly under warm indoor lighting.

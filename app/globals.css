@@ -177,6 +177,37 @@
   }
 }
 
+/* ─── Tile gallery rotation ──────────────────────────────────────────────────
+   Stacked tile images cycle on the compositor: image i of n runs the n-slot
+   keyframes below, phase-shifted via a negative animation-delay set inline by
+   components/RotatingImage.tsx. Fade in/out at the slot edges gives a
+   crossfade. Hover pauses so a stone can be examined (marquee convention;
+   deliberately not gated on reduced-motion, same owner decision as the
+   marquee: it is ambient product imagery, not layout motion). */
+.tile-rotate {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  opacity: 0;
+}
+.group:hover .tile-rotate {
+  animation-play-state: paused;
+}
+@keyframes tile-cycle-2 {
+  0%, 44% { opacity: 1; }
+  50%, 94% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes tile-cycle-3 {
+  0%, 27.5% { opacity: 1; }
+  33.3%, 94.2% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes tile-cycle-4 {
+  0%, 20.5% { opacity: 1; }
+  25%, 95.7% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 /* Keeps long specimen titles from blowing out grid cells. */
 .clamp-2 {
   display: -webkit-box;
@@ -285,7 +316,9 @@
   html {
     scroll-behavior: auto;
   }
-  *:not(.marquee-track),
+  /* .tile-rotate shares the marquee's owner-mandated exemption: both are
+     ambient product imagery (gentle opacity crossfade), not layout motion. */
+  *:not(.marquee-track):not(.tile-rotate),
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
