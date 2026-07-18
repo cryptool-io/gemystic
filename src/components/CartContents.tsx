@@ -132,12 +132,12 @@ export function CartContents() {
     localStorage.removeItem('gemystic:promo');
   }
 
-  if (items === null) return <p className="text-sm text-muted">Loading your bag…</p>;
+  if (items === null) return <p className="text-sm text-muted">Loading your cart…</p>;
 
   if (items.length === 0) {
     return (
       <div className="card p-8 text-center">
-        <p className="font-display text-lg">Your bag is empty</p>
+        <p className="font-display text-lg">Your cart is empty</p>
         <p className="mx-auto mt-2 max-w-md text-sm text-muted">
           Found a stone you like? Add it here while you decide.
         </p>

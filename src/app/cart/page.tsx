@@ -9,10 +9,10 @@ export const metadata: Metadata = {
 export default function CartPage() {
   return (
     <div className="wrap max-w-3xl">
-      <h1 className="font-display text-3xl">Your bag</h1>
+      <h1 className="font-display text-3xl">Your cart</h1>
       <p className="mt-2 max-w-xl text-sm text-muted">
         Every stone here is one of a kind and stays on sale until someone completes a
-        purchase, adding it to your bag does not reserve it.
+        purchase, adding it to your cart does not reserve it.
       </p>
       <div className="mt-6">
         <CartContents />

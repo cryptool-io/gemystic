@@ -36,6 +36,8 @@ export default async function AdminOverview() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <Panel title="Catalogue" body="Products, images, pricing, publish state. Currently sourced from the generated catalogue; full CRUD lands with the Postgres migration." href="/admin/catalogue" />
           <Panel title="Categories" body="Add and reorder the categories that structure the shop, and edit their SEO." href="/admin/categories" />
+          <Panel title="Discounts & campaigns" body="Create percentage offers and promo codes (like LAUNCH15), scoped to stone types or categories, with start and end dates." href="/admin/campaigns" />
+          <Panel title="Market check" body="Compare our per-carat pricing against researched retail market ranges." href="/admin/market" />
           <Panel title="Orders" body="View and fulfil orders, print packing lists and export documents." href="/admin/orders" />
           <Panel title="Reviews" body="Approve, reply to and remove customer reviews." href="/admin/reviews" />
           <Panel title="Team" body="Invite staff and grant admin access. Only the owner can create admins." href="/admin/team" />

@@ -99,6 +99,21 @@ Maintained from now on; last updated 18 July 2026.
 | Cart icon next to account | ✅ | Live badge + /cart with correct totals, sold-item exclusion, WhatsApp order path |
 | PM audit | ✅ | This document |
 
+## Turn 8 — sold flow & polish batch
+
+| Request | Status | Notes |
+|---|---|---|
+| SOLD banner + admin display-days | ✅ | Transparent overlay on tiles and product pages; admin sets days before auto-removal (default 14); sold pages stay reachable for old links |
+| Auto-sold from either channel | 🟡 | Sold state is one shared store both channels write. Etsy→here: watch mode polls every N minutes (`npm run etsy:sync -- --watch 10`); true instant needs an approved Etsy developer app, Etsy offers no public webhooks. Here→Etsy: needs the same API app. Local sales mark sold instantly once checkout lands |
+| "Someone is shopping for it" indicator | ✅ | Real add-to-cart events only, 30-minute TTL, shown on the product page |
+| € before amount | ✅ | €1,280.36 format |
+| Header icons shift on currency change | ✅ | Fixed-width switcher |
+| Marquee must self-move | ✅ | Now animates regardless of OS reduced-motion setting (owner decision, pause-on-hover kept) |
+| Support + AI = one button | ✅ | Single Support launcher with two tabs |
+| Add to bag → Add to cart | ✅ | All wording |
+| Discount codes findable in admin | ✅ | "Discounts" nav label + overview card |
+| Real payment brand icons | ✅ | Inline SVG Visa/Mastercard/Maestro/PayPal/Discover |
+
 ## The standing gap — one dependency, many features
 
 Order management, invoices, shipping docs, payments, sheet import and finance-in-admin

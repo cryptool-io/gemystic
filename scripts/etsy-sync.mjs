@@ -24,6 +24,13 @@ const SHOP_URL = 'https://www.etsy.com/shop/GemysticGemsStudio';
 const PAGES = 5;
 const APPLY = process.argv.includes('--apply');
 const OUT = join(process.env.VAR_DIR || join(ROOT, 'var'), 'etsy-sync.json');
+const WATCHING = process.argv.includes('--watch');
+
+/** In watch mode a failed cycle must not kill the loop; one-shot mode exits. */
+function bail(code) {
+  if (WATCHING) throw new Error(`cycle aborted (code ${code})`);
+  process.exit(code);
+}
 
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36';
@@ -100,7 +107,7 @@ async function main() {
             '     node scripts/etsy-sync.mjs --from-files page1.html page2.html …\n',
         );
         await writeResult({ status: 'blocked', fetchedPages, liveCount: 0, sold: [] });
-        process.exit(2);
+        bail(2);
       }
     }
   }
@@ -112,7 +119,7 @@ async function diff(catalog, localIds, liveIds, fetchedPages) {
   if (liveIds.size === 0) {
     console.error('No listings found — refusing to mark the whole catalogue sold on an empty read.');
     await writeResult({ status: 'empty_read', fetchedPages, liveCount: 0, sold: [] });
-    process.exit(2);
+    bail(2);
   }
 
   // Safety rail: a partial read (some pages failed) must not mass-mark stock as
@@ -131,13 +138,17 @@ async function diff(catalog, localIds, liveIds, fetchedPages) {
 
   const canApply = APPLY && fetchedPages === PAGES;
   if (canApply && sold.length > 0) {
-    for (const s of sold) {
-      const p = catalog.products.find((x) => x.etsyId === s.etsyId);
-      if (p) p.stock = 0;
-    }
-    await writeFile(join(ROOT, 'data/catalog.json'), JSON.stringify(catalog, null, 2));
-    console.log(`\nApplied: ${sold.length} listings marked stock 0 in data/catalog.json.`);
-    console.log('Rebuild the site (npm run build) to reflect it on the storefront.');
+    // Sold state lives in var/sold.json (not the regenerable catalogue) and is
+    // picked up by the running site within seconds, no rebuild needed.
+    const soldPath = join(process.env.VAR_DIR || join(ROOT, 'var'), 'sold.json');
+    let map = {};
+    try { map = JSON.parse(await readFile(soldPath, 'utf8')); } catch {}
+    const now = new Date().toISOString();
+    for (const s of sold) map[s.etsyId] ??= now;
+    await mkdir(dirname(soldPath), { recursive: true });
+    await writeFile(soldPath, JSON.stringify(map, null, 2));
+    console.log(`\nApplied: ${sold.length} listings marked sold in var/sold.json.`);
+    console.log('The live site picks this up automatically, no rebuild needed.');
   } else if (APPLY && fetchedPages < PAGES) {
     console.log('\n--apply skipped: incomplete read.');
   } else if (sold.length > 0) {
@@ -162,7 +173,24 @@ async function writeResult(result) {
   console.log(`\nResult written to ${OUT}`);
 }
 
-main().catch((err) => {
-  console.error('Sync failed:', err);
-  process.exit(1);
-});
+/**
+ * --watch [minutes]: keep syncing on an interval (default 10 min). This is the
+ * practical "as instant as Etsy allows" mode: Etsy offers no public webhooks
+ * without an approved developer app, so polling is the honest ceiling. Sales
+ * made on THIS platform mark sold instantly through var/sold.json the moment
+ * the order flow writes it, no sync needed in that direction.
+ */
+const watchIdx = process.argv.indexOf('--watch');
+if (watchIdx !== -1) {
+  const minutes = Math.max(2, Number(process.argv[watchIdx + 1]) || 10);
+  console.log(`Watch mode: syncing every ${minutes} minutes. Ctrl+C to stop.`);
+  const run = () =>
+    main().catch((err) => console.error('Sync failed (will retry):', err.message));
+  run();
+  setInterval(run, minutes * 60_000);
+} else {
+  main().catch((err) => {
+    console.error('Sync failed:', err);
+    process.exit(1);
+  });
+}

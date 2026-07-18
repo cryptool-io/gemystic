@@ -60,7 +60,15 @@ export async function ProductCard({
             One of a kind
           </span>
 
-          {pricing.campaign && (
+          {p.stock === 0 && (
+            <span className="absolute inset-0 z-10 flex items-center justify-center bg-fg/35 backdrop-blur-[1px]">
+              <span className="rounded-md border-2 border-white/90 px-5 py-1.5 text-lg font-bold uppercase tracking-[0.25em] text-white shadow-pop">
+                Sold
+              </span>
+            </span>
+          )}
+
+          {pricing.campaign && p.stock > 0 && (
             <span className="absolute right-2 top-2 rounded bg-brand px-2 py-0.5 text-[10px] font-semibold text-white shadow-sm">
               −{pricing.campaign.percentOff}%
             </span>

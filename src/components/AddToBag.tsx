@@ -26,6 +26,13 @@ export function AddToBag({
     }
     // Same-tab listeners (header cart badge) and analytics.
     window.dispatchEvent(new Event('gem:bag'));
+    // Tell the shop someone is shopping for this stone (urgency signal for
+    // other visitors). Fire-and-forget.
+    fetch('/api/interest', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ slug: product.slug }),
+    }).catch(() => {});
     gaEvent('add_to_cart', {
       currency: 'USD',
       value: product.price,
@@ -37,7 +44,7 @@ export function AddToBag({
   return (
     <div className="mt-6 flex flex-wrap gap-3">
       <button onClick={add} className="btn-primary min-w-40">
-        {state === 'added' ? 'Added to bag ✓' : 'Add to bag'}
+        {state === 'added' ? 'Added to cart ✓' : 'Add to cart'}
       </button>
       <a
         href={`mailto:${SITE.email}?subject=${encodeURIComponent(`Question about ${product.title}`)}`}

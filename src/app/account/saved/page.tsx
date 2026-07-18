@@ -21,7 +21,7 @@ export default async function SavedPage() {
       </nav>
       <h1 className="font-display text-3xl">Saved stones</h1>
       <p className="mt-2 max-w-xl text-sm text-muted">
-        Stones you have added to your bag or saved for later. Every piece is one of a
+        Stones you have added to your cart or saved for later. Every piece is one of a
         kind, a saved stone can still be bought by someone else, so do not sit on the
         one you want.
       </p>

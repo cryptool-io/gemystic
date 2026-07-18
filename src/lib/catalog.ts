@@ -1,19 +1,44 @@
 import catalogJson from '../../data/catalog.json';
 import speciesJson from '../../data/species.json';
 import type { Catalog, Product, Species } from './types';
+import { soldMap, isSoldExpired } from './sold';
 
 const catalog = catalogJson as unknown as Catalog;
 const speciesMap = speciesJson as unknown as Record<string, Species>;
+
+/**
+ * Sold overlay: var/sold.json (written by the Etsy sync and, later, our own
+ * orders) marks stones sold without touching the generated catalogue. Sold
+ * stones show a SOLD banner for the admin-configured number of days, then
+ * disappear from listings entirely. Product pages keep rendering so old links
+ * degrade gracefully.
+ */
+function withSoldState(products: Product[]): Product[] {
+  const sold = soldMap();
+  return products.map((p) => {
+    const soldAt = sold[p.etsyId];
+    return soldAt ? { ...p, stock: 0, soldAt } : p;
+  });
+}
+
+function excludeExpired(products: Product[]): Product[] {
+  return products.filter((p) => !(p.soldAt && isSoldExpired(p.soldAt)));
+}
 
 export const CURRENCY = catalog.currency;
 export const GENERATED_AT = catalog.generatedAt;
 
 export function allProducts(): Product[] {
-  return catalog.products;
+  return excludeExpired(withSoldState(catalog.products));
+}
+
+/** Everything including expired-sold, for admin views and static params. */
+export function allProductsIncludingSold(): Product[] {
+  return withSoldState(catalog.products);
 }
 
 export function getProduct(slug: string): Product | undefined {
-  return catalog.products.find((p) => p.slug === slug);
+  return withSoldState(catalog.products).find((p) => p.slug === slug);
 }
 
 export function getSpecies(key: string): Species | undefined {
@@ -79,7 +104,7 @@ export interface Query {
 }
 
 export function queryProducts(q: Query): Product[] {
-  let out = catalog.products;
+  let out = allProducts();
 
   if (q.species) out = out.filter((p) => p.species === q.species);
   if (q.category) out = out.filter((p) => p.category === q.category);
@@ -142,7 +167,7 @@ function scoreMatch(p: Product, terms: string[]): number {
 
 /** Stones a visitor looking at this one would plausibly also consider. */
 export function relatedProducts(p: Product, limit = 4): Product[] {
-  return catalog.products
+  return allProducts()
     .filter((o) => o.slug !== p.slug)
     .map((o) => {
       let score = 0;
@@ -161,7 +186,7 @@ export function relatedProducts(p: Product, limit = 4): Product[] {
 
 /** The latest additions. Etsy ids are chronological. */
 export function justListed(limit = 12): Product[] {
-  return [...catalog.products]
+  return [...allProducts()]
     .sort((a, b) => Number(b.etsyId) - Number(a.etsyId))
     .slice(0, limit);
 }
@@ -186,5 +211,5 @@ export function productsForBirthstone(month: string): Product[] {
   const keys = Object.entries(speciesMap)
     .filter(([, s]) => s.birthstone.includes(month))
     .map(([k]) => k);
-  return catalog.products.filter((p) => keys.includes(p.species));
+  return allProducts().filter((p) => keys.includes(p.species));
 }

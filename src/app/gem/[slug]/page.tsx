@@ -5,13 +5,14 @@ import { notFound } from 'next/navigation';
 import { ProductCard } from '@/components/ProductCard';
 import { JsonLd } from '@/components/JsonLd';
 import { AddToBag } from '@/components/AddToBag';
-import { allProducts, getProduct, getSpecies, relatedProducts } from '@/lib/catalog';
+import { allProductsIncludingSold, getProduct, getSpecies, relatedProducts } from '@/lib/catalog';
 import { approvedForProduct, summarise } from '@/lib/reviews/store';
 import { RatingHeadline, ReviewList } from '@/components/reviews/ReviewList';
 import { ReviewForm } from '@/components/reviews/ReviewForm';
 import { effectivePrice } from '@/lib/campaigns/store';
 import { Price, PricePerCarat } from '@/components/currency/Price';
 import { ProductAnalytics } from '@/components/Analytics';
+import { InterestBadge } from '@/components/InterestBadge';
 import { Stars } from '@/components/reviews/Stars';
 import {
   SITE, money, productJsonLd, faqJsonLd, breadcrumbJsonLd, stripMarkdown,
@@ -24,7 +25,9 @@ type Params = Promise<{ slug: string }>;
 export const revalidate = 3600;
 
 export function generateStaticParams() {
-  return allProducts().map((p) => ({ slug: p.slug }));
+  // Sold stones keep their page (old links, SEO history) even after they leave
+  // the listings, the page itself shows the sold state.
+  return allProductsIncludingSold().map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
@@ -114,6 +117,13 @@ export default async function GemPage({ params }: { params: Params }) {
                 className="object-cover"
                 priority
               />
+              {p.stock === 0 && (
+                <span className="absolute inset-0 z-10 flex items-center justify-center bg-fg/35 backdrop-blur-[1px]">
+                  <span className="rounded-md border-2 border-white/90 px-8 py-2 text-2xl font-bold uppercase tracking-[0.3em] text-white shadow-pop">
+                    Sold
+                  </span>
+                </span>
+              )}
             </div>
             <p className="mt-3 text-xs text-muted/60">
               Photographed under daylight-balanced light without retouching. Colour may shift
@@ -158,7 +168,19 @@ export default async function GemPage({ params }: { params: Params }) {
               <span className="chip border-brand-ring/50 text-brand">One of a kind</span>
             </div>
 
-            <AddToBag product={{ slug: p.slug, title: p.title, price: pricing.priceUsd }} />
+            {p.stock === 0 ? (
+              <div className="mt-6 rounded-lg border border-line bg-surface-2 p-4">
+                <p className="font-display text-lg text-fg">This stone has been sold</p>
+                <p className="mt-1 text-sm text-muted">
+                  Every piece here is one of a kind, so there is no restock of this exact
+                  stone. The related stones below are the closest matches still available.
+                </p>
+              </div>
+            ) : (
+              <AddToBag product={{ slug: p.slug, title: p.title, price: pricing.priceUsd }} />
+            )}
+
+            {p.stock > 0 && <InterestBadge slug={p.slug} />}
 
             {/* The guarantee sits beside the buy action, not buried in a policy
                 page: the single highest-leverage trust move for an unknown

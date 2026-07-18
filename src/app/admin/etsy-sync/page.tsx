@@ -1,7 +1,9 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { requireRole } from '@/lib/auth/guard';
-import { allProducts } from '@/lib/catalog';
+import { allProductsIncludingSold } from '@/lib/catalog';
+import { getSettings } from '@/lib/settings';
+import { SoldDisplaySetting } from '@/components/admin/SoldDisplaySetting';
 import { config } from '@/lib/config';
 
 export const dynamic = 'force-dynamic';
@@ -33,8 +35,10 @@ export default async function EtsySyncPage() {
     last = null;
   }
 
-  const inStock = allProducts().filter((p) => p.stock > 0).length;
-  const soldOut = allProducts().length - inStock;
+  const all = allProductsIncludingSold();
+  const inStock = all.filter((p) => p.stock > 0).length;
+  const soldOut = all.length - inStock;
+  const settings = getSettings();
 
   return (
     <div className="space-y-6">
@@ -46,6 +50,8 @@ export default async function EtsySyncPage() {
           one-of-a-kind stone can never be sold twice.
         </p>
       </div>
+
+      <SoldDisplaySetting current={settings.soldDisplayDays} />
 
       <section className="grid gap-4 sm:grid-cols-3">
         <Stat label="In stock here" value={String(inStock)} />

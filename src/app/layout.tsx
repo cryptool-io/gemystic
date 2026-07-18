@@ -7,8 +7,8 @@ import { SITE, organizationJsonLd, moneyWhole } from '@/lib/seo';
 import { JsonLd } from '@/components/JsonLd';
 import { stockedSpecies } from '@/lib/catalog';
 import { categoryTree } from '@/lib/taxonomy';
-import { AssistantLauncher } from '@/components/AssistantLauncher';
-import { SupportWidget } from '@/components/SupportWidget';
+import { HelpHub } from '@/components/HelpHub';
+import { PaymentIcons } from '@/components/PaymentIcons';
 import { MainNav } from '@/components/MainNav';
 import { SearchBox } from '@/components/SearchBox';
 import { Logo } from '@/components/Logo';
@@ -56,7 +56,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: 'Gemystic Gems. Natural Gemstones, Hand-Cut in Pakistan',
+    default: 'Gemystic Gems · Natural Gemstones, Hand-Cut in Pakistan',
     template: '%s | Gemystic Gems',
   },
   description: SITE.description,
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: SITE.name,
     url: SITE.url,
-    title: 'Gemystic Gems. Natural Gemstones, Hand-Cut in Pakistan',
+    title: 'Gemystic Gems · Natural Gemstones, Hand-Cut in Pakistan',
     description: SITE.description,
   },
   twitter: { card: 'summary_large_image' },
@@ -237,14 +237,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <div className="wrap mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
             <div className="flex flex-wrap items-center gap-2" aria-label="Accepted payment methods">
               <span className="text-xs text-muted">Secure payment:</span>
-              {['VISA', 'Mastercard', 'Maestro', 'PayPal', 'Discover'].map((m) => (
-                <span
-                  key={m}
-                  className="rounded border border-line bg-surface px-2.5 py-1 text-[11px] font-semibold tracking-wide text-fg"
-                >
-                  {m}
-                </span>
-              ))}
+              <PaymentIcons />
             </div>
             <span className="text-xs text-subtle">SSL encrypted checkout</span>
           </div>
@@ -255,13 +248,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </div>
         </footer>
 
-        <SupportWidget
+        <HelpHub
           email={SITE.email}
           phone={SITE.phone}
           phoneRaw={SITE.phoneRaw}
           whatsapp={SITE.whatsapp}
         />
-        <AssistantLauncher />
         </CurrencyProvider>
       </body>
     </html>

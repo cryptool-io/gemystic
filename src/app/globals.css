@@ -212,22 +212,16 @@ body {
   .sheen::after {
     display: none;
   }
-  /* Static, manually scrollable strip instead of motion. */
-  .marquee {
-    overflow-x: auto;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-  .marquee-track {
-    animation: none;
-  }
+  /* Owner decision: the just-listed carousel keeps moving even under
+     reduced-motion (it pauses on hover/focus and is duplicated content, the
+     primary grid below carries the same stones statically). */
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  *,
+  *:not(.marquee-track),
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
