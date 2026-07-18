@@ -129,10 +129,28 @@ Maintained from now on; last updated 18 July 2026.
 |---|---|---|
 | Header overflow at 1280-1500px desktop | ✅ | Priority+ "More" menu in MainNav: the desktop nav is now the flexible header element and folds trailing items into a right-aligned More dropdown when the row runs out of space (measured via an invisible clipped copy + ResizeObserver, so the category dropdown panels stay unclipped). Verified in the browser: no horizontal scroll at 1280 / 1366 / 1440 / 1920, full nav restored at 1920, More panel opens inside the viewport, mobile drawer at 375 unaffected. Overflowed categories link to their /shop?category page from the More panel |
 
+## Turn 11: static-first restored (layout de-dynamised)
+
+| Request | Status | Notes |
+|---|---|---|
+| Root layout made static | ✅ | Removed cookies()/headers()/currentUser() from app/layout.tsx. Currency now resolves fully client-side in CurrencyProvider (saved cookie first, then browser locale, USD default); signed-in state fetched from the new /api/auth/me route by AccountMenu after mount, re-probed on every route change so a fresh login updates the header without a reload |
+| Catalogue prerenders again | ✅ | Route table verified: / and /cart ○ Static, /gem/[slug] ● SSG 147 paths (1h revalidate), /collections/[slug], /learn/[slug], /policies/[slug] all ●. Only session pages (account, admin, login, register) and API routes remain ƒ Dynamic, which is correct |
+| Browser verification | 🟡 | Production build served via next start (new gemystic-prod launch config). Verified: USD default, switch to EUR updates prices and sets gem_currency cookie, EUR survives hard loads of prerendered pages, register/login/logout all update the header account menu correctly, dropdown shows name and admin link. Caveats: the in-app browser pane could not go below ~501px width (375px requested; no layout/CSS was touched so mobile rendering is unchanged) and its screenshot capture timed out, so checks were done through the accessibility tree and DOM instead |
+| Validate | ✅ | npm run validate green: 0 lint findings on changed files (pre-existing hex-literal warnings untouched), typecheck clean, 5/5 tests, build 231 static pages |
+
+## Turn 12: M1 stores on Prisma + password reset
+
+| Request | Status | Notes |
+|---|---|---|
+| Auth/reviews/campaigns on Postgres | ✅ | Two-driver stores (Prisma when DATABASE_URL set, JSON fallback otherwise); owner/admin accounts and LAUNCH15 imported via npm run db:import-stores; register/login verified writing to the users table |
+| Password reset | ✅ | /forgot + /reset/[token], hashed single-use tokens (60 min), throttled routes, mailer email, sessions revoked on success. Verified end-to-end incl. old-password rejection and token-reuse rejection |
+| Sold + settings stores | 🟡 | Deliberately still JSON: their reads are synchronous inside the catalogue query path; swap scheduled as its own refactor (NEXT-SESSION M1.3) |
+| Live deploy | ✅ | gems.cryptool.io serving over HTTPS from ronserver2 (PM2 gem-main, nginx + LE cert, native Postgres on the server, ./deploy.sh for future releases) |
+
 ## The standing gap — one dependency, many features
 
 ~~A running Postgres~~ **Resolved.** The `gemystic` database is live on the
 machine's native PostgreSQL 17 (no Docker; same server Trust-Agent uses), schema
-fully migrated. Order management, invoices, shipping docs, payments, sheet import
-and finance-in-admin now wait only on the store swap (milestone M1) and the
-payment accounts (B7).
+fully migrated, and auth/reviews/campaigns now run on it. Order management,
+invoices, shipping docs, payments, sheet import and finance-in-admin now wait
+only on the payment accounts (B7) and their build milestones (M2+).

@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { CURRENCIES } from '@/lib/currency';
 import { useCurrency } from './CurrencyProvider';
 
@@ -12,7 +11,6 @@ import { useCurrency } from './CurrencyProvider';
  */
 export function LocaleSwitcher() {
   const { currency, setCurrency } = useCurrency();
-  const router = useRouter();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -48,8 +46,6 @@ export function LocaleSwitcher() {
                 onClick={() => {
                   setCurrency(code);
                   setOpen(false);
-                  // Server components re-render with the new cookie.
-                  router.refresh();
                 }}
                 className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm transition hover:bg-brand-tint ${
                   currency === code ? 'font-medium text-brand' : 'text-muted'

@@ -13,14 +13,11 @@ import { MainNav } from '@/components/MainNav';
 import { SearchBox } from '@/components/SearchBox';
 import { Logo } from '@/components/Logo';
 import { AccountMenu } from '@/components/auth/AccountMenu';
-import { currentUser } from '@/lib/auth/session';
-import { cookies, headers } from 'next/headers';
 import { CurrencyProvider } from '@/components/currency/CurrencyProvider';
 import { LocaleSwitcher } from '@/components/currency/LocaleSwitcher';
 import { CartIcon } from '@/components/CartIcon';
 import { MobileSearch } from '@/components/MobileSearch';
 import { Analytics } from '@/components/Analytics';
-import { CURRENCY_COOKIE, detectCurrency, isSupported } from '@/lib/currency';
 
 /**
  * Type pairing: Fraunces, a high-contrast editorial serif with an optical axis,
@@ -76,24 +73,21 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+/**
+ * Static by design: no cookies(), headers() or session reads here. Currency
+ * resolves client-side in CurrencyProvider and the signed-in state via
+ * /api/auth/me in AccountMenu, so every catalogue page can prerender.
+ */
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const species = stockedSpecies();
   const tree = categoryTree(
     Object.fromEntries(species.map((s) => [s.key, s.species.name])),
   );
-  const user = await currentUser();
-
-  // Currency: explicit cookie choice wins; otherwise geo/locale detection.
-  const jar = await cookies();
-  const cookieCurrency = jar.get(CURRENCY_COOKIE)?.value;
-  const currency = isSupported(cookieCurrency)
-    ? cookieCurrency
-    : detectCurrency(await headers());
 
   return (
     <html lang="en" className={`${inter.variable} ${sora.variable}`}>
       <body>
-        <CurrencyProvider initial={currency}>
+        <CurrencyProvider>
         <Analytics />
         <JsonLd data={organizationJsonLd()} />
 
@@ -133,7 +127,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <MobileSearch />
             <LocaleSwitcher />
             <CartIcon />
-            <AccountMenu user={user} />
+            <AccountMenu />
           </div>
         </header>
 
