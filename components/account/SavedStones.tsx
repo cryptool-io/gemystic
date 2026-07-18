@@ -75,7 +75,7 @@ export function SavedStones() {
       <div className="card p-8 text-center">
         <p className="font-display text-lg">Nothing saved yet</p>
         <p className="mx-auto mt-2 max-w-md text-sm text-muted">
-          Tap “Add to bag” on any stone to keep it here while you decide.
+          Tap “Add to cart” on any stone to keep it here while you decide.
         </p>
         <Link href="/shop" className="btn-primary mt-5">Browse the stones</Link>
       </div>
