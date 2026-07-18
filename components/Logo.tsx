@@ -73,7 +73,9 @@ export function Logo({
   return (
     <span className={`inline-flex items-center gap-2 ${className}`}>
       <GemMark className={markClass} />
-      <span className="font-display text-lg tracking-tight sm:text-xl">
+      {/* Wordmark yields to the mark alone below xs so the header row
+          (logo + hamburger + search + currency + cart + account) fits 375px. */}
+      <span className="hidden font-display text-lg tracking-tight xs:inline sm:text-xl">
         <span className="text-brand-deep">Gemystic</span>{' '}
         <span className="text-brand">Gems</span>
       </span>

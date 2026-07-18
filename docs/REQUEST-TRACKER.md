@@ -120,10 +120,13 @@ Maintained from now on; last updated 18 July 2026.
 |---|---|---|
 | Exact same architecture/stack as Trust-Agent | ✅ | Converted and verified: Next 16.2 (Turbopack builds, 4.8s vs 20s), React 19.2.3 pinned, root-level app/components/lib (src/ removed), Tailwind 4 CSS-first tokens in @theme, Prisma 6.16.3 with the lib/prisma.ts singleton (migration re-verified against live DB), ESLint 9 flat config with the inline-style/hex bans, zod 4 in lib/schemas.ts, lib/api-response.ts envelope, cn() in lib/utils.ts, node --test suite via tsx (5 passing), BullMQ/ioredis queue layer with inline fallback, instrumentation.ts worker boot. npm run validate = lint + typecheck + test + build, all green. Rendering verified pixel-identical (same computed tokens) |
 | Remaining parity deltas | 🟡 | Deliberate, listed in NEXT-SESSION: components/ui primitives adopted incrementally, email-templates/telemetry/i18n/OAuth/2FA are feature ports scheduled with their milestones; Redis not installed on this machine so queues run inline (identical behaviour, no retry isolation) |
+| Browser re-verification after the conversion | ✅ | Tokens, fonts, shadows, grids and the custom xs breakpoint all render from the new @theme; found and fixed a real 375px header overflow (logo wordmark now yields below xs) |
+| Header overflow at 1280-1500px desktop | 🔴 | Pre-existing, surfaced by the same verification: the category nav (~1000px) pushes cart/account past the edge at common desktop widths. Needs a design decision (see NEXT-SESSION open items); not fixable with overflow scroll without clipping the dropdowns |
 
 ## The standing gap — one dependency, many features
 
-Order management, invoices, shipping docs, payments, sheet import and finance-in-admin
-all wait on the same thing: **a running Postgres.** Everything is designed and much is
-coded against it. Unblock: start Docker Desktop →
-`docker compose --profile db up -d` → `npm run db:migrate`.
+~~A running Postgres~~ **Resolved.** The `gemystic` database is live on the
+machine's native PostgreSQL 17 (no Docker; same server Trust-Agent uses), schema
+fully migrated. Order management, invoices, shipping docs, payments, sheet import
+and finance-in-admin now wait only on the store swap (milestone M1) and the
+payment accounts (B7).

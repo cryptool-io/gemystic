@@ -13,6 +13,8 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     "docs/**",
+    // Session worktrees (and their build output) live under .claude/.
+    ".claude/**",
     // Plain-node utility scripts and data stores, not app code.
     "scripts/**",
     "data/**",
