@@ -11,9 +11,9 @@ exists — and if the account went away tomorrow, the shop would keep trading.
 Application code never talks to a cloud SDK. It talks to an interface:
 
 ```
-src/lib/config.ts            typed env, driver selection, validation
-src/lib/services/mailer.ts   Mailer   -> file | smtp | ses
-src/lib/services/storage.ts  Storage  -> local | s3
+lib/config.ts            typed env, driver selection, validation
+lib/services/mailer.ts   Mailer   -> file | smtp | ses
+lib/services/storage.ts  Storage  -> local | s3
 scripts/backup.mjs           backup   -> local | s3
 ```
 

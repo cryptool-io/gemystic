@@ -1,4 +1,4 @@
-# Conversion and Trust Review: gemysticgems.com
+﻿# Conversion and Trust Review: gemysticgems.com
 
 Panel review, 2026-07-18.
 
@@ -6,7 +6,7 @@ Panel review, 2026-07-18.
 
 ## 1. First-impression audit
 
-**What a cold visitor thinks in 5 seconds:** "Beautiful stones, confident copy... but who are these people, and if I send $900 to Pakistan over WhatsApp, do I ever see it again?" The hero line ("cut by the people who mined them") is strong, but nothing in the first viewport *proves* it. The "Peshawar, Pakistan · Since 2025" chip actively hurts: it pairs a country many Western buyers treat as a fraud flag with an admission the business is one year old.
+**What a cold visitor thinks in 5 seconds:** "Beautiful stones, confident copy... but who are these people, and if I send $900 to Pakistan over WhatsApp, do I ever see it again?" The hero line ("cut by the people who mined them") is strong, but nothing in the first viewport *proves* it. The "Peshawar, Pakistan Â· Since 2025" chip actively hurts: it pairs a country many Western buyers treat as a fraud flag with an admission the business is one year old.
 
 **The 3 biggest trust gaps:**
 
@@ -27,9 +27,9 @@ Panel review, 2026-07-18.
 | 5 | **Guarantee block beside every price.** Copy: "30-day returns, no questions. If the stone is not what the listing and video showed, full refund including shipping. Every parcel insured and tracked from Peshawar to your door." | Trust evidence belongs where anxiety peaks: beside the price and the pay action. Footer policies do not get read. | PDP price block; cart | S |
 | 6 | **"Meet the cutter" page plus a 90-second founder film.** Faces, first names, Namak Mandi, the wheel. The hero claim "cut by the people who mined them" becomes a clickable link to it. | The mine-to-market claim is the brand. Unverified it is copywriting; on camera it is a moat no Bangkok reseller can copy. A majority of underperforming luxury stores lack a visible craft story. | New /about route, hero link, PDP module | M |
 | 7 | **Pre-shipment proof ritual, advertised.** "Before your stone ships, we send a video of it next to your order number, then film the parcel being sealed." | Converts the sight-unseen fear into a differentiator; the mechanism opal dealers like Black Opal Direct used to sell five-figure stones to strangers. Near-zero cost. | PDP, FAQ, WhatsApp flow | S |
-| 8 | **Fix the hero chip.** Replace "Peshawar, Pakistan · Since 2025" with "Namak Mandi, Peshawar · A family trade" (if true) or "From the Swat Valley mines to you". Hero line alternatives: (a) "The stone in the photo is the stone you receive." (b) "Swat Valley emeralds, sold by the families who cut them." (c) "One mine. One cutter. One stone. Yours." | "Since 2025" volunteers the newness objection unprompted. Provenance beats tenure: the valley has 2,000 years of history to borrow. | Homepage hero | S |
+| 8 | **Fix the hero chip.** Replace "Peshawar, Pakistan Â· Since 2025" with "Namak Mandi, Peshawar Â· A family trade" (if true) or "From the Swat Valley mines to you". Hero line alternatives: (a) "The stone in the photo is the stone you receive." (b) "Swat Valley emeralds, sold by the families who cut them." (c) "One mine. One cutter. One stone. Yours." | "Since 2025" volunteers the newness objection unprompted. Provenance beats tenure: the valley has 2,000 years of history to borrow. | Homepage hero | S |
 | 9 | **Independent verification offer over $500.** "Any stone over $500 ships with an independent lab report, or direct to a gemologist of your choice before final payment." | Mirrors GemRockAuctions' Gemstone Sheriff program, which made anonymous overseas dealers viable. Rarely used; the offer itself converts. | Qualifying PDPs, FAQ | M |
-| 10 | **Sticky mobile PDP trust bar.** "Insured worldwide · 30-day returns · PayPal protected." | Mobile buyers scroll past the price block; anxiety recurs at add-to-bag. | PDP mobile layout | S |
+| 10 | **Sticky mobile PDP trust bar.** "Insured worldwide Â· 30-day returns Â· PayPal protected." | Mobile buyers scroll past the price block; anxiety recurs at add-to-bag. | PDP mobile layout | S |
 
 ---
 
@@ -40,7 +40,7 @@ Panel review, 2026-07-18.
 2. *Workshop reels:* weekly, 30-60s: rough arriving from Mingora, preforming, faceting, the finished stone in the same hands. Post to Instagram, TikTok, YouTube Shorts; embed the best on /about. Never stock footage.
 3. *Proof videos:* pre-shipment order-number video (fix #7); with permission, reuse clips as social proof ("Order 0041, sealed and shipped to Germany").
 
-**Provenance storytelling.** One-line origin trail on every PDP: "Rough bought from a Mingora miner, March 2026 · Cut in our Peshawar workshop, lot GM-118 · Unheated." Name the mines (Mingora and Gujar Kili for emerald, Katlang for pink topaz). Specificity separates a story from a slogan.
+**Provenance storytelling.** One-line origin trail on every PDP: "Rough bought from a Mingora miner, March 2026 Â· Cut in our Peshawar workshop, lot GM-118 Â· Unheated." Name the mines (Mingora and Gujar Kili for emerald, Katlang for pink topaz). Specificity separates a story from a slogan.
 
 **Certification policy.** Under $500: a signed in-house identification card (species, weight, dimensions, treatment, cutter's initials), framed honestly as "our identification, not an independent appraisal." Over $500: independent lab report included, or buyer's-choice inspection (fix #9). Publish the policy on one page: "How we prove what we sell." Never say "certified" without naming the lab; educated buyers read that as a scam tell.
 
@@ -81,7 +81,7 @@ Every placement gets a "Featured by" logo row on the homepage the day it lands.
 
 ## 5. Copy rules
 
-**Voice:** a knowledgeable friend in the trade. Calm, specific, faintly proud. Numbers over adjectives, disclosure over persuasion, one story per stone. The em dash is banned everywhere; note the current build violates the ban (src/app/page.tsx hero paragraph and trust cards). Sweep and replace with periods, commas, or colons.
+**Voice:** a knowledgeable friend in the trade. Calm, specific, faintly proud. Numbers over adjectives, disclosure over persuasion, one story per stone. The em dash is banned everywhere; note the current build violates the ban (app/page.tsx hero paragraph and trust cards). Sweep and replace with periods, commas, or colons.
 
 1. **Do:** "Unheated. Most tourmaline on the market is heated; this one left the ground this colour." **Don't:** "Stunning AAA+ rare unheated tourmaline!!" (Invented grades, enthusiasm you cannot cash.)
 2. **Do:** "One small inclusion under the crown facet, invisible face-up. Shown at 10x in photo 4." **Don't:** "Eye-clean, flawless-looking gem." (Hiding the flaw costs a return; showing it earns the sale.)

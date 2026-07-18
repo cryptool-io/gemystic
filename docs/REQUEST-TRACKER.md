@@ -114,6 +114,13 @@ Maintained from now on; last updated 18 July 2026.
 | Discount codes findable in admin | ✅ | "Discounts" nav label + overview card |
 | Real payment brand icons | ✅ | Inline SVG Visa/Mastercard/Maestro/PayPal/Discover |
 
+## Turn 9: stack parity with Trust-Agent
+
+| Request | Status | Notes |
+|---|---|---|
+| Exact same architecture/stack as Trust-Agent | ✅ | Converted and verified: Next 16.2 (Turbopack builds, 4.8s vs 20s), React 19.2.3 pinned, root-level app/components/lib (src/ removed), Tailwind 4 CSS-first tokens in @theme, Prisma 6.16.3 with the lib/prisma.ts singleton (migration re-verified against live DB), ESLint 9 flat config with the inline-style/hex bans, zod 4 in lib/schemas.ts, lib/api-response.ts envelope, cn() in lib/utils.ts, node --test suite via tsx (5 passing), BullMQ/ioredis queue layer with inline fallback, instrumentation.ts worker boot. npm run validate = lint + typecheck + test + build, all green. Rendering verified pixel-identical (same computed tokens) |
+| Remaining parity deltas | 🟡 | Deliberate, listed in NEXT-SESSION: components/ui primitives adopted incrementally, email-templates/telemetry/i18n/OAuth/2FA are feature ports scheduled with their milestones; Redis not installed on this machine so queues run inline (identical behaviour, no retry isolation) |
+
 ## The standing gap — one dependency, many features
 
 Order management, invoices, shipping docs, payments, sheet import and finance-in-admin

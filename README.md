@@ -62,7 +62,7 @@ economics on a real fee model, rule-based repricing flags, landed-cost estimates
 destination, and an analyst that interprets those computed figures without inventing
 new ones.
 
-**Portable infrastructure** — a driver layer (`src/lib/services/`) means email,
+**Portable infrastructure** — a driver layer (`lib/services/`) means email,
 media storage and backups each run locally or on AWS depending on one env var, with
 no code change. The AWS SDKs are not dependencies; they load at runtime only if a
 cloud driver is selected. `/studio/system` shows which capabilities are where, and
@@ -82,21 +82,20 @@ data/
   species.json        gemmological knowledge base — drives SEO copy and the AI layer
   catalog.json        generated; do not edit by hand
 scripts/normalize.mjs parses Etsy titles into structured attributes
-src/lib/
+lib/
   catalog.ts          querying, faceting, relevance search, related products
   seo.ts              JSON-LD builders
   finance.ts          fee model, margins, pricing flags, landed cost
   ai.ts               Anthropic client with graceful degradation
-src/app/
+  config.ts           typed env, driver selection, validation
+  services/           mailer + storage adapters (local | smtp | ses | s3)
+app/
   gem/[slug]          product pages (SSG)
   collections/        by species, plus the birthstone calendar
   learn/              buying guides (SSG)
   policies/[slug]     shipping, returns, privacy, terms
   contact/            contact page + working enquiry form
   media/[...key]      serves local uploads (bypassed when on S3)
-src/lib/
-  config.ts           typed env, driver selection, validation
-  services/           mailer + storage adapters (local | smtp | ses | s3)
 scripts/
   backup.mjs          local archive, optional S3 push
   restore.mjs         verified byte-identical round-trip
