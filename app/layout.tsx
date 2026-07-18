@@ -122,7 +122,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <Logo />
             </Link>
 
-            <div className="flex-1" />
+            <div className="flex-1 lg:hidden" />
 
             <MainNav categories={tree} />
 

@@ -123,6 +123,12 @@ Maintained from now on; last updated 18 July 2026.
 | Browser re-verification after the conversion | ✅ | Tokens, fonts, shadows, grids and the custom xs breakpoint all render from the new @theme; found and fixed a real 375px header overflow (logo wordmark now yields below xs) |
 | Header overflow at 1280-1500px desktop | 🔴 | Pre-existing, surfaced by the same verification: the category nav (~1000px) pushes cart/account past the edge at common desktop widths. Needs a design decision (see NEXT-SESSION open items); not fixable with overflow scroll without clipping the dropdowns |
 
+## Turn 10: desktop header overflow fix
+
+| Request | Status | Notes |
+|---|---|---|
+| Header overflow at 1280-1500px desktop | ✅ | Priority+ "More" menu in MainNav: the desktop nav is now the flexible header element and folds trailing items into a right-aligned More dropdown when the row runs out of space (measured via an invisible clipped copy + ResizeObserver, so the category dropdown panels stay unclipped). Verified in the browser: no horizontal scroll at 1280 / 1366 / 1440 / 1920, full nav restored at 1920, More panel opens inside the viewport, mobile drawer at 375 unaffected. Overflowed categories link to their /shop?category page from the More panel |
+
 ## The standing gap — one dependency, many features
 
 ~~A running Postgres~~ **Resolved.** The `gemystic` database is live on the

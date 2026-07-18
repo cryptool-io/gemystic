@@ -193,13 +193,15 @@ Ongoing, weave into each milestone.
 
 ## 5. Small open items (pick up opportunistically)
 
-- **Header overflow at desktop widths around 1280-1500px**: the category nav
-  measures ~1000px; with logo, search, currency, cart and account it exceeds the
-  row, pushing the account button past the viewport edge (found during the
-  Tailwind 4 verification; pre-existing, not a v4 regression). Needs a design
-  decision: a "More" overflow menu, shorter labels, or full nav only at 3xl.
-  Do not fix with overflow-x-auto on the nav; that clips the dropdown panels.
-  (375px was also overflowing; fixed by hiding the logo wordmark below xs.)
+- ~~Header overflow at desktop widths around 1280-1500px~~ **Resolved** with a
+  priority+ "More" menu in components/MainNav.tsx: the desktop nav is now the
+  flexible header element (flex-1 min-w-0 justify-end, spacer div is lg:hidden),
+  an invisible zero-clipped measurement row plus ResizeObserver computes how many
+  items fit, and trailing items collapse into a right-aligned "More" dropdown
+  (categories link to /shop?category=slug there). Verified no horizontal
+  scroll at 1280/1366/1440/1920 and 375; full nav shows at 1920 with no More
+  button. (375px was also overflowing earlier; fixed by hiding the logo
+  wordmark below xs.)
 
 - PKR display: show whole rupees (no decimals), maximumFractionDigits 0 for PKR.
 - Cart promo scope only matches species client-side; wire category matching too
