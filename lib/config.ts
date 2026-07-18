@@ -78,6 +78,17 @@ export const config = {
     apiKey: env('ANTHROPIC_API_KEY'),
     enabled: Boolean(env('ANTHROPIC_API_KEY')),
   },
+
+  /**
+   * Google sign-in. Optional: without a client id the buttons stay hidden and
+   * email/password is the only route in, so a self-hosted install needs no
+   * Google project at all.
+   */
+  google: {
+    clientId: env('GOOGLE_CLIENT_ID'),
+    clientSecret: env('GOOGLE_CLIENT_SECRET'),
+    enabled: Boolean(env('GOOGLE_CLIENT_ID') && env('GOOGLE_CLIENT_SECRET')),
+  },
 } as const;
 
 export interface ConfigIssue {

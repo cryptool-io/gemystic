@@ -18,10 +18,20 @@ Companion files: docs/NEXT-SESSION.md (milestone detail), docs/REQUEST-TRACKER.m
 | "Add to bag = add to cart" rename | One remnant string in components/account/SavedStones.tsx. Fixed now |
 | Sold overlay, display-days setting, interest badge, marquee self-scroll, merged HelpHub button | All re-verified present in code (my audit greps were initially wrong, the features are real: ProductCard sold overlay, lib/sold.ts + soldDisplayDays 0-90 in lib/settings.ts, components/InterestBadge.tsx + app/api/interest, `*:not(.marquee-track)` motion exemption, single HelpHub in layout) |
 
-## B. NOT implemented: the commerce core
+## B. The commerce core: BUILT 19 July 2026
 
-These are the owner's biggest asks. All were dependency-blocked on the database,
-which is NOW LIVE, so nothing blocks them anymore except Stripe/PayPal keys.
+Status changed. Everything in this section now exists and was walked end to end
+in the browser (order placed, paid, prepared, shipped with documents, delivered,
+review requested). Payment runs on a demo provider until the owner opens Stripe
+and PayPal; swapping it is one function body in lib/payments.ts, because the
+order, payment row, stock, invoice and email side effects all sit behind it.
+
+Verified on 19 July 2026 with order GEM-2026-0001:
+subtotal 398.50 + 25.00 shipping = 423.50 charged; both stones marked sold in
+the shared sold store; confirmation to the buyer and notices to two team
+members in var/outbox; status advanced through the full pipeline with one
+email per transition; three export documents generated; review request sent on
+delivery. Declined-card and double-payment (idempotency) paths both tested.
 
 ### B1. Orders
 > "managing orders" ... "as admin we want the entire process from order to delivery automated"
@@ -73,7 +83,18 @@ M4 (service account, header-row contract validated with zod, upsert by
 source_ref, admin trigger + per-row error history). Owner must share the sheet
 and a service-account credential.
 
-## C. NOT implemented: admin self-service
+## C. Admin self-service: partly built 19 July 2026
+
+C2 (listing management) and C3 (per-stone SEO) are done: /admin/listings
+replaces the read-only catalogue with filters (search, category, stone, status,
+channel, edited-only), a per-listing editor covering title, description, price,
+treatment, meta title, meta description, site keywords and the separate Etsy
+tag set, an AI draft button, and a per-listing Etsy sync. Edits are stored as
+overrides layered over the generated catalogue, so `npm run normalize` no
+longer erases them, and they appear on the storefront immediately.
+
+Still open below: C1 category CRUD, C4 analytics dashboards, C5 currency admin.
+The remaining detail in each item stands.
 
 ### C1. Category management
 > "I should be able to add categories myself inside an admin portal"
@@ -200,14 +221,14 @@ sitemap submitted, IndexNow wired (M7 already lists it). Owner action: grant
 access to (or create) the Search Console / Bing accounts.
 
 ### G6. Logo decision
-> Owner: "Pick a logo for now also". Billah: "Gemystic Gems — 10 Logo
-> Concepts.html — this doesnt work"
+> Owner: "Pick a logo for now also". Billah: "Gemystic Gems, 10 Logo
+> Concepts.html, this doesnt work"
 
 The concepts file Billah received does not open. Re-export the 10 concepts as
 a single PNG/PDF sheet (no HTML), get a pick, apply it (components/Logo.tsx is
 the one-block swap point).
 
-## H. The admin pipeline (owner spec, 18 July 2026) — THE build order for M2-M6
+## H. The admin pipeline (owner spec, 18 July 2026), THE build order for M2-M6
 
 The owner defined the admin flow step by step. This supersedes scattered
 requirements above where they overlap; every admin screen must make its place

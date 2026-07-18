@@ -208,6 +208,38 @@
   100% { opacity: 1; }
 }
 
+/* Range-slider handles (components/RangeFilter.tsx). The inputs are stacked
+   transparently over a shared track, so only the thumbs are painted and
+   pointer events must fall through everywhere else. */
+.range-thumb {
+  pointer-events: none;
+}
+.range-thumb::-webkit-slider-thumb {
+  pointer-events: auto;
+  appearance: none;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 9999px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-brand);
+  box-shadow: 0 1px 3px rgba(12, 31, 25, 0.25);
+  cursor: pointer;
+}
+.range-thumb::-moz-range-thumb {
+  pointer-events: auto;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 9999px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-brand);
+  box-shadow: 0 1px 3px rgba(12, 31, 25, 0.25);
+  cursor: pointer;
+}
+.range-thumb:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--color-brand-ring);
+  outline-offset: 2px;
+}
+
 /* Keeps long specimen titles from blowing out grid cells. */
 .clamp-2 {
   display: -webkit-box;

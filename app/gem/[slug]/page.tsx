@@ -6,6 +6,7 @@ import { JsonLd } from '@/components/JsonLd';
 import { AddToBag } from '@/components/AddToBag';
 import { allProductsIncludingSold, getProduct, getSpecies, relatedProducts } from '@/lib/catalog';
 import { productImages } from '@/lib/galleries';
+import { getOverride, applyOverride } from '@/lib/listings/overrides';
 import { ProductGallery } from '@/components/ProductGallery';
 import { approvedForProduct, summarise } from '@/lib/reviews/store';
 import { RatingHeadline, ReviewList } from '@/components/reviews/ReviewList';
@@ -33,8 +34,10 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params;
-  const p = getProduct(slug);
-  if (!p) return {};
+  const generated = getProduct(slug);
+  if (!generated) return {};
+  // Per-stone SEO: whatever the owner set in admin wins over the generated meta.
+  const p = applyOverride(generated, await getOverride(slug));
 
   return {
     title: p.metaTitle,
@@ -53,9 +56,10 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
 export default async function GemPage({ params }: { params: Params }) {
   const { slug } = await params;
-  const p = getProduct(slug);
-  if (!p) notFound();
+  const generated = getProduct(slug);
+  if (!generated) notFound();
 
+  const p = applyOverride(generated, await getOverride(slug));
   const s = getSpecies(p.species);
   const related = relatedProducts(p);
   const reviews = await approvedForProduct(p.slug);

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Product } from '@/lib/types';
 import { getSpecies } from '@/lib/catalog';
 import { productImages } from '@/lib/galleries';
+import { allOverrides, applyOverride } from '@/lib/listings/overrides';
 import { effectivePrice } from '@/lib/campaigns/store';
 import { Price, PricePerCarat } from '@/components/currency/Price';
 import { RotatingImage } from '@/components/RotatingImage';
@@ -20,7 +21,7 @@ import { RotatingImage } from '@/components/RotatingImage';
  * items) where the tile is a pointer rather than a comparison.
  */
 export async function ProductCard({
-  p,
+  p: generated,
   priority = false,
   compact = false,
 }: {
@@ -28,6 +29,9 @@ export async function ProductCard({
   priority?: boolean;
   compact?: boolean;
 }) {
+  // Owner edits win over the generated catalogue. The map is memoised per
+  // request, so a grid of tiles costs one query, not one per tile.
+  const p = applyOverride(generated, (await allOverrides()).get(generated.slug));
   const species = getSpecies(p.species);
   const weight = p.caratWeight ? `${p.caratWeight} ct` : p.gramWeight ? `${p.gramWeight} g` : null;
   // Campaign-aware price in USD; conversion to the visitor's currency happens

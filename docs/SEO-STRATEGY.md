@@ -1,4 +1,4 @@
-# SEO + AEO Strategy — gemysticgems.com
+# SEO + AEO Strategy, gemysticgems.com
 
 **Scope:** Natural gemstone e-commerce (faceted, rough, cabochons, specimens, wholesale parcels, handmade jewellery). Ships from Pakistan & Thailand, USD pricing. Core edge: **Swat Valley emerald at source** + pigeon-blood ruby + Pakistani/Afghan material generally.
 **Date:** July 2026. Assumes: new/low-authority domain, llms.txt + /api/catalog + Product/FAQ schema already live.
@@ -9,9 +9,9 @@
 
 Difficulty scale: **XH** = extremely hard (years, DA 60+), **H** = hard (12–24 mo), **M** = winnable in 6–12 mo, **L** = winnable in 1–3 mo with a decent page.
 
-### Tier 1 — Head terms (intent: mixed/commercial · difficulty: XH–H · target: homepage + top collections)
+### Tier 1, Head terms (intent: mixed/commercial · difficulty: XH–H · target: homepage + top collections)
 
-Tracked for trend only — do not build the strategy around these.
+Tracked for trend only, do not build the strategy around these.
 
 | Keyword | Diff | Target page |
 |---|---|---|
@@ -28,9 +28,9 @@ Tracked for trend only — do not build the strategy around these.
 | gemstone jewelry | XH | /collections/jewellery |
 | mineral specimens for sale | H | /collections/specimens |
 
-### Tier 2 — Species terms (intent: commercial · difficulty: H–M · target: species collection pages)
+### Tier 2, Species terms (intent: commercial · difficulty: H–M · target: species collection pages)
 
-One collection page per species × form. Origin terms (★) are the realistic Tier-2 wins — thin competition, genuine supply-chain authority.
+One collection page per species × form. Origin terms (★) are the realistic Tier-2 wins, thin competition, genuine supply-chain authority.
 
 | Keyword | Diff | Target page |
 |---|---|---|
@@ -75,9 +75,9 @@ One collection page per species × form. Origin terms (★) are the realistic Ti
 | wholesale gemstone parcels | L | /collections/wholesale |
 | gem rough lots wholesale | L | /collections/wholesale-rough |
 
-### Tier 3 — Long-tail commercial (intent: high purchase intent · difficulty: M–L · target: product pages, filtered collections, price-guide pages)
+### Tier 3, Long-tail commercial (intent: high purchase intent · difficulty: M–L · target: product pages, filtered collections, price-guide pages)
 
-These convert. Filtered collections targeting these need indexable URLs + unique intro copy — do not leave them noindexed.
+These convert. Filtered collections targeting these need indexable URLs + unique intro copy, do not leave them noindexed.
 
 | Keyword | Diff | Target page |
 |---|---|---|
@@ -112,7 +112,7 @@ These convert. Filtered collections targeting these need indexable URLs + unique
 | collector grade mineral specimen fluorite | L | Specimen products |
 | aquamarine specimen with matrix | L | Specimen products |
 
-### Tier 4 — Informational (intent: research/learn · difficulty: M–L · target: /learn guides — most need to be created)
+### Tier 4, Informational (intent: research/learn · difficulty: M–L · target: /learn guides, most need to be created)
 
 These earn rankings, links, and AI citations, and feed internal links to collections.
 
@@ -144,9 +144,9 @@ These earn rankings, links, and AI citations, and feed internal links to collect
 | is peridot expensive | L | Peridot price guide |
 | hessonite (gomed) astrology stone | M | Hessonite guide (S. Asian demand) |
 
-### Tier 5 — AEO / AI-search queries (intent: recommendation-seeking · difficulty: n/a (citation, not rank) · target: About/Trust pages, guides, llms.txt)
+### Tier 5, AEO / AI-search queries (intent: recommendation-seeking · difficulty: n/a (citation, not rank) · target: About/Trust pages, guides, llms.txt)
 
-Questions typed into ChatGPT/Perplexity/Gemini/Google AI Mode. You "win" by being cited — the answer must exist verbatim on a crawlable page.
+Questions typed into ChatGPT/Perplexity/Gemini/Google AI Mode. You "win" by being cited, the answer must exist verbatim on a crawlable page.
 
 | Query | Page that must answer it |
 |---|---|
@@ -173,7 +173,7 @@ Questions typed into ChatGPT/Perplexity/Gemini/Google AI Mode. You "win" by bein
 
 ## 2. Honest Reality Check
 
-**Ranking #1 for "gemstones" / "buy gemstones online":** these SERPs are held by GemSelect, Gem Rock Auctions, GemPundit, Etsy, Amazon — domains with 15–25 years of age, DA 55–80, six-figure backlink profiles. A new domain will **not** rank top-10 for these inside 2–3 years, period.
+**Ranking #1 for "gemstones" / "buy gemstones online":** these SERPs are held by GemSelect, Gem Rock Auctions, GemPundit, Etsy, Amazon, domains with 15–25 years of age, DA 55–80, six-figure backlink profiles. A new domain will **not** rank top-10 for these inside 2–3 years, period.
 
 | Horizon | Realistically achievable |
 |---|---|
@@ -185,23 +185,23 @@ Questions typed into ChatGPT/Perplexity/Gemini/Google AI Mode. You "win" by bein
 
 ---
 
-## 3. Gap List — Pages to Build
+## 3. Gap List, Pages to Build
 
 Priority order. ~Effort: S = <1 day, M = 1–3 days, L = 1 week+.
 
 | # | Page | Type | Effort | Why |
 |---|---|---|---|---|
 | 1 | **Swat Valley Emeralds** origin hub (mine history, photos, your sourcing, link to collection) | Learn + collection | M | Single biggest defensible asset; low competition, high trust value |
-| 2 | **About / Trust page** — who you are, Peshawar/Bangkok operations, certs used, review links, guarantees | Trust | S | Prerequisite for every Tier-5 query; AI engines check seller legitimacy pages |
+| 2 | **About / Trust page**, who you are, Peshawar/Bangkok operations, certs used, review links, guarantees | Trust | S | Prerequisite for every Tier-5 query; AI engines check seller legitimacy pages |
 | 3 | **Price guides** ×5: emerald, ruby, sapphire, imperial topaz, peridot ("X price per carat 2026", updated yearly) | Learn | M each | Highest AI-citation content type; price questions dominate LLM gem queries |
 | 4 | **Treatment guides**: emerald oiling, ruby heat, sapphire heat/diffusion, "unheated" explained | Learn | M | Matches your untreated-stone positioning; converts skeptics |
 | 5 | **Comparison pages** ×6: emerald vs peridot, spinel vs ruby, citrine vs topaz, lab vs natural, Swat vs Colombian emerald, London blue vs sky blue topaz | Learn | S each | "X vs Y" is the easiest informational win + heavy LLM citation format |
 | 6 | **Birthstone hub + 12 month pages**, each linking to the relevant collection | Learn | L | Evergreen, seasonal spikes every month |
 | 7 | **Per-cut collection pages** (emerald cut, oval, pear, cushion, round) with indexable URLs & unique copy | Collection | M | Captures Tier-3 "cut + species" queries; currently only reachable by filter |
 | 8 | **Shipping, duties & returns page** per major destination (US/UK/EU/AU) in plain HTML | Trust | S | Top pre-purchase objection; frequent LLM question |
-| 9 | **Certification page** — which labs, sample reports, how to verify | Trust | S | Tier-3/5 "certified" queries |
-| 10 | **Wholesale/B2B landing page** — parcels, calibrated goods, MOQ, jeweler terms | Commercial | S | "wholesale gemstone supplier" queries are low-competition, high-value |
-| 11 | **Buying gemstones online safely** guide (vendor checklist — include yourself honestly) | Learn | M | Direct target of the #1 AEO query class |
+| 9 | **Certification page**, which labs, sample reports, how to verify | Trust | S | Tier-3/5 "certified" queries |
+| 10 | **Wholesale/B2B landing page**, parcels, calibrated goods, MOQ, jeweler terms | Commercial | S | "wholesale gemstone supplier" queries are low-competition, high-value |
+| 11 | **Buying gemstones online safely** guide (vendor checklist, include yourself honestly) | Learn | M | Direct target of the #1 AEO query class |
 | 12 | **Hardness chart / gem care hub** | Learn | S | Link magnet, internal-link hub |
 | 13 | **Hessonite/gomed & astrology-adjacent pages** (factual tone) | Learn | S | Large South-Asian search demand, near-zero Western competition |
 
@@ -209,36 +209,36 @@ Priority order. ~Effort: S = <1 day, M = 1–3 days, L = 1 week+.
 
 ## 4. Backlink & Authority Plan (realistic for a small dealer)
 
-No paid link schemes. Target: **15–25 genuine referring domains in 12 months** — that's enough in this niche.
+No paid link schemes. Target: **15–25 genuine referring domains in 12 months**, that's enough in this niche.
 
 | Channel | Action | Expected result |
 |---|---|---|
 | **YouTube** | Film cutting/rough-grading videos at source (Peshawar office, parcel unboxings, Swat rough sorting). Link each video description to the matching guide/collection. | Referral traffic + embeds; YouTube results surface in AI answers |
 | **Reddit** (r/gemstones, r/Gemcutters, r/jewelry, r/RockTumbling) | Participate genuinely for 2–3 months before any link. Post ID help, origin photos, "what we see at the Peshawar market" content. Link only when directly asked or in profile. | Brand searches, occasional links, LLM training-data presence (Reddit is heavily used by AI engines) |
-| **Gemology forums** | GemologyOnline, Mindat (specimen photos with locality data — Mindat links are excellent), IGS community | 3–5 authoritative niche links |
+| **Gemology forums** | GemologyOnline, Mindat (specimen photos with locality data, Mindat links are excellent), IGS community | 3–5 authoritative niche links |
 | **Supplier directories** | IGS dealer listing, JewelryDistrict-type directories, Ganoksin community | Easy foundational links |
 | **Lapidary & jewelry-maker outreach** | Sponsor rough for 5–10 faceting YouTubers/Instagram cutters ("stone provided by GemMysticGems") | Links + the most credible endorsement type in this hobby |
 | **Digital PR (1–2 per year)** | Pitch a "Swat Valley emerald market report" (prices you actually see at source) to trade press: JCK, National Jeweler, The Jewellery Editor, gem blogs | 1–3 high-DA links; also becomes an AI-cited data source |
 | **Guest content** | One article per quarter for IGS, Ganoksin, or a jewelry-business blog on Pakistani/Afghan sourcing | Steady authority growth |
 | **Etsy/eBay/GemRockAuctions storefronts** | Keep small satellite storefronts linking to the main site profile | Nofollow but drives brand queries + marketplace reviews feed Tier-5 trust answers |
 
-**Skip:** generic web directories, link exchanges, PBNs, fiverr links — actively harmful.
+**Skip:** generic web directories, link exchanges, PBNs, fiverr links, actively harmful.
 
 ---
 
-## 5. AEO Plan — Beyond llms.txt / catalog feed / schema
+## 5. AEO Plan, Beyond llms.txt / catalog feed / schema
 
 Already done: llms.txt, /api/catalog JSON, Product + FAQ schema. What still moves the needle:
 
 1. **Answer-first page structure.** Every guide opens with a 40–60-word direct answer under an H2 phrased as the question ("What is pigeon blood ruby?"). LLMs extract these blocks verbatim.
 2. **Dated, first-party data.** Publish actual price ranges you sell at ("As of July 2026, we sell 1ct Swat emeralds from $X–$Y") with a visible last-updated date. AI engines prefer sources with concrete, dated numbers over vague ranges.
 3. **Entity building.** Create/complete: Google Business Profile (Bangkok and/or Peshawar), Wikidata is overkill but get consistent NAP + `Organization` schema with `sameAs` → social/YouTube/marketplace profiles. AI trust checks cross-reference these.
-4. **Reviews on crawlable third parties.** Trustpilot or Google reviews (not just on-site widgets). "Is X trustworthy" answers are assembled from Trustpilot, Reddit, and BBB-type sources — on-site testimonials are ignored.
+4. **Reviews on crawlable third parties.** Trustpilot or Google reviews (not just on-site widgets). "Is X trustworthy" answers are assembled from Trustpilot, Reddit, and BBB-type sources, on-site testimonials are ignored.
 5. **Bing Webmaster Tools + IndexNow.** ChatGPT browsing and Copilot lean on Bing's index; most gem sellers ignore Bing entirely. Free win.
 6. **Expand llms.txt → llms-full.txt** with condensed versions of every guide (not just navigation), and keep /api/catalog referenced from it. Add per-page `speakable`/`FAQPage` only where the FAQ is real.
-7. **Crawlability audit for AI bots.** Confirm robots.txt allows GPTBot, ClaudeBot, PerplexityBot, Google-Extended (deliberate choice: allow — citations are the goal). Ensure prices/stock render server-side, not JS-only.
+7. **Crawlability audit for AI bots.** Confirm robots.txt allows GPTBot, ClaudeBot, PerplexityBot, Google-Extended (deliberate choice: allow, citations are the goal). Ensure prices/stock render server-side, not JS-only.
 8. **Author identity.** Guides bylined by a named person with a bio page (gem experience, location, photo). Anonymous content is cited less.
-9. **Monitor citations.** Monthly: ask ChatGPT/Perplexity/Gemini the Tier-5 queries, log whether/where you appear, and which competitors are cited — then study what page format of theirs got cited.
+9. **Monitor citations.** Monthly: ask ChatGPT/Perplexity/Gemini the Tier-5 queries, log whether/where you appear, and which competitors are cited, then study what page format of theirs got cited.
 
 ---
 
@@ -264,4 +264,4 @@ Already done: llms.txt, /api/catalog JSON, Product + FAQ schema. What still move
 
 ---
 
-*SERP check (July 2026): "swat valley emerald" is held by Gem Rock Auctions, Folkmarket Gems, GemPundit, Etsy, 1stDibs — beatable with a dedicated hub; head terms are marketplace-dominated and are not.*
+*SERP check (July 2026): "swat valley emerald" is held by Gem Rock Auctions, Folkmarket Gems, GemPundit, Etsy, 1stDibs, beatable with a dedicated hub; head terms are marketplace-dominated and are not.*

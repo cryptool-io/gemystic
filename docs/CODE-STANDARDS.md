@@ -1,7 +1,7 @@
 # Code standards
 
 Rules a reviewer can point at. Where this project and Trust-Agent differ without a
-reason, prefer Trust-Agent's convention — one house style across both codebases is
+reason, prefer Trust-Agent's convention, one house style across both codebases is
 worth more than a marginally better rule in one of them.
 
 ---
@@ -52,7 +52,7 @@ Two rules that carry real meaning and are easy to break:
 
 1. **Brand green means positive, accent amber means caution.** "Underpriced" is
    `brand`; "overpriced" is `accent`. A sweep once flattened both to `brand` and the
-   finance page silently lost its meaning — the numbers were right and the page lied.
+   finance page silently lost its meaning, the numbers were right and the page lied.
 2. **Never encode information in colour alone.** Every coloured state also carries a
    label or a sign (`+12%`, "underpriced"), for colour-blind users and greyscale print.
 
@@ -68,20 +68,20 @@ Three variants, no more. Defined in `globals.css`, never restyled inline.
 | `.btn-ghost` | secondary actions, filters, cancel | any number |
 | plain link | tertiary / navigational | no button chrome |
 
-- Every button has a visible focus ring — `.btn` includes `focus-visible:ring-2`.
+- Every button has a visible focus ring, `.btn` includes `focus-visible:ring-2`.
   Do not remove it.
 - Minimum touch target 44×44 px on touch devices; `.btn` padding satisfies this.
 - Disabled buttons use `disabled:opacity-40` **and** the `disabled` attribute, so
   they are non-interactive for keyboard and screen readers, not just faded.
 - Destructive actions require confirmation and must not be `.btn-primary`.
-- Button label is a verb: "Add to bag", "Generate listing" — not "OK", not "Submit".
+- Button label is a verb: "Add to bag", "Generate listing", not "OK", not "Submit".
 
 ## Forms
 
 - Every input uses `.field` and has a real `<label>` with `htmlFor`. Placeholder is
   never a substitute for a label.
 - Validate on the server always; client validation is a convenience, not a control.
-- Errors appear next to the field, in `accent`, with text — never colour alone.
+- Errors appear next to the field, in `accent`, with text, never colour alone.
 - Honeypot plus rate limiting on any public form (see `api/contact/route.ts`).
 
 ## Tables
@@ -89,7 +89,7 @@ Three variants, no more. Defined in `globals.css`, never restyled inline.
 - Always inside `.scroll-x`, with `min-w-[Nrem]` on the table. Wide content scrolls
   in its own container; **the page body must never scroll horizontally**.
 - Numeric columns right-aligned, text columns left-aligned.
-- Header row is `text-muted` and `font-normal` — weight is for data, not chrome.
+- Header row is `text-muted` and `font-normal`, weight is for data, not chrome.
 - Rows separated with `divide-y divide-line`, not borders on every cell.
 - Any table that can exceed ~50 rows needs pagination or virtualisation before ship.
 
@@ -111,7 +111,7 @@ Three variants, no more. Defined in `globals.css`, never restyled inline.
 ## React and Next
 
 - **Server components by default.** Add `'use client'` only for state, effects,
-  browser APIs or event handlers — and push it to the leaf, not the page.
+  browser APIs or event handlers, and push it to the leaf, not the page.
 - A client component that needs server data takes it as props. Do not fetch in a
   client component when the parent can pass it.
 - `useSearchParams` requires a `<Suspense>` boundary or the whole route opts out of
@@ -132,7 +132,7 @@ Return a consistent envelope (Trust-Agent's `lib/api-response.ts` is the referen
 
 - Validate input with zod. It is already a dependency and currently unused.
 - Never leak internals in an error message. Log the detail, return the cause.
-- Any handler with side effects is rate-limited and idempotent — a retried webhook
+- Any handler with side effects is rate-limited and idempotent, a retried webhook
   must not create a second payment.
 
 ## Comments
@@ -141,11 +141,11 @@ Explain **why**, never what. A comment restating the code is noise; a comment
 explaining a non-obvious constraint is the most valuable line in the file.
 
 ```ts
-// Good — explains a constraint the code cannot state
+// Good, explains a constraint the code cannot state
 // Addresses are COPIED, not referenced: if a customer edits their address in 2027
 // the 2026 invoice must still show where the parcel actually went.
 
-// Bad — restates the code
+// Bad, restates the code
 // Loop over the products
 ```
 
@@ -157,14 +157,14 @@ Before a change is considered finished:
 
 1. `npm run typecheck` passes.
 2. `npm run build` passes with **no new warnings**.
-3. The change was exercised in a browser at mobile and desktop widths — not just
+3. The change was exercised in a browser at mobile and desktop widths, not just
    compiled.
 4. No hex colours, no inline `style={{}}`, no `any` without a comment justifying it.
 5. New user-facing copy states what is actually true. If email is not delivered, the
    UI says so rather than showing "Sent".
 
 **Never run `next build` while `next dev` is running.** They share `.next` and
-corrupt each other — this produced two spurious failures during development.
+corrupt each other, this produced two spurious failures during development.
 
 ## Known gaps in this repo
 

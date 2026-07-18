@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { AuthForm } from '@/components/auth/AuthForm';
 import { currentUser } from '@/lib/auth/session';
 import { userStore } from '@/lib/auth/store';
+import { googleEnabled } from '@/lib/auth/google';
 
 export const metadata: Metadata = {
   title: 'Create Account',
@@ -31,7 +32,11 @@ export default async function RegisterPage({
           email.
         </div>
       )}
-      <AuthForm mode="register" next={isFirstAccount ? '/admin' : target} />
+      <AuthForm
+        mode="register"
+        next={isFirstAccount ? '/admin' : target}
+        googleEnabled={googleEnabled()}
+      />
     </div>
   );
 }

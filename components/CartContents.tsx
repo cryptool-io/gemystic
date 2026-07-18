@@ -258,21 +258,26 @@ export function CartContents() {
         </p>
 
         <div className="mt-4 space-y-2">
+          <Link href="/checkout" className="btn-primary w-full">
+            Checkout
+          </Link>
+          {/* The concierge path stays: several buyers prefer to talk to a human
+              before committing four figures to a stone they cannot hold. */}
           <a
             href={`${SITE.whatsapp}?text=${encodeURIComponent(
               `Hello! I'd like to buy: ${availableItems.map((i) => i.title).join(', ')} (total ${formatMoney(totalUsd, currency)}${promo ? `, code ${promo.code}` : ''})`,
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary w-full"
+            className="btn-ghost w-full"
           >
-            Order via personal concierge
+            Or order via personal concierge
           </a>
         </div>
         <div className="mt-4 rounded-lg bg-surface-2 p-3 text-xs leading-relaxed text-muted">
-          <span className="font-medium text-fg">How ordering works:</span> message us, we
-          confirm the stone is yours and send a secure PayPal invoice or card link, then it
-          ships insured with tracking. Payment is covered by PayPal Buyer Protection.
+          <span className="font-medium text-fg">How ordering works:</span> check out here and
+          your stone is reserved the moment payment clears, or message us and we will confirm
+          the stone and send a payment link. Either way it ships insured with tracking.
         </div>
       </div>
     </div>

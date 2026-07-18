@@ -1,30 +1,30 @@
-# Request tracker — full session audit
+# Request tracker, full session audit
 
-You asked whether anything you requested was missed. Fair challenge — this is the
+You asked whether anything you requested was missed. Fair challenge, this is the
 complete audit of every request across the whole engagement, honestly graded.
 Maintained from now on; last updated 18 July 2026.
 
 **Legend:** ✅ delivered & verified · 🟡 partially delivered (gap stated) ·
 🔴 designed but not operational · ⏳ blocked on something outside the code
 
-## Turn 1 — initial build
+## Turn 1, initial build
 
 | Request | Status | Notes |
 |---|---|---|
 | Marketplace with all stones from the Etsy shop | ✅ | 147 listings scraped, parsed, live |
 | SEO focus | ✅ | schema.org everywhere, sitemap, unique metas |
 | "AI variant" (AEO) | ✅ | llms.txt, /api/catalog, AI-crawler robots policy |
-| AI support (assistant) | 🟡 | Built; never executed — no provider key configured. Provider chain now supports free models + Bedrock |
+| AI support (assistant) | 🟡 | Built; never executed, no provider key configured. Provider chain now supports free models + Bedrock |
 | Auto-listing tools | 🟡 | AI auto-list from photo/notes built (same key caveat). Google-Sheet auto-import: schema designed, importer not built |
 | AI financial integration | 🟡 | Finance engine + analyst built; analyst needs a provider key |
 
-## Turn 2 — reference site
+## Turn 2, reference site
 
 | Request | Status | Notes |
 |---|---|---|
 | Use gemysticgems.com as reference | ✅ | Brand, USD, policies, taxonomy mirrored; compromise found and documented (local file, kept out of public repo) |
 
-## Turn 3 — theme & architecture
+## Turn 3, theme & architecture
 
 | Request | Status | Notes |
 |---|---|---|
@@ -32,12 +32,12 @@ Maintained from now on; last updated 18 July 2026.
 | Local-first, AWS (SES) later, backups | ✅ | Driver architecture; backup verified by restore round-trip |
 | Works on any device, ultrawide to phone | ✅ | Verified 320→3440px |
 
-## Turn 4 — platform requirements
+## Turn 4, platform requirements
 
 | Request | Status | Notes |
 |---|---|---|
-| PostgreSQL | 🟡 | Required per you: SQL DDL + Prisma schema validated, client generated, compose service, migrate scripts. **Not executed — Docker isn't running on this machine.** JSON stores drive runtime until then |
-| Auto-listing from Google Sheet | 🔴 | import_runs/import_rows designed (SQL + Prisma); importer service not built — sequenced after DB is live |
+| PostgreSQL | 🟡 | Required per you: SQL DDL + Prisma schema validated, client generated, compose service, migrate scripts. **Not executed, Docker isn't running on this machine.** JSON stores drive runtime until then |
+| Auto-listing from Google Sheet | 🔴 | import_runs/import_rows designed (SQL + Prisma); importer service not built, sequenced after DB is live |
 | Order management | 🔴 | Full schema (orders→items→payments→shipments→docs); no runtime until DB |
 | Email team on order events | 🟡 | Mailer works (file/SMTP/SES), review-pending notices send; order events need orders |
 | Shipping + export docs PK/TH | 🔴 | Schema incl. commercial invoice, packing list, certificate of origin; generation not built |
@@ -51,13 +51,13 @@ Maintained from now on; last updated 18 July 2026.
 | Walk buyer journey | ✅ | Done honestly: journey didn't exist; gap table in PLATFORM-AUDIT |
 | Tiles show more info | ✅ | Weight/cut/colour/origin/treatment/per-carat |
 
-## Turn 5 — UI & platform batch
+## Turn 5, UI & platform batch
 
 | Request | Status | Notes |
 |---|---|---|
 | Push to github.com/cryptool-io/gemystic | ✅ | Pushed once token fixed |
 | Sample photos on species tiles | ✅ | Rule-based best-photo selection |
-| **Clear support icon** | ✅ *(second attempt)* | **First attempt missed the mark — bare chat bubble, still ambiguous. Now a labelled "Support" pill with headset icon.** The miss that triggered this tracker |
+| **Clear support icon** | ✅ *(second attempt)* | **First attempt missed the mark, bare chat bubble, still ambiguous. Now a labelled "Support" pill with headset icon.** The miss that triggered this tracker |
 | Signup/login | ✅ | Working, verified end-to-end |
 | Add admins / admin view | ✅ | Team page, roles, first-account-owner rule |
 | Reviews section | ✅ | Product+shop reviews, moderation, real Etsy seed |
@@ -65,7 +65,7 @@ Maintained from now on; last updated 18 July 2026.
 | Unique animations / market research | ✅ | Research doc → scroll reveals, sheen, marquee |
 | Phone menu broken | ✅ | Real bug (backdrop-filter containing block), fixed + verified |
 
-## Turn 6 — refinement batch
+## Turn 6, refinement batch
 
 | Request | Status | Notes |
 |---|---|---|
@@ -79,27 +79,27 @@ Maintained from now on; last updated 18 July 2026.
 | Etsy sold-sync | ✅ | Script + admin page; live-verified 147/147 |
 | Shipping/finances/invoices managed here | 🔴 | Same DB dependency |
 
-## Turn 7 — this batch
+## Turn 7, this batch
 
 | Request | Status | Notes |
 |---|---|---|
 | Hero intro + changing count | ✅ | Rewritten; counters replaced with standing promises |
 | Cool professional animation | ✅ | "Just listed" film-strip marquee (pause-on-hover, reduced-motion safe) |
 | Prices by IP origin, USD/EUR, extensible, correct calcs | ✅ | Geo-header + Accept-Language detection, cookie override, one conversion path, rates file ready for admin UI |
-| Free models + Bedrock backup | ✅ | Provider chain (openai-compatible / bedrock / anthropic) wired into all three AI routes — runtime execution still needs credentials on the box |
+| Free models + Bedrock backup | ✅ | Provider chain (openai-compatible / bedrock / anthropic) wired into all three AI routes, runtime execution still needs credentials on the box |
 | Google Analytics linked to results | ✅ | GA4 + commerce events; set NEXT_PUBLIC_GA_ID |
 | Discount campaigns by stone type | ✅ | Admin CRUD, live/paused/scheduled, non-stacking correct math, storefront strikethrough |
 | Support icon redo | ✅ | See turn 5 row |
 | Filters as popup | ✅ | Slide-over over the results |
 | Raw vs Rough: same category | ✅ | Merged into "Rough & Raw Gemstones" |
 | Push (token fixed) | ✅ | On main |
-| "Recent sales" strip on landing | 🟡 | Delivered as "Just listed" — we have no per-item sales history to show real recent sales; strip switches to sold stones once orders exist |
+| "Recent sales" strip on landing | 🟡 | Delivered as "Just listed", we have no per-item sales history to show real recent sales; strip switches to sold stones once orders exist |
 | Language + currency switcher | 🟡 | Currency fully functional; language lists English only until translations exist (no fake locales) |
 | Search option | ✅ | Header (desktop) + magnifier row (phone) + drawer |
 | Cart icon next to account | ✅ | Live badge + /cart with correct totals, sold-item exclusion, WhatsApp order path |
 | PM audit | ✅ | This document |
 
-## Turn 8 — sold flow & polish batch
+## Turn 8, sold flow & polish batch
 
 | Request | Status | Notes |
 |---|---|---|
@@ -157,7 +157,25 @@ Maintained from now on; last updated 18 July 2026.
 | Remove Browse by colour from landing | ✅ | Section deleted |
 | Landing hero tiles smaller + indicated in admin | ✅ | Hero uses compact cards capped at max-w-md; admin Catalogue badges "Landing hero" (4) and "Fine & rare" (8), one featuredProducts() definition shared with the homepage |
 
-## The standing gap — one dependency, many features
+## Turn 14: commerce core, Google sign-in, admin pipeline
+
+| Request | Status | Notes |
+|---|---|---|
+| Google login and signup | ✅ | Server-side OAuth code flow (no Google JS on the page), links to an existing email account on first use, first account still becomes owner. Buttons appear once GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET are set; a Google-only account is told to use the button rather than shown "password incorrect" |
+| Category clicks landed on the all view | ✅ | Real bug: the heading always read "All gemstones" and category had no filter chip, so a filtered page looked unfiltered. Heading now names the category (and stone), the chip is removable, and a Category group was added to the sidebar |
+| Filters A to Z | ✅ | Stone, Colour, Cut, Origin, Type and Category all alphabetical |
+| Sliding bar for price and carat | ✅ | Dual-handle sliders over native range inputs (keyboard accessible, submit with the form). A handle left at its end stop is not treated as a filter |
+| Checkout and payment | ✅ | Name, address AND phone per the owner flow, two delivery profiles (normal and express), server-priced totals (the browser never sets a price), demo card provider standing in for Stripe/PayPal with success and decline cards, idempotent capture |
+| Invoice | ✅ | Print-ready invoice per order at /order/[number]/invoice, plus commercial invoice, packing list and certificate of origin for customs |
+| Order management and automation | ✅ | /admin/orders with filters and detail: confirm manual payment (bank transfer or concierge), start preparing, dispatch with carrier and tracking, mark delivered. Every transition emails the customer, and delivery triggers the review request |
+| Emailing team members on an order | ✅ | Notifies explicit subscribers, else every staff, admin and owner account. All sends logged and shown on the order |
+| Admin catalogue renamed to Listings, editable, filterable | ✅ | Filters (search, category, stone, status, channel, edited-only), full editor, per-listing Etsy sync button. Old /admin/catalogue redirects |
+| Per-stone SEO and AI variant | ✅ | Meta title, description and site keywords per stone, plus a separate Etsy tag set (13 max, enforced server-side). AI drafts all of it in one call, always as a draft for review. Verified live on the public page and its metadata |
+| Fake order for testing | ✅ | `npm run seed:order` (add --paid to skip payment) |
+| Admin must be very clear | ✅ | Nav restructured to the owner's pipeline: Inventory (1), Listings (2 & 3), Orders (4 & 5), Shipping (6), Finances (7), with tools below |
+| Full buyer and admin walk | ✅ | Order GEM-2026-0001 taken from cart to delivered in the browser; see docs/HANDOVER-OPEN-ITEMS.md section B for the verified figures |
+
+## The standing gap, one dependency, many features
 
 ~~A running Postgres~~ **Resolved.** The `gemystic` database is live on the
 machine's native PostgreSQL 17 (no Docker; same server Trust-Agent uses), schema

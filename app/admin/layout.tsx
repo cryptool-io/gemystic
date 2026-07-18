@@ -8,11 +8,22 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const NAV: [string, string][] = [
+/**
+ * Nav follows the owner's pipeline in order (inventory, listings, orders,
+ * shipping, finances) with the supporting tools below it, so the sequence a
+ * stone travels is the sequence on screen. Step numbers are the owner's own.
+ */
+const PIPELINE: [string, string, string][] = [
+  ['/admin/inventory', 'Inventory', '1'],
+  ['/admin/listings', 'Listings', '2 & 3'],
+  ['/admin/orders', 'Orders', '4 & 5'],
+  ['/admin/shipping', 'Shipping', '6'],
+  ['/admin/finances', 'Finances', '7'],
+];
+
+const TOOLS: [string, string][] = [
   ['/admin', 'Overview'],
-  ['/admin/catalogue', 'Catalogue'],
   ['/admin/categories', 'Categories'],
-  ['/admin/orders', 'Orders'],
   ['/admin/etsy-sync', 'Etsy sync'],
   ['/admin/campaigns', 'Discounts'],
   ['/admin/market', 'Market check'],
@@ -44,7 +55,20 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
       <div className="grid gap-8 lg:grid-cols-[190px_1fr]">
         <nav className="flex gap-1 overflow-x-auto lg:flex-col lg:overflow-visible" aria-label="Admin">
-          {NAV.map(([href, label]) => (
+          <div className="label hidden px-3 pb-1 lg:block">Pipeline</div>
+          {PIPELINE.map(([href, label, step]) => (
+            <Link
+              key={href}
+              href={href}
+              className="flex items-center justify-between gap-2 whitespace-nowrap rounded-lg px-3 py-2 text-sm text-muted transition hover:bg-brand-tint hover:text-brand-dark"
+            >
+              {label}
+              <span className="hidden text-[10px] text-subtle lg:inline">{step}</span>
+            </Link>
+          ))}
+
+          <div className="label hidden px-3 pb-1 pt-4 lg:block">Tools</div>
+          {TOOLS.map(([href, label]) => (
             <Link
               key={href}
               href={href}

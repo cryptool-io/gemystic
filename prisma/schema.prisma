@@ -20,7 +20,10 @@ model User {
   id            String    @id @default(uuid()) @db.Uuid
   email         String    @unique
   emailVerifiedAt DateTime? @map("email_verified_at")
+  // Null for Google-only accounts: they authenticate at Google, never here.
   passwordHash  String?   @map("password_hash")
+  googleId      String?   @unique @map("google_id")
+  avatarUrl     String?   @map("avatar_url")
   fullName      String?   @map("full_name")
   phone         String?
   role          String    @default("customer") // customer | staff | admin | owner
@@ -437,6 +440,39 @@ model Review {
   @@index([productId, status])
   @@index([productSlug, status])
   @@map("reviews")
+}
+
+/**
+ * Owner edits layered over the generated catalogue.
+ *
+ * data/catalog.json is regenerated from the Etsy export by `npm run normalize`,
+ * which would erase hand edits. Storing them here, keyed by slug, lets the
+ * generator keep owning raw facts while the owner owns titles, prices, SEO and
+ * channel choices. Rows are created lazily: only edited listings appear.
+ */
+model ListingOverride {
+  id             String    @id @default(uuid()) @db.Uuid
+  slug           String    @unique
+  title          String?
+  description    String?
+  priceUsd       Decimal?  @map("price_usd") @db.Decimal(12, 2)
+  treatment      String?
+  seoTitle       String?   @map("seo_title")
+  seoDescription String?   @map("seo_description")
+  seoKeywords    String[]  @default([]) @map("seo_keywords")
+  // Etsy uses its own tag vocabulary; keeping it separate stops site SEO
+  // keywords being pushed to Etsy where they would not apply.
+  etsyTags       String[]  @default([]) @map("etsy_tags")
+  listedOnEtsy   Boolean   @default(false) @map("listed_on_etsy")
+  etsyListingId  String?   @map("etsy_listing_id")
+  status         String    @default("active") // active | draft | archived
+  aiGenerated    Boolean   @default(false) @map("ai_generated")
+  aiReviewedAt   DateTime? @map("ai_reviewed_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  @@index([status])
+  @@map("listing_overrides")
 }
 
 // ── Promotions ──────────────────────────────────────────────────────────────

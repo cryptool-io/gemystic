@@ -21,7 +21,10 @@ export type Role = 'customer' | 'staff' | 'admin' | 'owner';
 export interface StoredUser {
   id: string;
   email: string;
+  /** Empty for Google-only accounts: they authenticate at Google, never here. */
   passwordHash: string;
+  googleId: string | null;
+  avatarUrl: string | null;
   fullName: string | null;
   role: Role;
   createdAt: string;
@@ -69,6 +72,9 @@ async function write(db: DbShape): Promise<void> {
 export interface UserStore {
   findByEmail(email: string): Promise<StoredUser | null>;
   findById(id: string): Promise<StoredUser | null>;
+  findByGoogleId(googleId: string): Promise<StoredUser | null>;
+  /** Links a Google account to an existing email account (first Google sign-in). */
+  linkGoogle(id: string, googleId: string, avatarUrl: string | null): Promise<void>;
   createUser(u: Omit<StoredUser, 'id' | 'createdAt' | 'lastLoginAt'>): Promise<StoredUser>;
   touchLogin(id: string): Promise<void>;
   countUsers(): Promise<number>;
@@ -102,6 +108,21 @@ class JsonUserStore implements UserStore {
   async findById(id: string) {
     const db = await read();
     return db.users.find((u) => u.id === id) ?? null;
+  }
+
+  async findByGoogleId(googleId: string) {
+    const db = await read();
+    return db.users.find((u) => u.googleId === googleId) ?? null;
+  }
+
+  async linkGoogle(id: string, googleId: string, avatarUrl: string | null) {
+    const db = await read();
+    const u = db.users.find((x) => x.id === id);
+    if (u) {
+      u.googleId = googleId;
+      u.avatarUrl = avatarUrl;
+      await write(db);
+    }
   }
 
   async createUser(u: Omit<StoredUser, 'id' | 'createdAt' | 'lastLoginAt'>) {
@@ -220,6 +241,8 @@ function toStoredUser(u: {
   id: string;
   email: string;
   passwordHash: string | null;
+  googleId: string | null;
+  avatarUrl: string | null;
   fullName: string | null;
   role: string;
   createdAt: Date;
@@ -229,6 +252,8 @@ function toStoredUser(u: {
     id: u.id,
     email: u.email,
     passwordHash: u.passwordHash ?? '',
+    googleId: u.googleId,
+    avatarUrl: u.avatarUrl,
     fullName: u.fullName,
     role: u.role as Role,
     createdAt: u.createdAt.toISOString(),
@@ -247,11 +272,23 @@ class PrismaUserStore implements UserStore {
     return u ? toStoredUser(u) : null;
   }
 
+  async findByGoogleId(googleId: string) {
+    const u = await prisma.user.findUnique({ where: { googleId } });
+    return u ? toStoredUser(u) : null;
+  }
+
+  async linkGoogle(id: string, googleId: string, avatarUrl: string | null) {
+    await prisma.user.update({ where: { id }, data: { googleId, avatarUrl } });
+  }
+
   async createUser(u: Omit<StoredUser, 'id' | 'createdAt' | 'lastLoginAt'>) {
     const created = await prisma.user.create({
       data: {
         email: u.email.toLowerCase(),
-        passwordHash: u.passwordHash,
+        // Google-only accounts have no local password to store.
+        passwordHash: u.passwordHash || null,
+        googleId: u.googleId,
+        avatarUrl: u.avatarUrl,
         fullName: u.fullName,
         role: u.role,
       },

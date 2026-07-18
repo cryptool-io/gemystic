@@ -23,3 +23,15 @@ export async function requireRole(min: Role, returnTo = '/admin'): Promise<Sessi
   if (!hasRole(user, min)) redirect('/account?denied=1');
   return user;
 }
+
+/**
+ * Route-handler guard. Returns a response to send back when the caller is not
+ * permitted, or null to continue, since an API must answer with a status code
+ * rather than a redirect to a login page.
+ */
+export async function requireRoleApi(min: Role): Promise<Response | null> {
+  const user = await currentUser();
+  if (!user) return Response.json({ error: 'Sign in required.' }, { status: 401 });
+  if (!hasRole(user, min)) return Response.json({ error: 'Not permitted.' }, { status: 403 });
+  return null;
+}
