@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-canvas text-fg antialiased;
+  /* Two very soft emerald washes so a light page doesn't read as flat white. */
+  background-image:
+    radial-gradient(1200px 600px at 12% -8%, rgba(4, 120, 87, 0.07), transparent 62%),
+    radial-gradient(900px 520px at 88% 0%, rgba(16, 163, 127, 0.06), transparent 58%);
+  background-attachment: fixed;
+}
+
+@layer components {
+  /**
+   * Fluid page gutter. Padding grows with the viewport so content never touches
+   * the edge on a phone and never floats in a thin ribbon on an ultrawide.
+   */
+  .wrap {
+    @apply mx-auto w-full max-w-wrap;
+    padding-inline: clamp(1rem, 4vw, 3.5rem);
+  }
+
+  /**
+   * Ultrawide. A fixed 1664px cap strands ~900px of empty gutter each side on a
+   * 3440px display, so the container steps up on very large viewports.
+   *
+   * Prose is not affected: article and policy pages constrain themselves with
+   * `max-w-3xl` internally, so line length stays readable while grids get the
+   * extra room they can actually use.
+   */
+  @media (min-width: 1920px) {
+    .wrap {
+      max-width: 120rem;
+    }
+  }
+  @media (min-width: 2560px) {
+    .wrap {
+      max-width: 140rem;
+    }
+  }
+
+  .card {
+    @apply rounded-xl border border-line bg-surface shadow-card;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2 focus-visible:ring-offset-canvas;
+  }
+  .btn-primary {
+    @apply btn bg-brand text-white hover:bg-brand-dark active:bg-brand-deep;
+  }
+  .btn-ghost {
+    @apply btn border border-line bg-surface text-fg hover:border-brand-ring hover:text-brand;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-line bg-surface px-2.5 py-1 text-xs text-muted;
+  }
+  .chip-brand {
+    @apply chip border-brand-ring bg-brand-tint text-brand-dark;
+  }
+
+  .label {
+    @apply text-[11px] font-medium uppercase tracking-[0.14em] text-muted;
+  }
+
+  .field {
+    @apply w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-fg outline-none transition;
+    @apply placeholder:text-subtle focus:border-brand focus:ring-2 focus:ring-brand-ring/40;
+  }
+
+  .prose-gem p {
+    @apply mb-4 leading-relaxed text-muted;
+  }
+  .prose-gem strong {
+    @apply font-medium text-fg;
+  }
+
+  /**
+   * Product grid, sized by the card rather than by breakpoint.
+   *
+   * Breakpoint-counted columns break down at the extremes: six columns inside a
+   * 1664px container gives 200px cards, which is too small to judge a gemstone.
+   * auto-fill with a minimum card width instead lets the column count follow the
+   * space actually available, so cards stay legible from a 320px phone to a 4K
+   * monitor without a single media query for the count.
+   *
+   * `min(100%, …)` is what stops the track exceeding the container on the
+   * narrowest phones, which would otherwise force a horizontal scrollbar.
+   */
+  .grid-products {
+    display: grid;
+    gap: 0.75rem;
+    /* 9.25rem keeps two columns at 360-375px — the most common phone widths —
+       rather than dropping to one and halving how much stock is visible. */
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.25rem), 1fr));
+  }
+
+  @media (min-width: 640px) {
+    .grid-products {
+      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    }
+  }
+}
+
+/* Keeps long specimen titles from blowing out grid cells. */
+.clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Wide content (tables, code) scrolls inside its own box, never the page body. */
+.scroll-x {
+  @apply overflow-x-auto;
+  scrollbar-width: thin;
+}
+
+/* ─── Premium interactions ───────────────────────────────────────────────────
+   Zero-dependency, compositor-friendly, and every one gated behind
+   prefers-reduced-motion below. Research: docs/PLATFORM-AUDIT wasn't the source
+   — these are the tasteful subset (CSS scroll reveals, sparkle, count shimmer)
+   that read as luxury without gimmickry. */
+
+/* Reveal-on-scroll. Elements tagged .reveal rise + fade in as they enter the
+   viewport, driven by the native scroll timeline where supported (no JS, runs
+   on the compositor). Browsers without animation-timeline simply show them. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 22%;
+    }
+  }
+}
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Gemstone shimmer: a soft light sweep across an image on hover, evoking the
+   fire of a cut stone catching the light. Applied via .sheen on an image frame. */
+.sheen {
+  position: relative;
+  overflow: hidden;
+}
+.sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.28) 48%,
+    rgba(255, 255, 255, 0.05) 55%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.9s cubic-bezier(0.2, 0.6, 0.2, 1);
+  pointer-events: none;
+}
+.group:hover .sheen::after {
+  transform: translateX(120%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .sheen::after {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

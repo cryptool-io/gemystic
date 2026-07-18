@@ -1,0 +1,21 @@
+# Dependencies & build output
+node_modules/
+.next/
+*.tsbuildinfo
+next-env.d.ts
+
+# Secrets — never commit
+.env.local
+.env*.local
+
+# Runtime state: user accounts (bcrypt hashes), sessions, reviews, uploads,
+# mail outbox, backups. This is data, not code, and some of it is sensitive.
+var/
+
+# Local agent scratch
+.claude/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+SECURITY-gemysticgems.com.md

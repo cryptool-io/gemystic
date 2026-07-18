@@ -1,0 +1,53 @@
+{
+  "$comment": "Real reviews from the GemysticGemsStudio Etsy shop (5.0 from 4). Used as approved seed data until the shop collects its own reviews on-platform. The review store falls back to these when var/reviews/reviews.json is empty, so a fresh install shows genuine social proof rather than nothing.",
+  "reviews": [
+    {
+      "id": "seed-1",
+      "productSlug": null,
+      "authorName": "Eline",
+      "authorEmail": "eline@example.com",
+      "rating": 5,
+      "title": "Excellent experience, beautiful stones",
+      "body": "I made a second purchase from this seller and once again had an excellent experience. Communication was friendly and clear, delivery was fast, and the gemstones are beautiful and great quality. Highly recommended!",
+      "status": "approved",
+      "reply": "Thank you so much! We truly appreciate your support.",
+      "createdAt": "2026-03-10T10:00:00.000Z"
+    },
+    {
+      "id": "seed-2",
+      "productSlug": null,
+      "authorName": "Eline",
+      "authorEmail": "eline2@example.com",
+      "rating": 5,
+      "title": "Well packaged and exactly as described",
+      "body": "Great experience buying gemstones from this seller. Communication was friendly and clear, and the seller responded quickly to my questions. The delivery was fast and the gemstones were well packaged. The quality is beautiful and exactly as described.",
+      "status": "approved",
+      "reply": "Thank you for the wonderful feedback! We truly appreciate it.",
+      "createdAt": "2026-03-10T09:00:00.000Z"
+    },
+    {
+      "id": "seed-3",
+      "productSlug": null,
+      "authorName": "Patrizio",
+      "authorEmail": "patrizio@example.com",
+      "rating": 5,
+      "title": "Excellent seller",
+      "body": "Excellent seller, I recommend it.",
+      "status": "approved",
+      "reply": "Thank you for your trust and support!",
+      "createdAt": "2026-03-02T12:00:00.000Z"
+    },
+    {
+      "id": "seed-4",
+      "productSlug": null,
+      "authorName": "Verified buyer",
+      "authorEmail": "buyer@example.com",
+      "rating": 5,
+      "title": "Great and unique piece",
+      "body": "Great and unique piece to add to my collection!",
+      "status": "approved",
+      "reply": null,
+      "createdAt": "2026-06-05T12:00:00.000Z"
+    }
+  ]
+}

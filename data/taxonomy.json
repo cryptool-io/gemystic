@@ -1,0 +1,83 @@
+{
+  "$comment": "Admin-editable category tree. This file is the interim source of truth until the Postgres `categories` table is live (db/migrations/001_init.sql) — the shape mirrors that table exactly so the migration is a straight copy, not a rewrite. `formMapping` maps the normaliser's detected product form onto a category so imported stock lands in the right place automatically.",
+  "version": 1,
+  "categories": [
+    {
+      "slug": "faceted-gemstones",
+      "name": "Faceted Gemstones",
+      "position": 1,
+      "isActive": true,
+      "formMapping": ["faceted"],
+      "description": "Cut and polished stones ready for setting. Every stone is cut in our own workshop from rough we sourced ourselves, and every listing is a single piece.",
+      "seoTitle": "Faceted Gemstones for Sale — Natural Cut Stones",
+      "seoDescription": "Natural faceted gemstones cut in our Peshawar workshop — emerald, ruby, sapphire, peridot and more. Treatment disclosed on every listing. Free worldwide shipping over $500.",
+      "seoKeywords": ["faceted gemstones", "loose cut gemstones", "natural faceted stones", "buy faceted gemstones online"]
+    },
+    {
+      "slug": "cabochons",
+      "name": "Cabochons",
+      "position": 2,
+      "isActive": true,
+      "formMapping": ["cabochon"],
+      "description": "Domed and polished rather than faceted, cut to show body colour and any internal character such as silk or chatoyancy.",
+      "seoTitle": "Cabochon Gemstones — Polished Domed Stones",
+      "seoDescription": "Natural cabochon gemstones polished to show body colour and internal character. Hand-cut in Pakistan, one of a kind, treatment disclosed.",
+      "seoKeywords": ["cabochon gemstones", "gemstone cabochons", "polished cabochon", "cabochon for jewelry making"]
+    },
+    {
+      "slug": "raw-gemstones",
+      "name": "Raw Gemstones",
+      "position": 3,
+      "isActive": true,
+      "formMapping": ["raw"],
+      "description": "Natural crystals sold in their grown form — uncut, unpolished, and collected for the crystal habit rather than for cutting.",
+      "seoTitle": "Raw Gemstones — Natural Uncut Crystals",
+      "seoDescription": "Raw natural gemstone crystals in their grown form, uncut and unpolished. Direct from Pakistani and Thai sources for collectors and crystal practitioners.",
+      "seoKeywords": ["raw gemstones", "natural raw crystals", "uncut gemstones", "raw crystal for sale"]
+    },
+    {
+      "slug": "rough-gemstones",
+      "name": "Rough Gemstones",
+      "position": 4,
+      "isActive": true,
+      "formMapping": ["rough"],
+      "description": "Cutting material sold by weight or by the parcel, graded for yield. For lapidaries and cutters who want to work the stone themselves.",
+      "seoTitle": "Rough Gemstones for Cutting — Lapidary Rough",
+      "seoDescription": "Gem rough graded for cutting yield, sold by weight and by the parcel. Emerald, tourmaline, topaz and more, direct from the source in Pakistan.",
+      "seoKeywords": ["rough gemstones", "gem rough for cutting", "lapidary rough", "buy gem rough"]
+    },
+    {
+      "slug": "jewellery",
+      "name": "Jewellery",
+      "position": 5,
+      "isActive": true,
+      "formMapping": ["ring", "pendant", "earring", "bracelet", "necklace"],
+      "description": "Hand-fabricated sterling silver and 21K gold, made in our workshop around individual stones. No two pieces are identical.",
+      "seoTitle": "Handmade Gemstone Jewellery — Silver & Gold",
+      "seoDescription": "Handmade gemstone rings, pendants and necklaces in sterling silver and 21K gold. Each piece built around a single natural stone in our Peshawar workshop.",
+      "seoKeywords": ["gemstone jewellery", "handmade gemstone rings", "silver gemstone pendant", "natural gemstone jewelry"]
+    },
+    {
+      "slug": "specimens",
+      "name": "Specimens",
+      "position": 6,
+      "isActive": true,
+      "formMapping": ["specimen"],
+      "description": "Mineral specimens presented as found, on matrix. Valued for crystal form, termination quality and how they display rather than for facetable clarity.",
+      "seoTitle": "Mineral Specimens — Natural Crystal Matrix Pieces",
+      "seoDescription": "Collector mineral specimens on natural matrix from Swat Valley and beyond. Emerald, ruby, quartz and tourmaline crystals with undamaged terminations.",
+      "seoKeywords": ["mineral specimens", "crystal specimens", "emerald matrix specimen", "collector minerals"]
+    },
+    {
+      "slug": "parcels",
+      "name": "Wholesale Parcels",
+      "position": 7,
+      "isActive": true,
+      "formMapping": ["parcel"],
+      "description": "Sorted lots priced by the parcel, matched for tone so a designer can build a collection from one batch. Trade pricing.",
+      "seoTitle": "Wholesale Gemstone Parcels — Bulk Lots for Designers",
+      "seoDescription": "Wholesale gemstone parcels sorted and tone-matched for jewellery designers and dealers. Buy gemstones in bulk direct from the source.",
+      "seoKeywords": ["wholesale gemstones", "gemstone parcels", "bulk gemstones", "gemstone lots for designers"]
+    }
+  ]
+}

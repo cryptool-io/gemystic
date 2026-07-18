@@ -1,0 +1,65 @@
+# Local-first deployment. Everything below runs on one box with no cloud account.
+#
+#   docker compose up -d --build        # phase 1: fully self-hosted
+#   docker compose --profile backup up  # add the nightly backup sidecar
+#
+# Moving a capability to AWS later means setting the matching *_DRIVER variable
+# in .env — no image rebuild, no code change.
+
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    ports:
+      - '${PORT:-3100}:3100'
+    environment:
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3100}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+
+      # Phase 1 defaults — local. Phase 2 flips MAIL_DRIVER to ses.
+      MAIL_DRIVER: ${MAIL_DRIVER:-file}
+      MAIL_FROM: ${MAIL_FROM:-Gemystic Gems <no-reply@gemysticgems.com>}
+      MAIL_TO: ${MAIL_TO:-Info@gemysticgems.com}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+
+      STORAGE_DRIVER: ${STORAGE_DRIVER:-local}
+      BACKUP_DRIVER: ${BACKUP_DRIVER:-local}
+
+      # Only read when a driver is set to an AWS one. Prefer an instance role
+      # over static keys wherever the host supports it.
+      AWS_REGION: ${AWS_REGION:-eu-west-1}
+      S3_BUCKET: ${S3_BUCKET:-}
+      BACKUP_S3_BUCKET: ${BACKUP_S3_BUCKET:-}
+    volumes:
+      - gemystic-var:/data/var
+    healthcheck:
+      test: ['CMD', 'node', '-e', "fetch('http://127.0.0.1:3100/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  # Nightly backup. Writes into the same volume; pushes to S3 only if configured.
+  backup:
+    build: .
+    profiles: ['backup']
+    restart: unless-stopped
+    depends_on: [web]
+    environment:
+      BACKUP_DRIVER: ${BACKUP_DRIVER:-local}
+      BACKUP_S3_BUCKET: ${BACKUP_S3_BUCKET:-}
+      BACKUP_RETAIN_DAYS: ${BACKUP_RETAIN_DAYS:-30}
+      AWS_REGION: ${AWS_REGION:-eu-west-1}
+      BACKUP_DIR: /data/var/backups
+      VAR_DIR: /data/var
+    volumes:
+      - gemystic-var:/data/var
+    entrypoint: ['sh', '-c']
+    command:
+      - 'while true; do node scripts/backup.mjs || echo "backup failed"; sleep 86400; done'
+
+volumes:
+  gemystic-var:

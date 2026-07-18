@@ -1,0 +1,125 @@
+'use client';
+
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import type { SessionUser } from '@/lib/auth/session';
+
+/**
+ * Header account affordance. Signed-out shows a plain "Sign in" link; signed-in
+ * shows an avatar button with a dropdown. Kept a client component only for the
+ * dropdown open/close and logout call — the signed-in state itself comes from
+ * the server via props, so there is no auth flicker on load.
+ */
+export function AccountMenu({ user }: { user: SessionUser | null }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener('mousedown', onClick);
+    return () => document.removeEventListener('mousedown', onClick);
+  }, []);
+
+  if (!user) {
+    return (
+      <Link href="/login" className="btn-ghost shrink-0 px-3" aria-label="Sign in">
+        <UserIcon />
+        <span className="hidden sm:inline">Sign in</span>
+      </Link>
+    );
+  }
+
+  const initials =
+    (user.fullName ?? user.email)
+      .split(/\s+/)
+      .map((s) => s[0])
+      .slice(0, 2)
+      .join('')
+      .toUpperCase() || 'U';
+
+  const isAdmin = user.role === 'admin' || user.role === 'owner' || user.role === 'staff';
+
+  async function logout() {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    setOpen(false);
+    router.push('/');
+    router.refresh();
+  }
+
+  return (
+    <div className="relative shrink-0" ref={ref}>
+      <button
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-label="Account menu"
+        className="flex h-9 w-9 items-center justify-center rounded-full bg-brand text-xs font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-ring focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+      >
+        {initials}
+      </button>
+
+      {open && (
+        <div className="card absolute right-0 top-full z-50 mt-2 w-56 p-2 shadow-pop">
+          <div className="border-b border-line px-3 py-2">
+            <div className="truncate text-sm font-medium text-fg">{user.fullName ?? 'Signed in'}</div>
+            <div className="truncate text-xs text-muted">{user.email}</div>
+          </div>
+
+          <MenuLink href="/account" onClick={() => setOpen(false)}>Your account</MenuLink>
+          <MenuLink href="/account/orders" onClick={() => setOpen(false)}>Orders</MenuLink>
+          <MenuLink href="/account/saved" onClick={() => setOpen(false)}>Saved stones</MenuLink>
+
+          {isAdmin && (
+            <>
+              <div className="my-1 border-t border-line" />
+              <MenuLink href="/admin" onClick={() => setOpen(false)} accent>
+                Admin portal
+              </MenuLink>
+            </>
+          )}
+
+          <div className="my-1 border-t border-line" />
+          <button
+            onClick={logout}
+            className="block w-full rounded-lg px-3 py-2 text-left text-sm text-muted transition hover:bg-surface-2 hover:text-fg"
+          >
+            Sign out
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MenuLink({
+  href, children, onClick, accent = false,
+}: {
+  href: string;
+  children: React.ReactNode;
+  onClick: () => void;
+  accent?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className={`block rounded-lg px-3 py-2 text-sm transition hover:bg-brand-tint ${
+        accent ? 'font-medium text-brand hover:text-brand-dark' : 'text-muted hover:text-fg'
+      }`}
+    >
+      {children}
+    </Link>
+  );
+}
+
+function UserIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <circle cx="8" cy="5" r="2.6" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M2.5 13.5c0-2.5 2.5-4 5.5-4s5.5 1.5 5.5 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+    </svg>
+  );
+}
