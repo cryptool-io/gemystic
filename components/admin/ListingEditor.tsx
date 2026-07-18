@@ -37,6 +37,7 @@ export function ListingEditor({
     title: override?.title ?? '',
     description: override?.description ?? '',
     priceUsd: override?.priceUsd != null ? String(override.priceUsd) : '',
+    compareAtUsd: override?.compareAtUsd != null ? String(override.compareAtUsd) : '',
     treatment: override?.treatment ?? '',
     seoTitle: override?.seoTitle ?? '',
     seoDescription: override?.seoDescription ?? '',
@@ -55,6 +56,15 @@ export function ListingEditor({
     setForm((f) => ({ ...f, [key]: value }));
   }
 
+  // Live read-back of the discount, so the owner sees the result before saving.
+  const nowPrice = Number(form.priceUsd) || generated.priceUsd;
+  const wasPrice = Number(form.compareAtUsd) || 0;
+  const discountPct =
+    wasPrice > nowPrice ? Math.round(((wasPrice - nowPrice) / wasPrice) * 100) : null;
+  const fmt = (n: number) => `$${n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  const currentWas = fmt(wasPrice);
+  const currentNow = fmt(nowPrice);
+
   async function save() {
     setBusy(true);
     setError(null);
@@ -67,6 +77,7 @@ export function ListingEditor({
           slug,
           ...form,
           priceUsd: form.priceUsd ? Number(form.priceUsd) : null,
+          compareAtUsd: form.compareAtUsd ? Number(form.compareAtUsd) : null,
           seoKeywords: splitList(form.seoKeywords),
           etsyTags: splitList(form.etsyTags),
         }),
@@ -163,6 +174,66 @@ export function ListingEditor({
             />
           </div>
         </div>
+      </div>
+
+      <div className="card p-5">
+        <h2 className="font-display text-lg">Discount</h2>
+        <p className="mt-1 text-xs leading-relaxed text-muted">
+          Set what this stone used to cost. The shop then shows the old price struck through next
+          to the new one. Leave it empty to sell at full price. A shop-wide discount code never
+          stacks on top of this: whichever gives the buyer the lower price is the one that applies.
+        </p>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <Field
+            label="Was (USD, before discount)"
+            value={form.compareAtUsd}
+            onChange={(v) => set('compareAtUsd', v)}
+            placeholder="e.g. 800"
+            type="number"
+          />
+          <div>
+            <span className="label mb-1.5 block">Or take a percentage off</span>
+            <div className="flex flex-wrap gap-2">
+              {[10, 15, 20, 25, 30, 40].map((pct) => (
+                <button
+                  key={pct}
+                  type="button"
+                  onClick={() => {
+                    // The current price becomes the "was", and the new selling
+                    // price is that figure less the percentage.
+                    const was = Number(form.compareAtUsd) || Number(form.priceUsd) || generated.priceUsd;
+                    const now = Math.round(was * (100 - pct)) / 100;
+                    set('compareAtUsd', String(was));
+                    set('priceUsd', String(now));
+                  }}
+                  className="chip hover:border-brand-ring"
+                >
+                  −{pct}%
+                </button>
+              ))}
+              {(form.compareAtUsd || form.priceUsd) && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    // Back to full price: restore the "was" and drop the sale.
+                    if (form.compareAtUsd) set('priceUsd', form.compareAtUsd);
+                    set('compareAtUsd', '');
+                  }}
+                  className="chip hover:border-brand-ring"
+                >
+                  Clear discount
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {discountPct !== null && (
+          <p className="mt-3 rounded-lg border border-brand-ring bg-brand-tint p-3 text-sm text-brand-deep">
+            On sale: {discountPct}% off, {currentWas} down to {currentNow}.
+          </p>
+        )}
       </div>
 
       <div className="card p-5">

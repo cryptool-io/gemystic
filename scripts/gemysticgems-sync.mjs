@@ -100,6 +100,7 @@ const ours = catalog.products.map((p) => ({ slug: p.slug, title: p.title, toks: 
 const byNorm = new Map(ours.map((o) => [o.norm, o]));
 
 const galleries = {};
+const discounts = {};
 const missing = [];
 let matchedExact = 0;
 let matchedFuzzy = 0;
@@ -131,6 +132,11 @@ for (const w of wp) {
     if (w.images.length > 0) {
       galleries[match.slug] = w.images.map((i) => i.src);
     }
+    // The legacy shop's sale prices are real discounts the owner set; carry
+    // them across as a per-listing discount rather than losing them.
+    if (w.onSale && w.regularUsd > w.priceUsd) {
+      discounts[match.slug] = { priceUsd: w.priceUsd, compareAtUsd: w.regularUsd };
+    }
   } else {
     missing.push(w);
   }
@@ -142,6 +148,8 @@ console.log(`WP products: ${wp.length}`);
 console.log(`Matched to catalogue: ${matchedExact} exact + ${matchedFuzzy} fuzzy = ${matchedExact + matchedFuzzy}`);
 console.log(`Galleries written: ${Object.keys(galleries).length} (data/galleries.json)`);
 console.log(`Missing from catalogue: ${missing.length}`);
+console.log(`Sale prices found on matched listings: ${Object.keys(discounts).length}`);
+console.log(`Sale prices on unmatched (inventory) products: ${missing.filter((w) => w.onSale && w.regularUsd > w.priceUsd).length}`);
 
 if (!IMPORT) {
   console.log('Run with --import to add the missing products to the DB inventory.');
@@ -159,6 +167,18 @@ const prisma = new PrismaClient();
 let createdCats = 0;
 let createdProducts = 0;
 let updatedProducts = 0;
+let importedDiscounts = 0;
+
+// Matched catalogue listings that were on sale keep their discount, written as
+// a listing override so the storefront shows the strikethrough.
+for (const [slug, d] of Object.entries(discounts)) {
+  await prisma.listingOverride.upsert({
+    where: { slug },
+    update: { priceUsd: d.priceUsd, compareAtUsd: d.compareAtUsd },
+    create: { slug, priceUsd: d.priceUsd, compareAtUsd: d.compareAtUsd },
+  });
+  importedDiscounts++;
+}
 
 const catBySlug = new Map();
 for (const w of missing) {
@@ -236,5 +256,7 @@ for (const w of missing) {
   }
 }
 
-console.log(`DB: ${createdCats} categories created, ${createdProducts} products created, ${updatedProducts} refreshed.`);
+console.log(
+  `DB: ${createdCats} categories created, ${createdProducts} products created, ${updatedProducts} refreshed, ${importedDiscounts} discounts applied to catalogue listings.`,
+);
 await prisma.$disconnect();

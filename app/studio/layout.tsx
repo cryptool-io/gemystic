@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { requireRole } from '@/lib/auth/guard';
 
 export const metadata: Metadata = {
   title: 'Studio',
@@ -13,7 +14,12 @@ const TABS = [
   ['/studio/system', 'System'],
 ] as const;
 
-export default function StudioLayout({ children }: { children: React.ReactNode }) {
+export default async function StudioLayout({ children }: { children: React.ReactNode }) {
+  // Studio exposes cost prices, margins and the AI drafting tools. noindex kept
+  // it out of search results but nothing kept a visitor out of the pages
+  // themselves; this is the actual gate.
+  await requireRole('staff', '/studio');
+
   return (
     <div className="wrap">
       <div className="mb-8 border-b border-line pb-5">

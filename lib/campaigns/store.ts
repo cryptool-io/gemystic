@@ -219,17 +219,38 @@ export async function effectivePrice(p: Product): Promise<EffectivePrice> {
   const now = new Date();
   const live = (await read()).campaigns.filter((c) => isLive(c, now) && !c.code && matches(c, p));
 
+  // A per-listing sale price (set by the owner in admin, or imported from the
+  // legacy shop) is already reflected in p.priceUsd; compareAtUsd is what it
+  // was before. This is the baseline a campaign has to beat.
+  const listingSale = p.compareAtUsd != null && p.compareAtUsd > p.priceUsd;
+
   if (live.length === 0) {
-    return { priceUsd: p.priceUsd, originalUsd: null, campaign: null };
+    return {
+      priceUsd: p.priceUsd,
+      originalUsd: listingSale ? p.compareAtUsd! : null,
+      campaign: null,
+    };
   }
 
-  // Best single discount wins; campaigns never stack.
+  // Best single discount wins; discounts never stack. A campaign is measured
+  // against the pre-discount price, so a listing already marked down is not
+  // marked down twice, and whichever route gives the buyer the lower price is
+  // the one that applies.
   const best = live.reduce((a, b) => (b.percentOff > a.percentOff ? b : a));
-  const discounted = Math.round(p.priceUsd * (100 - best.percentOff)) / 100;
+  const base = listingSale ? p.compareAtUsd! : p.priceUsd;
+  const campaignPrice = Math.round(base * (100 - best.percentOff)) / 100;
+
+  if (campaignPrice >= p.priceUsd) {
+    return {
+      priceUsd: p.priceUsd,
+      originalUsd: listingSale ? p.compareAtUsd! : null,
+      campaign: null,
+    };
+  }
 
   return {
-    priceUsd: discounted,
-    originalUsd: p.priceUsd,
+    priceUsd: campaignPrice,
+    originalUsd: base,
     campaign: { name: best.name, percentOff: best.percentOff },
   };
 }
@@ -256,17 +277,39 @@ export async function effectivePrices(products: Product[]): Promise<Map<string, 
   const out = new Map<string, EffectivePrice>();
 
   for (const p of products) {
+    // Same rule as effectivePrice: a listing's own sale price is the baseline,
+    // a campaign is measured against the pre-discount price, and the lower of
+    // the two wins. Kept in step with that function deliberately.
+    const listingSale = p.compareAtUsd != null && p.compareAtUsd > p.priceUsd;
     const live = campaigns.filter((c) => matches(c, p));
+
     if (live.length === 0) {
-      out.set(p.slug, { priceUsd: p.priceUsd, originalUsd: null, campaign: null });
-    } else {
-      const best = live.reduce((a, b) => (b.percentOff > a.percentOff ? b : a));
       out.set(p.slug, {
-        priceUsd: Math.round(p.priceUsd * (100 - best.percentOff)) / 100,
-        originalUsd: p.priceUsd,
-        campaign: { name: best.name, percentOff: best.percentOff },
+        priceUsd: p.priceUsd,
+        originalUsd: listingSale ? p.compareAtUsd! : null,
+        campaign: null,
       });
+      continue;
     }
+
+    const best = live.reduce((a, b) => (b.percentOff > a.percentOff ? b : a));
+    const base = listingSale ? p.compareAtUsd! : p.priceUsd;
+    const campaignPrice = Math.round(base * (100 - best.percentOff)) / 100;
+
+    out.set(
+      p.slug,
+      campaignPrice < p.priceUsd
+        ? {
+            priceUsd: campaignPrice,
+            originalUsd: base,
+            campaign: { name: best.name, percentOff: best.percentOff },
+          }
+        : {
+            priceUsd: p.priceUsd,
+            originalUsd: listingSale ? p.compareAtUsd! : null,
+            campaign: null,
+          },
+    );
   }
   return out;
 }

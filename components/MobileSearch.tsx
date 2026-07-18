@@ -27,7 +27,7 @@ export function MobileSearch() {
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-label="Search stones"
-        className="flex h-9 w-9 items-center justify-center rounded-full border border-line bg-surface text-fg transition hover:border-brand-ring hover:text-brand"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface text-fg transition hover:border-brand-ring hover:text-brand"
       >
         <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
           <circle cx="9" cy="9" r="5.5" stroke="currentColor" strokeWidth="1.6" />

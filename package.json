@@ -24,6 +24,7 @@
     "db:push": "prisma db push",
     "db:import-stores": "tsx scripts/import-stores.ts",
     "seed:order": "tsx scripts/seed-order.ts",
+    "grant:admin": "tsx scripts/grant-admin.ts",
     "gemystic:sync": "node scripts/gemysticgems-sync.mjs",
     "normalize": "node scripts/normalize.mjs",
     "backup": "node scripts/backup.mjs",

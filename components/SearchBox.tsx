@@ -41,7 +41,9 @@ export function SearchBox({
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder="Search stones…"
-        className="field py-2"
+        // h-10 matches the currency switcher, cart and account controls beside
+        // it; the default field padding made this the one tall element in the row.
+        className="field h-10 py-0"
       />
     </form>
   );

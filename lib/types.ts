@@ -25,6 +25,12 @@ export interface Product {
   treatment: string;
   certified: boolean;
   priceUsd: number;
+  /**
+   * The pre-discount price, when this listing is on sale. Set by an owner
+   * discount in admin (or imported from the legacy shop's sale price); absent
+   * on a full-price stone. Drives the strikethrough.
+   */
+  compareAtUsd?: number | null;
   image: string;
   imageLarge: string;
   stock: number;

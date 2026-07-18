@@ -21,6 +21,8 @@ export interface ListingOverride {
   title?: string | null;
   description?: string | null;
   priceUsd?: number | null;
+  /** Pre-discount price; set above priceUsd to put this listing on sale. */
+  compareAtUsd?: number | null;
   treatment?: string | null;
   seoTitle?: string | null;
   seoDescription?: string | null;
@@ -65,6 +67,7 @@ export async function saveOverride(
     title: patch.title ?? null,
     description: patch.description ?? null,
     priceUsd: patch.priceUsd ?? null,
+    compareAtUsd: patch.compareAtUsd ?? null,
     treatment: patch.treatment ?? null,
     seoTitle: patch.seoTitle ?? null,
     seoDescription: patch.seoDescription ?? null,
@@ -88,6 +91,7 @@ function fromRow(r: {
   title: string | null;
   description: string | null;
   priceUsd: unknown;
+  compareAtUsd: unknown;
   treatment: string | null;
   seoTitle: string | null;
   seoDescription: string | null;
@@ -105,6 +109,7 @@ function fromRow(r: {
     title: r.title,
     description: r.description,
     priceUsd: r.priceUsd == null ? null : Number(r.priceUsd),
+    compareAtUsd: r.compareAtUsd == null ? null : Number(r.compareAtUsd),
     treatment: r.treatment,
     seoTitle: r.seoTitle,
     seoDescription: r.seoDescription,
@@ -127,6 +132,12 @@ export function applyOverride(p: Product, o: ListingOverride | undefined | null)
     title: o.title || p.title,
     description: o.description || p.description,
     priceUsd: o.priceUsd ?? p.priceUsd,
+    // Only a compare-at above the selling price is a discount; anything else
+    // would render a strikethrough that insults the buyer's arithmetic.
+    compareAtUsd:
+      o.compareAtUsd != null && o.compareAtUsd > (o.priceUsd ?? p.priceUsd)
+        ? o.compareAtUsd
+        : null,
     treatment: o.treatment || p.treatment,
     metaTitle: o.seoTitle || p.metaTitle,
     metaDescription: o.seoDescription || p.metaDescription,

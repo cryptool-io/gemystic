@@ -59,6 +59,44 @@ export async function register(input: {
 }
 
 /**
+ * Password change from inside the account.
+ *
+ * Requires the current password even though the visitor is already signed in:
+ * a borrowed or unattended session must not be able to lock the real owner out.
+ * A Google-only account can set its first password here without one, since
+ * there is nothing to prove and they authenticated at Google to get here.
+ */
+export async function changePassword(
+  userId: string,
+  currentPassword: string,
+  newPassword: string,
+): Promise<AuthResult> {
+  const pwError = validatePassword(newPassword);
+  if (pwError) return { ok: false, error: pwError };
+
+  const store = userStore();
+  const user = await store.findById(userId);
+  if (!user) return { ok: false, error: 'Account not found.' };
+
+  if (user.passwordHash) {
+    if (!currentPassword) return { ok: false, error: 'Enter your current password.' };
+    const ok = await verifyPassword(currentPassword, user.passwordHash);
+    if (!ok) return { ok: false, error: 'That current password is not right.' };
+    if (currentPassword === newPassword) {
+      return { ok: false, error: 'The new password has to be different from the old one.' };
+    }
+  }
+
+  await store.setPassword(userId, await hashPassword(newPassword));
+  // Every other device is signed out, then this one is signed back in, so a
+  // password change actually ends any session someone else was holding.
+  await store.deleteUserSessions(userId);
+  await createSession(userId);
+
+  return { ok: true, userId };
+}
+
+/**
  * Google sign-in and sign-up in one path, which is what visitors expect from a
  * "Continue with Google" button: an existing email account gets the Google id
  * linked on first use (same person, verified by Google), anyone else is

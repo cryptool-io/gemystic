@@ -143,9 +143,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <Logo />
             </Link>
 
-            <div className="flex-1 lg:hidden" />
+            <MainNav
+              categories={tree}
+              species={species.map((s) => ({ key: s.key, name: s.species.name, count: s.count }))}
+              total={species.reduce((a, s) => a + s.count, 0)}
+            />
 
-            <MainNav categories={tree} />
+            {/* Utilities sit right; the nav no longer needs the whole row. */}
+            <div className="flex-1" />
 
             <Suspense fallback={null}>
               <SearchBox />

@@ -32,7 +32,7 @@ export function CartIcon() {
     <Link
       href="/cart"
       aria-label={`Cart, ${count} ${count === 1 ? 'item' : 'items'}`}
-      className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line bg-surface text-fg transition hover:border-brand-ring hover:text-brand"
+      className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line bg-surface text-fg transition hover:border-brand-ring hover:text-brand"
     >
       <svg width="17" height="17" viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <path

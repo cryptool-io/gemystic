@@ -27,6 +27,20 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Price must be a positive number.' }, { status: 400 });
   }
 
+  const compareAt = body.compareAtUsd == null ? null : Number(body.compareAtUsd);
+  if (compareAt != null && (Number.isNaN(compareAt) || compareAt < 0)) {
+    return NextResponse.json({ error: 'The was-price must be a positive number.' }, { status: 400 });
+  }
+  // A compare-at at or below the selling price is not a discount, it is a
+  // misleading strikethrough. Reject it rather than quietly ignoring it.
+  const effectivePriceUsd = price ?? getProduct(slug)!.priceUsd;
+  if (compareAt != null && compareAt <= effectivePriceUsd) {
+    return NextResponse.json(
+      { error: 'The was-price has to be higher than the selling price.' },
+      { status: 400 },
+    );
+  }
+
   const etsyTags = asList(body.etsyTags);
   if (etsyTags.length > 13) {
     return NextResponse.json({ error: 'Etsy allows at most 13 tags.' }, { status: 400 });
@@ -36,6 +50,7 @@ export async function POST(req: NextRequest) {
     title: str(body.title),
     description: str(body.description),
     priceUsd: price,
+    compareAtUsd: compareAt,
     treatment: str(body.treatment),
     seoTitle: str(body.seoTitle),
     seoDescription: str(body.seoDescription),

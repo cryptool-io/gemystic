@@ -456,6 +456,9 @@ model ListingOverride {
   title          String?
   description    String?
   priceUsd       Decimal?  @map("price_usd") @db.Decimal(12, 2)
+  // Pre-discount price. Set it above priceUsd to put the listing on sale; the
+  // difference is what the storefront strikes through.
+  compareAtUsd   Decimal?  @map("compare_at_usd") @db.Decimal(12, 2)
   treatment      String?
   seoTitle       String?   @map("seo_title")
   seoDescription String?   @map("seo_description")

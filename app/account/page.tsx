@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { requireUser } from '@/lib/auth/guard';
 import { hasRole } from '@/lib/auth/session';
+import { userStore } from '@/lib/auth/store';
 import { LogoutButton } from '@/components/auth/LogoutButton';
+import { PasswordForm } from '@/components/account/PasswordForm';
 
 export const metadata: Metadata = {
   title: 'Your Account',
@@ -17,6 +19,9 @@ export default async function AccountPage({
   const user = await requireUser('/account');
   const { denied } = await searchParams;
   const isAdmin = hasRole(user, 'admin');
+  // Google-only accounts have no local password, so the form asks them to set
+  // a first one rather than to confirm one that does not exist.
+  const hasPassword = Boolean((await userStore().findById(user.id))?.passwordHash);
 
   return (
     <div className="wrap max-w-3xl">
@@ -63,13 +68,20 @@ export default async function AccountPage({
         />
       </div>
 
+      <div className="mt-8">
+        <PasswordForm hasPassword={hasPassword} />
+      </div>
+
       {isAdmin && (
         <div className="mt-8 card border-brand-ring bg-brand-tint p-6">
           <h2 className="font-display text-lg text-brand-deep">Admin</h2>
           <p className="mt-1 text-sm text-brand-deep/80">
-            You have admin access. Manage the catalogue, categories, orders, team and SEO.
+            You have admin access. Manage inventory, listings, orders, shipping and finances.
           </p>
-          <Link href="/admin" className="btn-primary mt-4">Open admin portal</Link>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Link href="/admin" className="btn-primary">Open admin portal</Link>
+            <Link href="/studio" className="btn-ghost">Studio (internal tools)</Link>
+          </div>
         </div>
       )}
     </div>

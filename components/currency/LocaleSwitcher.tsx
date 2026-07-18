@@ -27,7 +27,7 @@ export function LocaleSwitcher() {
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-label="Language and currency"
-        className="btn-ghost w-[5.5rem] justify-center gap-1.5 px-2 py-2 text-xs tabular-nums"
+        className="btn-ghost h-10 w-[5.5rem] justify-center gap-1.5 px-2 py-0 text-xs tabular-nums"
       >
         <GlobeIcon />
         <span className="font-medium">
