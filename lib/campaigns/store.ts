@@ -1,11 +1,13 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { config } from '../config';
+import { prisma, hasDatabase } from '../prisma';
 import type { Product } from '../types';
 
 /**
- * Discount campaigns. Local-first JSON store (same pattern as auth/reviews);
- * shape mirrors a future `campaigns` table.
+ * Discount campaigns. Two drivers behind the same functions (the auth-store
+ * pattern): the Prisma `campaigns` table when DATABASE_URL is set, local-first
+ * JSON otherwise.
  *
  * A campaign targets stones by species and/or category, "15% off all peridot",
  * "10% off specimens in August". Discounts are display-side: the base USD price
@@ -37,17 +39,51 @@ export interface Campaign {
 const DB_PATH = join(config.paths.var, 'campaigns', 'campaigns.json');
 
 // A product grid calls the pricing helpers once per tile; a 3-second TTL keeps
-// that at one file read per render burst without ever serving stale campaigns
-// to the admin (writes clear it).
+// that at one read (file or table) per render burst without ever serving stale
+// campaigns to the admin (writes clear it).
 let cache: { at: number; db: { campaigns: Campaign[] } } | null = null;
+
+function toCampaign(c: {
+  id: string;
+  name: string;
+  percentOff: number;
+  species: string[];
+  categories: string[];
+  startsAt: Date;
+  endsAt: Date;
+  active: boolean;
+  code: string | null;
+  freeShipping: boolean;
+  createdAt: Date;
+}): Campaign {
+  return {
+    id: c.id,
+    name: c.name,
+    percentOff: c.percentOff,
+    species: c.species,
+    categories: c.categories,
+    // Date-only, the shape the admin's <input type="date"> fields round-trip.
+    startsAt: c.startsAt.toISOString().slice(0, 10),
+    endsAt: c.endsAt.toISOString().slice(0, 10),
+    active: c.active,
+    code: c.code,
+    freeShipping: c.freeShipping,
+    createdAt: c.createdAt.toISOString(),
+  };
+}
 
 async function read(): Promise<{ campaigns: Campaign[] }> {
   if (cache && Date.now() - cache.at < 3000) return cache.db;
   let db: { campaigns: Campaign[] };
-  try {
-    db = JSON.parse(await readFile(DB_PATH, 'utf8'));
-  } catch {
-    db = { campaigns: [] };
+  if (hasDatabase()) {
+    const rows = await prisma.campaign.findMany();
+    db = { campaigns: rows.map(toCampaign) };
+  } else {
+    try {
+      db = JSON.parse(await readFile(DB_PATH, 'utf8'));
+    } catch {
+      db = { campaigns: [] };
+    }
   }
   cache = { at: Date.now(), db };
   return db;
@@ -66,12 +102,34 @@ export async function allCampaigns(): Promise<Campaign[]> {
 export async function createCampaign(
   input: Omit<Campaign, 'id' | 'createdAt'>,
 ): Promise<Campaign> {
-  const db = await read();
-  const campaign: Campaign = {
+  const clean = {
     ...input,
     code: input.code ? input.code.trim().toUpperCase() : null,
     freeShipping: Boolean(input.freeShipping),
     percentOff: Math.min(90, Math.max(0, Math.round(input.percentOff))),
+  };
+
+  if (hasDatabase()) {
+    const created = await prisma.campaign.create({
+      data: {
+        name: clean.name,
+        percentOff: clean.percentOff,
+        species: clean.species,
+        categories: clean.categories,
+        startsAt: new Date(clean.startsAt),
+        endsAt: new Date(clean.endsAt),
+        active: clean.active,
+        code: clean.code,
+        freeShipping: clean.freeShipping,
+      },
+    });
+    cache = null;
+    return toCampaign(created);
+  }
+
+  const db = await read();
+  const campaign: Campaign = {
+    ...clean,
     id: globalThis.crypto.randomUUID(),
     createdAt: new Date().toISOString(),
   };
@@ -81,6 +139,24 @@ export async function createCampaign(
 }
 
 export async function updateCampaign(id: string, patch: Partial<Campaign>): Promise<void> {
+  if (hasDatabase()) {
+    const data: Record<string, unknown> = {};
+    if (patch.name !== undefined) data.name = patch.name;
+    if (patch.percentOff !== undefined) {
+      data.percentOff = Math.min(90, Math.max(0, Math.round(patch.percentOff)));
+    }
+    if (patch.species !== undefined) data.species = patch.species;
+    if (patch.categories !== undefined) data.categories = patch.categories;
+    if (patch.startsAt !== undefined) data.startsAt = new Date(patch.startsAt);
+    if (patch.endsAt !== undefined) data.endsAt = new Date(patch.endsAt);
+    if (patch.active !== undefined) data.active = patch.active;
+    if (patch.code !== undefined) data.code = patch.code ? patch.code.trim().toUpperCase() : null;
+    if (patch.freeShipping !== undefined) data.freeShipping = Boolean(patch.freeShipping);
+    await prisma.campaign.updateMany({ where: { id }, data });
+    cache = null;
+    return;
+  }
+
   const db = await read();
   const c = db.campaigns.find((x) => x.id === id);
   if (c) {
@@ -93,6 +169,12 @@ export async function updateCampaign(id: string, patch: Partial<Campaign>): Prom
 }
 
 export async function deleteCampaign(id: string): Promise<void> {
+  if (hasDatabase()) {
+    await prisma.campaign.deleteMany({ where: { id } });
+    cache = null;
+    return;
+  }
+
   const db = await read();
   db.campaigns = db.campaigns.filter((x) => x.id !== id);
   await write(db);

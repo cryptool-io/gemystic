@@ -35,9 +35,24 @@ model User {
   orders        Order[]
   auditEntries  AuditLog[]
   notifications NotificationSubscription[]
+  resetTokens   PasswordResetToken[]
 
   @@index([role])
   @@map("users")
+}
+
+model PasswordResetToken {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  tokenHash String    @unique @map("token_hash")
+  expiresAt DateTime  @map("expires_at")
+  usedAt    DateTime? @map("used_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("password_reset_tokens")
 }
 
 model Session {
@@ -404,6 +419,10 @@ model ShipmentDocument {
 model Review {
   id          String   @id @default(uuid()) @db.Uuid
   productId   String?  @map("product_id") @db.Uuid
+  // The storefront catalogue is slug-addressed (products live in
+  // data/catalog.json until M6 moves them into the products table), so
+  // reviews carry the slug; product_id joins up once products are imported.
+  productSlug String?  @map("product_slug")
   authorName  String   @map("author_name")
   authorEmail String   @map("author_email")
   rating      Int
@@ -416,7 +435,27 @@ model Review {
   product Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
 
   @@index([productId, status])
+  @@index([productSlug, status])
   @@map("reviews")
+}
+
+// ── Promotions ──────────────────────────────────────────────────────────────
+
+model Campaign {
+  id           String   @id @default(uuid()) @db.Uuid
+  name         String
+  percentOff   Int      @map("percent_off") // 0-90; 0 = free-shipping-only offer
+  species      String[] @default([]) // empty = matches all
+  categories   String[] @default([]) // empty = matches all
+  startsAt     DateTime @map("starts_at")
+  endsAt       DateTime @map("ends_at") // inclusive through 23:59:59 UTC
+  active       Boolean  @default(true)
+  code         String?  @unique // set = promo code, not auto-applied
+  freeShipping Boolean  @default(false) @map("free_shipping")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@index([active, startsAt, endsAt])
+  @@map("campaigns")
 }
 
 // ── Operations ──────────────────────────────────────────────────────────────

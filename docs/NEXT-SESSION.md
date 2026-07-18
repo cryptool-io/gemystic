@@ -81,16 +81,24 @@ account becomes owner. Admin under `/admin`, internal tooling under `/studio`.
 Prereq: none (B1 completed: schema is migrated and live on native Postgres 17).
 1. DONE: database `gemystic` exists with all tables; verify anytime with
    `npm run db:studio`.
-2. Swap `lib/auth/store.ts` JsonUserStore → PrismaUserStore (interface already
-   defined; implement against the `prisma` singleton from lib/prisma.ts, same
-   pattern as Trust-Agent). One-shot import script for
-   existing var/auth/users.json accounts.
-3. Same swap for reviews, campaigns, sold, settings stores (each ~30 lines).
-4. **Add password reset** (missing entirely): token table or reuse sessions pattern,
-   `/forgot` + `/reset/[token]` pages, mail via mailer(). Port shape from
-   Trust-Agent `lib/auth-password.ts` / PasswordResetToken.
-5. Acceptance: register/login/roles work off Postgres; old JSON stores renamed
-   `.migrated`; reset email lands in var/outbox in dev.
+2. DONE: auth store runs on Prisma when DATABASE_URL is set (PrismaUserStore in
+   lib/auth/store.ts; JSON driver remains the keyless fallback). Existing
+   accounts imported via `npm run db:import-stores` (idempotent; JSON files kept
+   in place as rollback, no longer read).
+3. DONE for reviews + campaigns (Prisma drivers behind the same functions; new
+   campaigns table + reviews.product_slug in migration
+   20260718213829_m1_reset_tokens_campaigns_review_slug; seed reviews auto-seed
+   an empty DB on first read). STILL JSON: sold + settings, their reads are
+   synchronous inside the catalogue query path; swapping them means an async
+   refactor through lib/catalog.ts, do it deliberately, not as a drive-by.
+4. DONE: password reset live end-to-end: password_reset_tokens table (hashed,
+   single-use, 60 min TTL, re-request invalidates), /forgot + /reset/[token]
+   pages, throttled /api/auth/forgot + /api/auth/reset, mail via mailer(),
+   all sessions revoked on success. Verified: request → outbox email → reset →
+   old password rejected → token reuse rejected.
+5. Acceptance (verified 18 July 2026 against local Postgres): register/login/
+   roles work off the DB, test user landed in users table with role customer,
+   JSON file untouched; reset email lands in var/outbox in dev.
 
 ### M2: Checkout + orders (the revenue milestone)
 Prereq: M1, B7. ~2 sessions. Schema is fully designed, read `orders`/`order_items`/

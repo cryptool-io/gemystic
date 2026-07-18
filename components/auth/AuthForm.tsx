@@ -81,8 +81,14 @@ export function AuthForm({ mode, next }: { mode: 'login' | 'register'; next: str
             autoComplete={isRegister ? 'new-password' : 'current-password'}
             className="field"
           />
-          {isRegister && (
+          {isRegister ? (
             <p className="mt-1.5 text-xs text-subtle">At least 8 characters.</p>
+          ) : (
+            <p className="mt-1.5 text-right text-xs">
+              <Link href="/forgot" className="text-muted hover:text-brand">
+                Forgot your password?
+              </Link>
+            </p>
           )}
         </div>
 

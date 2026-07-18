@@ -140,14 +140,82 @@ the settings table; FX refresh cadence decision is the owner's, see D).
 | Trust-Agent parity (stack DONE this session) | Feature ports remain: email-templates set, telemetry, OAuth + 2FA, components/ui adoption, api/v1 versioning, Redis install for real queues | Scheduled inside M2/M5/M8 |
 | Small polish | PKR shows decimals (should be whole rupees); cart promo scope matches species but not categories; Studio link visible to public nav; images still hotlink Etsy CDN | 30-60 min batch, do alongside M2 |
 
+## G. Owner-Billah WhatsApp flow (added 18 July 2026, verbatim requirements)
+
+The owner shared the WhatsApp thread with Billah describing the real business
+flow. New requirements not captured anywhere else; quoted so nothing gets
+reinterpreted.
+
+### G1. Delivery profiles: Normal and Express shipping
+> "We provide 2 type of shipping. Normal and Express. We set delivery profile
+> for each gemstone we upload."
+
+Not modelled anywhere: products have no shipping/delivery profile, checkout
+design (M2) assumed one method. Build: delivery_profiles (name, carrier hints,
+normal/express rates and day-ranges), per-product profile assignment, shipping
+choice at checkout, shown on PDP.
+
+### G2. Inventory-first admin (replaces the spreadsheet)
+> Billah: "We have the gemstones at the office and we upload them" (inventory =
+> a spreadsheet). Owner: "You keep it on the site so it's all connected and you
+> only have to do it once" and later: "for admin we have inventory management,
+> we can list stones from that list or when items are added to that list
+> directly, have an AI option to generate content and make sure all marketplace
+> and etsy listing categories are entered correctly"
+
+This reframes C2 (listing upload) and M4 (sheet import): inventory is the
+primary entity (stone in the office: weight, dimensions, colour, cost, photos),
+listing is an action ON an inventory item. AI content generation is an option in
+that flow and must fill both the marketplace categories and, when Etsy listing
+is enabled, Etsy's category/tag taxonomy correctly. The M4 Google-Sheet import
+becomes the one-time migration INTO inventory plus an ongoing import channel.
+
+### G3. Etsy cross-listing: optional, never default
+> Billah: "keep it separate", "listing on ETSY costs money", "ETSY listing has
+> different type of Tags SEO based". Owner: "i will make an option not default
+> and to be done later phase to list it also on Etsy. So it does that
+> automatically"
+
+When listing from inventory, an opt-in "also list on Etsy" toggle (later phase,
+needs the Etsy developer app, see D). Etsy tags are their own field set, not a
+copy of site SEO tags. Default is OFF because each Etsy listing costs money.
+
+### G4. Order flow contract (the acceptance script for M2/M3)
+> "the customer orders the gemstone and gives us address, name and phone number.
+> Once we confirm payment is received we ship the gemstone and mark the order as
+> delivered. Once the customer gets the order, they leave a review"
+
+Checkout must capture name, address AND phone. Status pipeline needs the
+manual "payment confirmed" step to also work concierge-style (bank transfer /
+WhatsApp deals), not only via Stripe webhooks. Post-delivery review ask closes
+the loop (ties into the review-acquisition flow in docs/CONVERSION-REVIEW.md).
+
+### G5. Sitemap submission
+> Owner: "SEO is useless if you don't have the sitemap uploaded on bing and
+> google"
+
+Sitemap.xml exists; nobody has submitted it. Needs: Google Search Console +
+Bing Webmaster verification for gems.cryptool.io now and the final domain later,
+sitemap submitted, IndexNow wired (M7 already lists it). Owner action: grant
+access to (or create) the Search Console / Bing accounts.
+
+### G6. Logo decision
+> Owner: "Pick a logo for now also". Billah: "Gemystic Gems — 10 Logo
+> Concepts.html — this doesnt work"
+
+The concepts file Billah received does not open. Re-export the 10 concepts as
+a single PNG/PDF sheet (no HTML), get a pick, apply it (components/Logo.tsx is
+the one-block swap point).
+
 ## F. How the next session starts
 
 1. Read this file, then docs/NEXT-SESSION.md sections 1 and 4.
 2. Confirm nothing regressed: `npm run validate` (lint + typecheck + test + build).
 3. If owner supplied Stripe/PayPal keys: begin M2 (checkout). That single
    milestone closes B1, B2, B3, most of B5, and turns on order-related emails.
-4. If not: begin M1 step 2 (swap auth/reviews/campaigns/sold stores onto the
-   live Prisma DB, add password reset), then M6.1 category CRUD, both key-free.
+4. If not: M1 is now largely done (auth/reviews/campaigns on Prisma, password
+   reset live; sold/settings deliberately still JSON, see NEXT-SESSION M1.3).
+   Next key-free work: M6.1 category CRUD and the G2 inventory module.
 5. Update docs/REQUEST-TRACKER.md and this file as items close. Never mark an
    item done without a code-level or browser-level verification, that is what
    this audit existed to correct.

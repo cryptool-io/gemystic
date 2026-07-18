@@ -1,16 +1,20 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { config } from '../config';
+import { prisma, hasDatabase } from '../prisma';
 import seedJson from '@/data/seed-reviews.json';
 
 /**
- * Review store. Local-first JSON, same pattern as the auth and mail drivers, and
- * the same reason: real, working reviews today without a database. The shape
- * mirrors a future `reviews` table so the migration is a copy.
+ * Review store. Two drivers behind the same functions (the auth-store pattern):
+ * Prisma `reviews` table when DATABASE_URL is set, local-first JSON otherwise.
  *
  * Reviews are moderated: they are created `pending` and only render on the
  * storefront once `approved`. A gemstone shop trading on trust cannot let
  * arbitrary text publish itself.
+ *
+ * On the DB driver the seed reviews are inserted once (id-keyed upsert via the
+ * import script or lazily here) so a fresh database shows the same genuine
+ * social proof the JSON fallback does.
  */
 
 export type ReviewStatus = 'pending' | 'approved' | 'rejected';
@@ -51,9 +55,78 @@ async function write(db: DbShape): Promise<void> {
   await writeFile(DB_PATH, JSON.stringify(db, null, 2), 'utf8');
 }
 
+function toReview(r: {
+  id: string;
+  productSlug: string | null;
+  authorName: string;
+  authorEmail: string;
+  rating: number;
+  title: string;
+  body: string;
+  status: string;
+  reply: string | null;
+  createdAt: Date;
+}): Review {
+  return {
+    id: r.id,
+    productSlug: r.productSlug,
+    authorName: r.authorName,
+    authorEmail: r.authorEmail,
+    rating: r.rating,
+    title: r.title,
+    body: r.body,
+    status: r.status as ReviewStatus,
+    reply: r.reply,
+    createdAt: r.createdAt.toISOString(),
+  };
+}
+
+/**
+ * Fresh databases start empty; the JSON fallback starts with the seed reviews.
+ * Seeding once on first read keeps the two drivers behaviourally identical.
+ * The flag caps this at one query per process, the count query is trivial.
+ */
+let dbSeeded = false;
+
+async function ensureSeeded(): Promise<void> {
+  if (dbSeeded) return;
+  dbSeeded = true;
+  if ((await prisma.review.count()) > 0) return;
+  for (const r of SEED) {
+    await prisma.review.create({
+      data: {
+        productSlug: r.productSlug,
+        authorName: r.authorName,
+        authorEmail: r.authorEmail,
+        rating: r.rating,
+        title: r.title,
+        body: r.body,
+        status: r.status,
+        reply: r.reply,
+        createdAt: new Date(r.createdAt),
+      },
+    });
+  }
+}
+
 export async function createReview(
   input: Omit<Review, 'id' | 'status' | 'reply' | 'createdAt'>,
 ): Promise<Review> {
+  if (hasDatabase()) {
+    await ensureSeeded();
+    const created = await prisma.review.create({
+      data: {
+        productSlug: input.productSlug,
+        authorName: input.authorName,
+        authorEmail: input.authorEmail,
+        rating: input.rating,
+        title: input.title,
+        body: input.body,
+      },
+    });
+    return toReview(created);
+  }
+
   const db = await read();
   const review: Review = {
     ...input,
@@ -68,6 +141,15 @@ export async function createReview(
 }
 
 export async function approvedForProduct(productSlug: string): Promise<Review[]> {
+  if (hasDatabase()) {
+    await ensureSeeded();
+    const rows = await prisma.review.findMany({
+      where: { status: 'approved', productSlug },
+      orderBy: { createdAt: 'desc' },
+    });
+    return rows.map(toReview);
+  }
+
   const db = await read();
   return db.reviews
     .filter((r) => r.status === 'approved' && r.productSlug === productSlug)
@@ -75,6 +157,15 @@ export async function approvedForProduct(productSlug: string): Promise<Review[]>
 }
 
 export async function approvedShopReviews(): Promise<Review[]> {
+  if (hasDatabase()) {
+    await ensureSeeded();
+    const rows = await prisma.review.findMany({
+      where: { status: 'approved' },
+      orderBy: { createdAt: 'desc' },
+    });
+    return rows.map(toReview);
+  }
+
   const db = await read();
   return db.reviews
     .filter((r) => r.status === 'approved')
@@ -82,11 +173,22 @@ export async function approvedShopReviews(): Promise<Review[]> {
 }
 
 export async function allReviews(): Promise<Review[]> {
+  if (hasDatabase()) {
+    await ensureSeeded();
+    const rows = await prisma.review.findMany({ orderBy: { createdAt: 'desc' } });
+    return rows.map(toReview);
+  }
+
   const db = await read();
   return [...db.reviews].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
 export async function setReviewStatus(id: string, status: ReviewStatus): Promise<void> {
+  if (hasDatabase()) {
+    await prisma.review.updateMany({ where: { id }, data: { status } });
+    return;
+  }
+
   const db = await read();
   const r = db.reviews.find((x) => x.id === id);
   if (r) {
@@ -96,6 +198,11 @@ export async function setReviewStatus(id: string, status: ReviewStatus): Promise
 }
 
 export async function setReviewReply(id: string, reply: string): Promise<void> {
+  if (hasDatabase()) {
+    await prisma.review.updateMany({ where: { id }, data: { reply: reply.trim() || null } });
+    return;
+  }
+
   const db = await read();
   const r = db.reviews.find((x) => x.id === id);
   if (r) {

@@ -22,6 +22,7 @@
     "prisma:migrate:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio",
     "db:push": "prisma db push",
+    "db:import-stores": "tsx scripts/import-stores.ts",
     "normalize": "node scripts/normalize.mjs",
     "backup": "node scripts/backup.mjs",
     "restore": "node scripts/restore.mjs",
