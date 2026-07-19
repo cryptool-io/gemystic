@@ -1,71 +1,152 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
- * A real carousel: arrows, scroll snapping, and a page indicator.
+ * Infinite carousel.
  *
- * The previous "just listed" strip was an auto-scrolling film loop, which looks
- * like motion but gives the visitor no control, no sense of how much there is,
- * and no way back to a stone that has slid past. This scrolls the native
- * container instead, so it keeps keyboard access, touch swipe and momentum for
- * free, and the arrows are genuinely optional rather than the only way through.
+ * The set is rendered three times in a row and the scroll position is kept in
+ * the middle copy. When it drifts into the first or last copy, the position
+ * jumps one copy back or forward: the pixels under the cursor are identical, so
+ * the jump is invisible, and the strip never reaches an end in either
+ * direction. That gives a genuine loop rather than a bar that stops.
+ *
+ * It also drifts on its own, slowly, and pauses the moment a visitor hovers,
+ * focuses or touches it, so the motion never fights someone trying to read a
+ * card. Everything stays inside the container: cards do not run past the edge
+ * of the page, they fade out at a soft boundary instead.
  */
+const CARD_STEP = 224; // one 13rem card plus its gap
+const DRIFT_MS = 32; // ~30fps, enough for a smooth slow crawl
+const DRIFT_PX = 0.4; // per tick, about 12px a second
+
 export function Carousel({
   children,
   ariaLabel,
+  autoplay = true,
 }: {
   children: React.ReactNode;
   ariaLabel: string;
+  autoplay?: boolean;
 }) {
-  const trackRef = useRef<HTMLUListElement | null>(null);
-  const [atStart, setAtStart] = useState(true);
-  const [atEnd, setAtEnd] = useState(false);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const [paused, setPaused] = useState(false);
+  // Guards the wrap so it cannot re-enter while it is repositioning.
+  const wrapping = useRef(false);
 
-  function measure() {
+  /** One copy of the set. The track holds exactly three. */
+  const bandWidth = useCallback(() => {
     const el = trackRef.current;
-    if (!el) return;
-    setAtStart(el.scrollLeft <= 2);
-    setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 2);
-  }
-
-  useEffect(() => {
-    measure();
-    const el = trackRef.current;
-    if (!el) return;
-    const onResize = () => measure();
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
+    return el ? el.scrollWidth / 3 : 0;
   }, []);
+
+  /** Keeps the position inside the middle copy, invisibly. */
+  const recentre = useCallback(() => {
+    const el = trackRef.current;
+    if (!el || wrapping.current) return;
+    const band = bandWidth();
+    if (band <= 0) return;
+
+    if (el.scrollLeft < band * 0.5) {
+      wrapping.current = true;
+      el.scrollLeft += band;
+      wrapping.current = false;
+    } else if (el.scrollLeft > band * 1.5) {
+      wrapping.current = true;
+      el.scrollLeft -= band;
+      wrapping.current = false;
+    }
+  }, [bandWidth]);
+
+  /**
+   * Start in the middle copy so there is material in both directions at once.
+   *
+   * This waits for the track to actually have width rather than assuming one
+   * frame is enough: the cards are sized by images, so on a cold load the
+   * first frame measures zero and a single attempt would leave the strip
+   * pinned at the start with nothing to its left. A ResizeObserver positions
+   * it as soon as real layout exists, and disconnects once it has.
+   */
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+
+    const place = () => {
+      const band = bandWidth();
+      if (band <= 0 || el.clientWidth <= 0) return false;
+      el.scrollLeft = band;
+      return true;
+    };
+
+    if (place()) return;
+
+    const observer = new ResizeObserver(() => {
+      if (place()) observer.disconnect();
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [bandWidth]);
+
+  // Continuous drift. Pointer-driven scrolling is untouched by this: the
+  // interval only nudges the position when nobody is interacting. It measures
+  // every tick rather than trusting a flag, so a late-loading image or a
+  // resize cannot leave the carousel stuck.
+  useEffect(() => {
+    if (!autoplay || paused) return;
+    const el = trackRef.current;
+    if (!el) return;
+
+    const id = setInterval(() => {
+      const band = bandWidth();
+      if (band <= 0) return;
+      // Self-heal: if the strip is sitting at an edge (a resize, or the first
+      // placement having missed), bring it back into the middle copy.
+      if (el.scrollLeft <= 0) el.scrollLeft = band;
+      el.scrollLeft += DRIFT_PX;
+      recentre();
+    }, DRIFT_MS);
+    return () => clearInterval(id);
+  }, [autoplay, paused, bandWidth, recentre]);
 
   function page(direction: 1 | -1) {
     const el = trackRef.current;
     if (!el) return;
-    // Scroll by a viewport of the track, less a card's worth of overlap so the
-    // visitor keeps a visual anchor between pages.
-    const amount = Math.max(240, el.clientWidth * 0.8);
-    el.scrollBy({ left: amount * direction, behavior: 'smooth' });
+    // Move by whole cards, roughly a viewport at a time on a wide screen.
+    const step = Math.max(CARD_STEP, Math.floor(el.clientWidth / CARD_STEP) * CARD_STEP);
+    el.scrollBy({ left: step * direction, behavior: 'smooth' });
   }
 
   return (
-    <div className="relative">
-      <ul
+    <div
+      className="carousel relative"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => setPaused(false)}
+      onTouchStart={() => setPaused(true)}
+      onTouchEnd={() => setPaused(false)}
+    >
+      <div
         ref={trackRef}
-        onScroll={measure}
-        aria-label={ariaLabel}
-        className="scroll-x flex snap-x snap-mandatory gap-4 scroll-pl-4 pb-2"
+        onScroll={recentre}
+        className="carousel-track flex overflow-x-auto overflow-y-hidden"
       >
-        {children}
-      </ul>
+        {/* Three copies: the middle one is the real list, the outer two exist
+            only so there is always more strip on either side to scroll into. */}
+        <ul className="flex shrink-0 gap-4 pr-4" aria-hidden="true">
+          {children}
+        </ul>
+        <ul className="flex shrink-0 gap-4 pr-4" aria-label={ariaLabel}>
+          {children}
+        </ul>
+        <ul className="flex shrink-0 gap-4 pr-4" aria-hidden="true">
+          {children}
+        </ul>
+      </div>
 
-      {/* Arrows are hidden at the ends rather than disabled-but-present, so the
-          control never invites a click that does nothing. */}
-      {!atStart && (
-        <Arrow direction="left" onClick={() => page(-1)} />
-      )}
-      {!atEnd && (
-        <Arrow direction="right" onClick={() => page(1)} />
-      )}
+      {/* Both arrows are always available: there is no end to reach. */}
+      <Arrow direction="left" onClick={() => page(-1)} />
+      <Arrow direction="right" onClick={() => page(1)} />
     </div>
   );
 }
@@ -76,8 +157,8 @@ function Arrow({ direction, onClick }: { direction: 'left' | 'right'; onClick: (
     <button
       type="button"
       onClick={onClick}
-      aria-label={isLeft ? 'Previous stones' : 'More stones'}
-      className={`absolute top-1/2 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-surface/95 text-fg shadow-card backdrop-blur-sm transition hover:border-brand-ring hover:text-brand sm:flex ${
+      aria-label={isLeft ? 'Scroll back' : 'Scroll forward'}
+      className={`absolute top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-surface/95 text-fg shadow-card backdrop-blur-sm transition hover:border-brand-ring hover:text-brand sm:flex ${
         isLeft ? 'left-1' : 'right-1'
       }`}
     >

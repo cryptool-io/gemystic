@@ -36,7 +36,7 @@ export async function ShowcaseMarquee() {
           {stones.map((p) => {
             const price = pricing.get(p.slug);
             return (
-              <li key={p.slug} className="w-52 shrink-0 snap-start">
+              <li key={p.slug} className="w-52 shrink-0">
                 <Link
                   href={`/gem/${p.slug}`}
                   className="card group block h-full overflow-hidden transition hover:border-brand-ring hover:shadow-lift"

@@ -218,6 +218,22 @@ Maintained from now on; last updated 18 July 2026.
 | Import the sheet | ✅ | `npm run import:sheet` reads all three tabs; `--apply` writes them. 68 stones imported with their codes, weights, Drive folders and existing Etsy links. 11 rows were reported and skipped because they carry no price in the sheet yet, rather than being guessed at |
 | Image ownership | ✅ | `npm run own:images` downloaded all 1,072 hotlinked photos (778 from the compromised WordPress site, 294 from Etsy's CDN) into our own storage and rewrote every reference: 147 catalogue products, the galleries, and 777 database images. Zero failures. The shop no longer depends on either site staying up |
 
+## Turn 19: the carousel, properly
+
+| Request | Status | Notes |
+|---|---|---|
+| "a carousal is infinite" | ✅ | The set is rendered three times and the scroll position is kept in the middle copy; drifting into either outer copy jumps one copy back, over identical pixels, so the jump is invisible and the strip has no end in either direction. Verified by pushing the position deep into the last copy and then into the first: it wrapped both ways |
+| "you only had them move from right to left" | ✅ | Both arrows are always live, because there is no end to disable them at, and the strip can be dragged or swiped either way |
+| "go outside the screen limits" | ✅ | The track sits inside the page container and its edges fade rather than a card being sliced at the boundary |
+| Motion | ✅ | It drifts slowly on its own and stops the moment a visitor hovers, focuses or touches it, so it never fights someone reading a card |
+
+Two bugs found and fixed while verifying this, both of which only appear on a
+cold load: the initial centring ran before the images had given the strip any
+width, so it stayed pinned at the start with nothing to its left; and a
+first-paint opacity guard could latch off and leave the whole carousel
+invisible. The placement now waits for real layout and the drift tick re-centres
+itself, so neither can wedge.
+
 ## The standing gap, one dependency, many features
 
 ~~A running Postgres~~ **Resolved.** The `gemystic` database is live on the
