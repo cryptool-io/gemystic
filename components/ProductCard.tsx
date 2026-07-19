@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Product } from '@/lib/types';
 import { getSpecies } from '@/lib/catalog';
-import { productImages } from '@/lib/galleries';
+import { listingImages } from '@/lib/listings';
 import { allOverrides, applyOverride } from '@/lib/listings/overrides';
 import { effectivePrice } from '@/lib/campaigns/store';
 import { Price, PricePerCarat } from '@/components/currency/Price';
@@ -47,7 +47,7 @@ export async function ProductCard({
       <Link href={`/gem/${p.slug}`} className="flex h-full flex-col">
         <div className="sheen relative aspect-square overflow-hidden bg-surface-2">
           <RotatingImage
-            images={productImages(p)}
+            images={await listingImages(p)}
             alt={`${p.title}, natural ${p.color.toLowerCase()} ${species?.name.toLowerCase() ?? ''} from ${p.origin}`}
             sizes="(max-width: 640px) 50vw, (max-width: 1280px) 25vw, 260px"
             priority={priority}

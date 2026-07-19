@@ -5,6 +5,7 @@ import { prisma, hasDatabase } from '@/lib/prisma';
 import { money } from '@/lib/seo';
 import { CHANNELS, INTAKE_STATUSES, STONE_TYPES } from '@/lib/inventory/intake';
 import { IntakeForm } from '@/components/admin/IntakeForm';
+import { RangeFilter } from '@/components/RangeFilter';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,10 +21,20 @@ const TYPE_LABEL = Object.fromEntries(STONE_TYPES.map((t) => [t.value, t.label])
 export default async function AdminInventory({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; status?: string; type?: string; channel?: string }>;
+  searchParams: Promise<{
+    q?: string;
+    status?: string;
+    type?: string;
+    channel?: string;
+    listed?: string;
+    min?: string;
+    max?: string;
+    sort?: string;
+  }>;
 }) {
   await requireRole('admin', '/admin/inventory');
   const sp = await searchParams;
+  const num = (v?: string) => (v && !Number.isNaN(Number(v)) ? Number(v) : undefined);
 
   if (!hasDatabase()) {
     return (
@@ -34,6 +45,9 @@ export default async function AdminInventory({
     );
   }
 
+  const priceFloor = num(sp.min);
+  const priceCeiling = num(sp.max);
+
   const items = await prisma.product.findMany({
     where: {
       ...(sp.q
@@ -41,12 +55,23 @@ export default async function AdminInventory({
             OR: [
               { title: { contains: sp.q, mode: 'insensitive' as const } },
               { sku: { contains: sp.q, mode: 'insensitive' as const } },
+              { colour: { contains: sp.q, mode: 'insensitive' as const } },
             ],
           }
         : {}),
       ...(sp.status ? { intakeStatus: sp.status } : {}),
       ...(sp.type ? { stoneType: sp.type } : {}),
       ...(sp.channel ? { channels: { some: { channel: sp.channel, status: 'listed' } } } : {}),
+      ...(sp.listed === 'yes' ? { status: 'active' } : {}),
+      ...(sp.listed === 'no' ? { status: { not: 'active' } } : {}),
+      ...(priceFloor != null || priceCeiling != null
+        ? {
+            price: {
+              ...(priceFloor != null ? { gte: priceFloor } : {}),
+              ...(priceCeiling != null ? { lte: priceCeiling } : {}),
+            },
+          }
+        : {}),
     },
     include: {
       images: { where: { isPrimary: true }, take: 1 },
@@ -54,9 +79,23 @@ export default async function AdminInventory({
       channels: true,
       _count: { select: { images: true } },
     },
-    orderBy: [{ createdAt: 'desc' }],
+    orderBy:
+      sp.sort === 'price-asc'
+        ? [{ price: 'asc' as const }]
+        : sp.sort === 'price-desc'
+          ? [{ price: 'desc' as const }]
+          : sp.sort === 'name'
+            ? [{ title: 'asc' as const }]
+            : [{ createdAt: 'desc' as const }],
     take: 300,
   });
+
+  // Bounds for the price slider, from real stock rather than a guess.
+  const priceRange = await prisma.product.aggregate({ _min: { price: true }, _max: { price: true } });
+  const bound = {
+    min: Math.floor(Number(priceRange._min.price ?? 0)),
+    max: Math.ceil(Number(priceRange._max.price ?? 1000)),
+  };
 
   const categories = await prisma.category.findMany({
     select: { id: true, name: true },
@@ -106,26 +145,78 @@ export default async function AdminInventory({
         </p>
       )}
 
-      {/* Filters */}
-      <div className="flex flex-wrap gap-2">
-        <Chip href="/admin/inventory" label="All" active={!sp.status && !sp.type && !sp.channel} />
-        {INTAKE_STATUSES.map((s) => (
-          <Chip
-            key={s.value}
-            href={`/admin/inventory?status=${s.value}`}
-            label={s.label}
-            active={sp.status === s.value}
-          />
-        ))}
-        {STONE_TYPES.map((t) => (
-          <Chip
-            key={t.value}
-            href={`/admin/inventory?type=${t.value}`}
-            label={t.label}
-            active={sp.type === t.value}
-          />
-        ))}
-      </div>
+      {/* Filters, the same set the marketplace uses: search, the facets that
+          matter here, a price range and a sort, all in one submit. */}
+      <form action="/admin/inventory" className="card space-y-4 p-4">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="lg:col-span-2">
+            <label htmlFor="q" className="label mb-1.5 block">Search</label>
+            <input id="q" name="q" defaultValue={sp.q} placeholder="Name, code or colour…" className="field" />
+          </div>
+          <div>
+            <label htmlFor="type" className="label mb-1.5 block">Stone type</label>
+            <select id="type" name="type" defaultValue={sp.type ?? ''} className="field">
+              <option value="">Any type</option>
+              {STONE_TYPES.map((t) => (
+                <option key={t.value} value={t.value}>{t.label}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="status" className="label mb-1.5 block">Photo status</label>
+            <select id="status" name="status" defaultValue={sp.status ?? ''} className="field">
+              <option value="">Any status</option>
+              {INTAKE_STATUSES.map((s) => (
+                <option key={s.value} value={s.value}>{s.label}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="listed" className="label mb-1.5 block">In the shop</label>
+            <select id="listed" name="listed" defaultValue={sp.listed ?? ''} className="field">
+              <option value="">Either</option>
+              <option value="yes">Listed on the site</option>
+              <option value="no">Not listed yet</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="channel" className="label mb-1.5 block">Live on channel</label>
+            <select id="channel" name="channel" defaultValue={sp.channel ?? ''} className="field">
+              <option value="">Any channel</option>
+              {CHANNELS.map((c) => (
+                <option key={c.value} value={c.value}>{c.label}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor="sort" className="label mb-1.5 block">Sort</label>
+            <select id="sort" name="sort" defaultValue={sp.sort ?? ''} className="field">
+              <option value="">Newest first</option>
+              <option value="price-desc">Price: high to low</option>
+              <option value="price-asc">Price: low to high</option>
+              <option value="name">Name A to Z</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div>
+            <span className="label mb-1.5 block">Price (USD)</span>
+            <RangeFilter
+              minName="min"
+              maxName="max"
+              bound={bound}
+              value={{ min: priceFloor, max: priceCeiling }}
+              step={5}
+              prefix="$"
+            />
+          </div>
+          <div className="flex items-end gap-2">
+            <button type="submit" className="btn-primary flex-1">Filter</button>
+            <Link href="/admin/inventory" className="btn-ghost">Reset</Link>
+          </div>
+        </div>
+      </form>
 
       <div className="card scroll-x">
         <table className="w-full min-w-[60rem] text-sm">
@@ -149,7 +240,7 @@ export default async function AdminInventory({
                 <tr key={i.id}>
                   <td className="p-3 font-mono text-xs text-muted">{i.sku ?? '–'}</td>
                   <td className="p-3">
-                    <span className="flex items-center gap-3">
+                    <Link href={`/admin/inventory/${i.id}`} className="flex items-center gap-3 hover:text-brand">
                       <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-sm bg-surface-2">
                         {i.images[0] && (
                           <Image src={i.images[0].url} alt="" fill sizes="40px" className="object-cover" />
@@ -159,7 +250,7 @@ export default async function AdminInventory({
                         <span className="block truncate">{i.title}</span>
                         <span className="block truncate text-xs text-muted">{i.category.name}</span>
                       </span>
-                    </span>
+                    </Link>
                   </td>
                   <td className="p-3 text-muted">{TYPE_LABEL[i.stoneType] ?? i.stoneType}</td>
                   <td className="p-3 text-right text-muted">
@@ -244,13 +335,6 @@ export default async function AdminInventory({
   );
 }
 
-function Chip({ href, label, active }: { href: string; label: string; active: boolean }) {
-  return (
-    <Link href={href} className={`chip transition ${active ? 'chip-brand' : 'hover:border-brand-ring'}`}>
-      {label}
-    </Link>
-  );
-}
 
 function Stat({ label, value, hint }: { label: string; value: string; hint: string }) {
   return (

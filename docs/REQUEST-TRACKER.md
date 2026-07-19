@@ -241,6 +241,20 @@ The drift now keeps its position as a float and assigns the running total, so
 the fractional part accumulates. Verified against a real production build
 rather than the dev server, at the intended 13 pixels a second.
 
+## Turn 20: inventory to shop, photo upload, auto-list
+
+| Request | Status | Notes |
+|---|---|---|
+| "we only save photos on the server not on the drive anymore" | ✅ | Drag and drop upload on each stone, written through the storage adapter into our own storage (S3 later by changing one env var). The first photo becomes the main image, any photo can be promoted or removed, and uploading moves the bench status off "pending images". Drive links from the old sheet are still shown, but only as a reminder of where to fetch the originals from |
+| "need an option to edit these" | ✅ | Full edit page per stone: listing copy, per-stone SEO, type, measurements by type, both prices, cost, origin, treatment, notes, photographs and all eight channels |
+| "the filter should be same filter as in the marketplace" | ✅ | Inventory now has the marketplace filter set: search, stone type, photo status, listed or not, live-on-channel, a price range slider off real stock bounds, and a sort |
+| "auto list and fill in listing including seo button" | ✅ | Two buttons, deliberately separate. Fill listing with AI writes title, description, meta title, meta description, keywords and Etsy tags into the fields. Publish to shop is what actually lists it, and that click is what records the AI copy as human-reviewed. Publishing refuses a stone with no photograph or no price |
+| "i still only see 1 image per listing when the originals have many more" | ✅ | Diagnosed rather than assumed: the two catalogues are different stock. The legacy shop sells rough parcels (203 products, about 4 photos each); the Etsy-derived listings are cut stones and jewellery (147, one photo each, which is all the Etsy scrape ever captured). Zero overlap on species and weight. The multi-photo products were sitting in inventory, so publishing is what puts them in the shop with their full galleries. Verified: published a 4-photo stone, it appeared in the shop and its page rendered 4 gallery thumbnails |
+
+Published inventory now merges into the storefront through lib/listings.ts, so
+the shop, product pages and tile galleries read one combined set and neither
+source is special-cased.
+
 ## The standing gap, one dependency, many features
 
 ~~A running Postgres~~ **Resolved.** The `gemystic` database is live on the

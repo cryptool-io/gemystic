@@ -54,6 +54,67 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
+  if (action === 'update') {
+    const productId = String(body.productId ?? '');
+    const price = Number(body.price);
+    if (!Number.isFinite(price) || price <= 0) {
+      return NextResponse.json({ error: 'Enter a selling price above zero.' }, { status: 400 });
+    }
+
+    const from = num(body.weightFromG);
+    const to = num(body.weightToG);
+    if (from != null && to != null && from > to) {
+      return NextResponse.json(
+        { error: 'The lightest stone cannot weigh more than the heaviest.' },
+        { status: 400 },
+      );
+    }
+
+    await prisma.product.update({
+      where: { id: productId },
+      data: {
+        title: String(body.title ?? '').trim() || undefined,
+        description: String(body.description ?? ''),
+        stoneType: asStoneType(body.stoneType),
+        intakeStatus: asIntakeStatus(body.intakeStatus),
+        categoryId: String(body.categoryId ?? '') || undefined,
+        colour: str(body.colour),
+        shape: str(body.shape),
+        caratWeight: num(body.caratWeight),
+        weightGrams: num(body.weightGrams),
+        weightFromG: from,
+        weightToG: to,
+        lengthMm: num(body.lengthMm),
+        widthMm: num(body.widthMm),
+        heightMm: num(body.heightMm),
+        diameterMm: num(body.diameterMm),
+        unitPrice: num(body.unitPrice),
+        priceUnit: str(body.priceUnit),
+        price,
+        costPrice: num(body.costPrice),
+        originCountry: str(body.originCountry),
+        treatment: str(body.treatment) ?? 'Not disclosed',
+        shipsFrom: body.shipsFrom === 'TH' ? 'TH' : 'PK',
+        intakeNotes: str(body.intakeNotes),
+        seoTitle: str(body.seoTitle),
+        seoDescription: str(body.seoDescription),
+        seoKeywords: String(body.seoKeywords ?? '')
+          .split(',')
+          .map((s) => s.trim())
+          .filter(Boolean),
+      },
+    });
+
+    // A published stone should reflect an edit straight away.
+    const saved = await prisma.product.findUnique({ where: { id: productId } });
+    if (saved?.status === 'active') {
+      revalidatePath('/shop');
+      revalidatePath(`/gem/${saved.slug}`);
+    }
+    revalidatePath('/admin/inventory');
+    return NextResponse.json({ ok: true });
+  }
+
   if (action === 'set-status') {
     const productId = String(body.productId ?? '');
     const intakeStatus = asIntakeStatus(body.intakeStatus);

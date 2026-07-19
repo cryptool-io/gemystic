@@ -5,7 +5,7 @@ import { ProductCard } from '@/components/ProductCard';
 import { JsonLd } from '@/components/JsonLd';
 import { AddToBag } from '@/components/AddToBag';
 import { allProductsIncludingSold, getProduct, getSpecies, relatedProducts } from '@/lib/catalog';
-import { productImages } from '@/lib/galleries';
+import { findListing, listingImages } from '@/lib/listings';
 import { getOverride, applyOverride } from '@/lib/listings/overrides';
 import { ProductGallery } from '@/components/ProductGallery';
 import { approvedForProduct, summarise } from '@/lib/reviews/store';
@@ -34,7 +34,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params;
-  const generated = getProduct(slug);
+  const generated = await findListing(slug);
   if (!generated) return {};
   // Per-stone SEO: whatever the owner set in admin wins over the generated meta.
   const p = applyOverride(generated, await getOverride(slug));
@@ -56,7 +56,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
 export default async function GemPage({ params }: { params: Params }) {
   const { slug } = await params;
-  const generated = getProduct(slug);
+  // Resolves both the generated catalogue and published inventory stones.
+  const generated = await findListing(slug);
   if (!generated) notFound();
 
   const p = applyOverride(generated, await getOverride(slug));
@@ -64,7 +65,7 @@ export default async function GemPage({ params }: { params: Params }) {
   const related = relatedProducts(p);
   const reviews = await approvedForProduct(p.slug);
   const pricing = await effectivePrice(p);
-  const gallery = productImages(p);
+  const gallery = await listingImages(p);
   const ratingSummary = summarise(reviews);
   const weight = p.caratWeight ? `${p.caratWeight} ct` : p.gramWeight ? `${p.gramWeight} g` : ',';
 

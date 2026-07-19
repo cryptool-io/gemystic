@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ProductCard } from '@/components/ProductCard';
 import { JsonLd } from '@/components/JsonLd';
-import { queryProducts, facets, stockedSpecies, allProducts, priceStats } from '@/lib/catalog';
+import { facets, stockedSpecies, allProducts, priceStats } from '@/lib/catalog';
+import { queryListings } from '@/lib/listings';
 import { allCategories, getCategory } from '@/lib/taxonomy';
 import { itemListJsonLd } from '@/lib/seo';
 import { FilterPanel } from '@/components/FilterPanel';
@@ -47,7 +48,9 @@ export default async function ShopPage({ searchParams }: { searchParams: SearchP
     sort: (sp.sort as 'featured' | 'price-asc' | 'price-desc' | 'carat-desc' | 'newest') ?? 'featured',
   };
 
-  const results = queryProducts(query);
+  // Both sources: the generated catalogue and any inventory stone published
+  // from the bench, so listing a stone is all it takes to put it in the shop.
+  const results = await queryListings(query);
   const f = facets();
   const species = stockedSpecies();
 

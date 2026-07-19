@@ -104,7 +104,16 @@ export interface Query {
 }
 
 export function queryProducts(q: Query): Product[] {
-  let out = allProducts();
+  return filterProducts(allProducts(), q);
+}
+
+/**
+ * The filtering and sorting rules, over whichever set of products is handed in.
+ * Split out so published inventory stones go through exactly the same path as
+ * the generated catalogue rather than a parallel implementation that drifts.
+ */
+export function filterProducts(products: Product[], q: Query): Product[] {
+  let out = products;
 
   if (q.species) out = out.filter((p) => p.species === q.species);
   if (q.category) out = out.filter((p) => p.category === q.category);
