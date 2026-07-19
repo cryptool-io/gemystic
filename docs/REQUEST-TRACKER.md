@@ -227,12 +227,19 @@ Maintained from now on; last updated 18 July 2026.
 | "go outside the screen limits" | ✅ | The track sits inside the page container and its edges fade rather than a card being sliced at the boundary |
 | Motion | ✅ | It drifts slowly on its own and stops the moment a visitor hovers, focuses or touches it, so it never fights someone reading a card |
 
-Two bugs found and fixed while verifying this, both of which only appear on a
-cold load: the initial centring ran before the images had given the strip any
-width, so it stayed pinned at the start with nothing to its left; and a
-first-paint opacity guard could latch off and leave the whole carousel
-invisible. The placement now waits for real layout and the drift tick re-centres
-itself, so neither can wedge.
+Three bugs found and fixed while verifying this. Two only appear on a cold load:
+the initial centring ran before the images had given the strip any width, so it
+stayed pinned at the start with nothing to its left, and a first-paint opacity
+guard could latch off and leave the whole carousel invisible.
+
+The third only appeared in production, and is worth recording. The drift added
+0.4 pixels per tick, and scrollLeft is stored in whole pixels, so the browser
+rounded every step back to nothing and the strip never moved. It worked in
+development purely because React StrictMode mounts effects twice: two timers
+each added their step, the sum cleared a pixel, and the fault stayed hidden.
+The drift now keeps its position as a float and assigns the running total, so
+the fractional part accumulates. Verified against a real production build
+rather than the dev server, at the intended 13 pixels a second.
 
 ## The standing gap, one dependency, many features
 

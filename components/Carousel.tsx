@@ -33,6 +33,17 @@ export function Carousel({
   const [paused, setPaused] = useState(false);
   // Guards the wrap so it cannot re-enter while it is repositioning.
   const wrapping = useRef(false);
+  /**
+   * Drift position as a float.
+   *
+   * scrollLeft is stored in whole pixels, so adding a sub-pixel step to it each
+   * tick rounds straight back down and the strip never moves. Keeping the real
+   * position here and assigning the running total means the fractional part
+   * accumulates until it crosses a pixel. (This is why the bug hid in
+   * development: StrictMode mounts effects twice, two intervals added their
+   * steps together and cleared a pixel per tick, while production ran one.)
+   */
+  const driftPos = useRef<number | null>(null);
 
   /** One copy of the set. The track holds exactly three. */
   const bandWidth = useCallback(() => {
@@ -99,13 +110,26 @@ export function Carousel({
     const id = setInterval(() => {
       const band = bandWidth();
       if (band <= 0) return;
+
       // Self-heal: if the strip is sitting at an edge (a resize, or the first
       // placement having missed), bring it back into the middle copy.
       if (el.scrollLeft <= 0) el.scrollLeft = band;
-      el.scrollLeft += DRIFT_PX;
+
+      // Resync whenever something other than the drift moved the strip: a
+      // swipe, an arrow, or the wrap jumping a whole copy.
+      if (driftPos.current === null || Math.abs(driftPos.current - el.scrollLeft) > 2) {
+        driftPos.current = el.scrollLeft;
+      }
+
+      driftPos.current += DRIFT_PX;
+      el.scrollLeft = driftPos.current;
       recentre();
     }, DRIFT_MS);
-    return () => clearInterval(id);
+
+    return () => {
+      clearInterval(id);
+      driftPos.current = null;
+    };
   }, [autoplay, paused, bandWidth, recentre]);
 
   function page(direction: 1 | -1) {
