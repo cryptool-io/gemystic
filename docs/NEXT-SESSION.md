@@ -176,16 +176,24 @@ and on-site search terms. Both are additive to what exists.
 1. DONE: categories are editable and creatable at /admin/categories, stored as
    overrides over data/taxonomy.json (CategoryOverride). New categories take
    stock through formMapping. Nav and shop read the merged set.
-2. PARTLY DONE: listings are fully editable at /admin/listings/[slug] (copy,
-   price, treatment, per-stone SEO, Etsy tag set, channel, status, AI draft),
-   stored as ListingOverride so `npm run normalize` cannot erase them.
-   STILL OPEN: creating a brand new product from scratch and image upload.
-3. STILL OPEN, and now the most valuable remaining infrastructure job:
-   **image ownership**. Every product photo is still hotlinked from
-   i.etsystatic.com or gemysticgems.com. The legacy WordPress site is
-   compromised (see the local SECURITY file); if it is cleaned, taken down or
-   its media rewritten, those images break. Download all of them into
-   lib/services/storage.ts (local or S3) and rewrite the URLs.
+2. MOSTLY DONE: listings are fully editable at /admin/listings/[slug] (copy,
+   price, per-listing discount, treatment, per-stone SEO, Etsy tag set,
+   channel, status, AI draft), stored as ListingOverride so `npm run normalize`
+   cannot erase them. New stock is created through the inventory intake form
+   (step 1) rather than as a listing directly, which matches how the business
+   actually works: a stone exists before it is listed anywhere.
+   STILL OPEN: uploading photographs through the browser. Intake records the
+   Drive folder link today; pulling the files out of Drive needs a Google
+   service-account credential from the owner, and a plain file upload control
+   is worth adding alongside it.
+3. DONE 19 July 2026: **image ownership**. `npm run own:images` downloaded all
+   1072 hotlinked photographs (778 from the compromised WordPress site, 294
+   from Etsy's CDN) into var/uploads and rewrote every reference in
+   data/catalog.json, data/galleries.json and the product_images table. Zero
+   failures. The files are gitignored, so a new host needs them copied across
+   (tar var/uploads and extract on the target) or the script re-run there.
+   Note for a future S3 move: set STORAGE_DRIVER=s3 and re-run, the script
+   writes through the same storage adapter.
 4. DONE: /admin/seo edits global SEO and the redirect map; redirects resolve
    through the app/[...path] catch-all rather than middleware, because
    middleware runs on the edge runtime and cannot reach Postgres.
