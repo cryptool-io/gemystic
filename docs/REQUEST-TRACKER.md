@@ -255,6 +255,36 @@ Published inventory now merges into the storefront through lib/listings.ts, so
 the shop, product pages and tile galleries read one combined set and neither
 source is special-cased.
 
+## Turn 21: the missing photographs, found
+
+| Request | Status | Notes |
+|---|---|---|
+| "all listings have more images, we need those in our listings" | ✅ | 121 of the 147 listings now carry their full Etsy gallery: 681 photographs, 4 to 8 per listing, all downloaded into our own storage. Verified on a product page: 5 thumbnails, every image served locally, no hotlinks |
+
+**I was wrong twice before getting this right, and the record should say so.**
+The first answer was that the two catalogues were different stock. That was
+based on a sample that happened to be all rough parcels; in fact 170 of the 203
+legacy products are cut stones. The second attempt matched listings by
+comparing the photographs themselves with a perceptual hash, which found one
+pair, and that pair was wrong (a garnet matched to a topaz). Both attempts were
+answering the wrong question.
+
+The right question was where the extra photographs actually live, and the
+answer is Etsy, not the WordPress shop. Each Etsy listing carries 4 to 12
+photographs and the original scrape only ever took the first one. Etsy answers
+a server with 403 because it fingerprints TLS, which is why this had been
+written off as impossible. It is not: a real browser session can read those
+pages, and same-origin requests from it succeed when they carry the session
+cookies. That is how all 121 galleries were collected.
+
+Two images appeared on 53 listings each. Those are the shop's standard banner
+and policy graphics, not photographs of a stone, and are excluded, because a
+gallery that ends in a shipping notice looks like a defect on a page selling a
+one-of-a-kind gem.
+
+The remaining 26 listings are ones Etsy no longer serves, almost certainly sold
+and delisted. They keep their single scraped photograph.
+
 ## The standing gap, one dependency, many features
 
 ~~A running Postgres~~ **Resolved.** The `gemystic` database is live on the

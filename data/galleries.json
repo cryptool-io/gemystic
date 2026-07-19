@@ -1,8 +1,925 @@
 {
  "honey-citrine": [
-  "/media/products/4cda013220876dfb.jpg",
-  "/media/products/a698b54a2ec51bb6.jpg",
-  "/media/products/39b95c06cf73bad4.jpg",
-  "/media/products/da28b712761a2f91.jpg"
+  "/media/products/30d2ecd20fd8eabe.jpg",
+  "/media/products/97b10f801bd42e3b.jpg",
+  "/media/products/06cd714352c16445.jpg",
+  "/media/products/b69c857158d32da8.jpg",
+  "/media/products/e8c6510c390e14e5.jpg"
+ ],
+ "sapphire-1-55ct-oval-cut": [
+  "/media/products/b564dcbe8734994b.jpg",
+  "/media/products/7c9bac46468704b1.jpg",
+  "/media/products/b0695964530de4aa.jpg",
+  "/media/products/1de75cfb4c5c7eca.jpg",
+  "/media/products/9edccf9e6fa95b7a.jpg",
+  "/media/products/3b7d5a4f98e58816.jpg"
+ ],
+ "black-tourmaline-schorl-17-3g-mineral-specimen": [
+  "/media/products/03c4d70bf953a4c4.jpg",
+  "/media/products/eba24b9453dbaa1e.jpg",
+  "/media/products/b5819b6c3c9ad84a.jpg",
+  "/media/products/d7faa19d8af29e76.jpg",
+  "/media/products/726b1c39cf29a9c6.jpg"
+ ],
+ "swat-emerald-21-45g-mineral-specimen": [
+  "/media/products/31eab0dcd5fa01ab.jpg",
+  "/media/products/2e690b8306c7ffd5.jpg",
+  "/media/products/ceb983a4a4af674f.jpg",
+  "/media/products/6e25426da85c275b.jpg",
+  "/media/products/d832eb12ed6308f2.jpg",
+  "/media/products/057826e8dbffad4d.jpg",
+  "/media/products/4fe7828e722d4b35.jpg"
+ ],
+ "vintage-blue-aquamarine-sterling-silver-ring": [
+  "/media/products/c2b6e21dbc6e26eb.jpg",
+  "/media/products/72a903abee132829.jpg",
+  "/media/products/504b41964eada44f.jpg",
+  "/media/products/48adeeee47a14321.jpg",
+  "/media/products/43f78cd320b40ec8.jpg",
+  "/media/products/1ab9e513a3c68c62.jpg",
+  "/media/products/4626fe4b5fdde0a3.jpg"
+ ],
+ "sapphire-1-5ct-oval-cut": [
+  "/media/products/a224c5ee0a5e5022.jpg",
+  "/media/products/9abdf7e3c7b6dc94.jpg",
+  "/media/products/70e1a891871f62b4.jpg",
+  "/media/products/980c772b5457d344.jpg",
+  "/media/products/1818cc6a014c0b26.jpg",
+  "/media/products/b151eed19fd56cac.jpg"
+ ],
+ "swat-emerald-0-76ct": [
+  "/media/products/ee48d73a9c8c3784.jpg",
+  "/media/products/a66c8e1063fed232.jpg",
+  "/media/products/5a8347a215b2f45c.jpg",
+  "/media/products/2b41ca4665c0faa7.jpg",
+  "/media/products/eaa265f9ba2e7f01.jpg",
+  "/media/products/0ec8fde9f3819e7f.jpg",
+  "/media/products/25cbb13cf688bad1.jpg"
+ ],
+ "mens-green-zambian-emerald-sterling-silver-ring": [
+  "/media/products/dd1c724c1f7c3e3f.jpg",
+  "/media/products/875cc2458b1f3289.jpg",
+  "/media/products/f8792f1db979eacb.jpg",
+  "/media/products/1785227a621c9558.jpg",
+  "/media/products/297e65fc62d2183b.jpg",
+  "/media/products/514211765c93b426.jpg",
+  "/media/products/f417c87fddc32054.jpg"
+ ],
+ "swat-emerald-1-2ct-emerald-cut": [
+  "/media/products/1dab001c7c8c5e18.jpg",
+  "/media/products/4255f261a19c97e4.jpg",
+  "/media/products/282a59a91afd6dcc.jpg",
+  "/media/products/9612898891984238.jpg",
+  "/media/products/0d374dea2976dcd6.jpg",
+  "/media/products/e0b90cc7e4fbc880.jpg"
+ ],
+ "rhodolite-garnet-3-75ct-emerald-cut": [
+  "/media/products/af344f70e1b10de3.jpg",
+  "/media/products/0db7935c61f4b02a.jpg",
+  "/media/products/0597aa5821b99c97.jpg",
+  "/media/products/6578970d1372034d.jpg",
+  "/media/products/7bfb308e80b9b8ff.jpg",
+  "/media/products/726c7491a878f10c.jpg"
+ ],
+ "emerald-mineral-specimen": [
+  "/media/products/83cb763421fbc5a7.jpg",
+  "/media/products/a52333ba0d8cdbf1.jpg",
+  "/media/products/48d40709d30f4332.jpg",
+  "/media/products/922dac80ea12fbe3.jpg",
+  "/media/products/9d29e235862e26b2.jpg",
+  "/media/products/3a25007637bd5bb1.jpg"
+ ],
+ "emerald-mineral-specimen-8951": [
+  "/media/products/ec68bc29f8242083.jpg",
+  "/media/products/bb0fe900d54f4621.jpg",
+  "/media/products/e3ccd0895fdb7466.jpg",
+  "/media/products/ae8a29855d9ec5f1.jpg",
+  "/media/products/90887f5bfd69fdda.jpg"
+ ],
+ "imperial-topaz-108-6g-parcel": [
+  "/media/products/319d47e97e4bde92.jpg",
+  "/media/products/5a002584f16723ac.jpg",
+  "/media/products/a2416d5f3b39dcb0.jpg",
+  "/media/products/c874d5d1e51ba70e.jpg"
+ ],
+ "swat-emerald-156-8g-mineral-specimen": [
+  "/media/products/145d2987aa1c3204.jpg",
+  "/media/products/b517fda47030e80c.jpg",
+  "/media/products/51a2b3b5567acddf.jpg",
+  "/media/products/4333a2b7df9e4296.jpg",
+  "/media/products/6c73498803c1f63d.jpg"
+ ],
+ "swat-emerald-mineral-specimen": [
+  "/media/products/63246153812e447d.jpg",
+  "/media/products/39a143823f177213.jpg",
+  "/media/products/26374d07b0f8c030.jpg",
+  "/media/products/ada7632be591ed09.jpg",
+  "/media/products/81b347313119fc4d.jpg",
+  "/media/products/912143fea53c20d4.jpg"
+ ],
+ "statement-orange-spessartine-garnet-sterling-silver-ring": [
+  "/media/products/3e64522ce2438b7b.jpg",
+  "/media/products/7c194d29142f1d16.jpg",
+  "/media/products/28715ef311422ea0.jpg",
+  "/media/products/c83063b169e8db1c.jpg",
+  "/media/products/565e2fc7730feacc.jpg",
+  "/media/products/4e22165f32cca5b7.jpg",
+  "/media/products/9b1170267ab9c404.jpg"
+ ],
+ "mens-rectangular-teal-indicolite-tourmaline-sterling-silver-ring": [
+  "/media/products/45e7d5cb99d0f1c4.jpg",
+  "/media/products/4f2b1e42dab3854d.jpg",
+  "/media/products/911c5b1b419b3d80.jpg",
+  "/media/products/2f100582b79d9588.jpg",
+  "/media/products/7470cfe3a71ed278.jpg"
+ ],
+ "pear-green-emerald-sterling-silver-ring": [
+  "/media/products/a4b855f8869b0d22.jpg",
+  "/media/products/352842728b2db55e.jpg",
+  "/media/products/8062de634a9b307e.jpg",
+  "/media/products/bdfc41adc403d09e.jpg",
+  "/media/products/399feeb66a1325f7.jpg"
+ ],
+ "three-stone-tourmaline-sterling-silver-ring": [
+  "/media/products/1cae0f7a8efa1f90.jpg",
+  "/media/products/1ef251a0acc74826.jpg",
+  "/media/products/180ea6ddf9c3e240.jpg",
+  "/media/products/5aa512f8b1c614f6.jpg",
+  "/media/products/3a638669cc46fb59.jpg",
+  "/media/products/3d9f5d58c94f92c2.jpg"
+ ],
+ "pink-tourmaline-sterling-silver-ring": [
+  "/media/products/41d2d037cf6deb36.jpg",
+  "/media/products/ded0390d997db5ce.jpg",
+  "/media/products/63a2b638d3ba3d55.jpg",
+  "/media/products/0dc66f9be326e303.jpg",
+  "/media/products/6d69fe34ab8d8c5b.jpg",
+  "/media/products/9b49169d6fcfeee7.jpg",
+  "/media/products/d6df6a6769831b7c.jpg"
+ ],
+ "ruby-0-55ct-round-brilliant-cut": [
+  "/media/products/d152dbe6be1de740.jpg",
+  "/media/products/016cc22033c01418.jpg",
+  "/media/products/c3adbca895f2fe1d.jpg",
+  "/media/products/6bc2cec8cb0c8afc.jpg",
+  "/media/products/4b0baf68f29f8eba.jpg",
+  "/media/products/2719103a59451339.jpg",
+  "/media/products/df16816fb54a27c5.jpg"
+ ],
+ "open-band-pink-tourmaline-sterling-silver-ring": [
+  "/media/products/9ac99db9c8f19226.jpg",
+  "/media/products/d2dbf9e4d9c1b3e8.jpg",
+  "/media/products/55944a0d799c6331.jpg",
+  "/media/products/183731bc25237111.jpg",
+  "/media/products/e163b04cbd724c67.jpg",
+  "/media/products/df62f5b1417eb845.jpg",
+  "/media/products/8c8f222d070a1d4c.jpg",
+  "/media/products/fa1edee99b3354d7.jpg"
+ ],
+ "halo-red-ruby-sterling-silver-ring": [
+  "/media/products/da0605540e32e220.jpg",
+  "/media/products/9cc17555f1aef52e.jpg",
+  "/media/products/5d0887c5295d6d0d.jpg",
+  "/media/products/f9af6e7b94b674af.jpg",
+  "/media/products/43ec9414a6ed843e.jpg",
+  "/media/products/dc0903b08bd3a9e4.jpg"
+ ],
+ "open-band-pink-tourmaline-sterling-silver-ring-0719": [
+  "/media/products/c151fbc6cd846ad5.jpg",
+  "/media/products/8d0ae9578d27f1b0.jpg",
+  "/media/products/ccb8ef774e8c3738.jpg",
+  "/media/products/ad0c0e8e8b31807c.jpg",
+  "/media/products/f421c6d029b5f0ad.jpg",
+  "/media/products/756486795c9556b6.jpg"
+ ],
+ "solitaire-pink-tourmaline-sterling-silver-ring": [
+  "/media/products/86aeef06bba47221.jpg",
+  "/media/products/76357d59e46822eb.jpg",
+  "/media/products/3783595e702493d1.jpg",
+  "/media/products/95c70e11b314a6de.jpg",
+  "/media/products/0c8b0fc0b3dce245.jpg",
+  "/media/products/5062306767b7a9b2.jpg",
+  "/media/products/46b84c3fbd4b1510.jpg"
+ ],
+ "crisscross-pink-tourmaline-sterling-silver-ring": [
+  "/media/products/f24a58078e2c67e1.jpg",
+  "/media/products/24a5954d4487125b.jpg",
+  "/media/products/e12e41cafcbd9644.jpg",
+  "/media/products/9d27b3e1d7694adb.jpg",
+  "/media/products/6ab1d4c111f7fff9.jpg"
+ ],
+ "swat-emerald-0-81ct-emerald-cut": [
+  "/media/products/b8c8dd8e6daf52d2.jpg",
+  "/media/products/13314a3119a27eb0.jpg",
+  "/media/products/8b44b9264be9171e.jpg",
+  "/media/products/6fbb83b12b6482f8.jpg",
+  "/media/products/00e2b40b396ad1c0.jpg"
+ ],
+ "swat-emerald-0-73ct-emerald-cut": [
+  "/media/products/00678da28e01c0e3.jpg",
+  "/media/products/6b4e6ff6ac347165.jpg",
+  "/media/products/d7d243731e6676e5.jpg",
+  "/media/products/cb0101f09a833020.jpg",
+  "/media/products/fe7cacf08c988128.jpg",
+  "/media/products/67a3497f10bf481c.jpg",
+  "/media/products/034bf0faa354f361.jpg"
+ ],
+ "swat-emerald-0-8ct-emerald-cut": [
+  "/media/products/70ac51559a2cabf8.jpg",
+  "/media/products/a715cc48ca064a9d.jpg",
+  "/media/products/1cf90faae3b1c5b5.jpg",
+  "/media/products/d4d780bc22fd810a.jpg",
+  "/media/products/0e5a76b5ba5742dd.jpg",
+  "/media/products/a93d17734233df9a.jpg"
+ ],
+ "swat-emerald-19-45ct-rough-crystal": [
+  "/media/products/8213d4ff84f32da9.jpg",
+  "/media/products/d12d3ff72efa359f.jpg",
+  "/media/products/618ad6655b30b3d4.jpg",
+  "/media/products/d401ac6ed9584668.jpg",
+  "/media/products/01979a0934093e53.jpg",
+  "/media/products/8718ea2ce28ea4e0.jpg",
+  "/media/products/ce2ad798e58faf0a.jpg"
+ ],
+ "swat-emerald-0-56ct-emerald-cut": [
+  "/media/products/aa4b504481ecf998.jpg",
+  "/media/products/1a964c4d78cfc56b.jpg",
+  "/media/products/f233b14acf2de4f8.jpg",
+  "/media/products/ac8cee375adeaf83.jpg",
+  "/media/products/2eec22e50d2e4b45.jpg"
+ ],
+ "ruby-1ct-fancy-cut": [
+  "/media/products/eaceb35cf46a618f.jpg",
+  "/media/products/ec71f0c91c034cc4.jpg",
+  "/media/products/5f349872efd50ce2.jpg",
+  "/media/products/c67db94529cd7df3.jpg",
+  "/media/products/c6bca5fef4fac98f.jpg",
+  "/media/products/d96a0a958fb53fa4.jpg",
+  "/media/products/455bc56ec3942a99.jpg"
+ ],
+ "peridot-8-15ct-cushion-cut": [
+  "/media/products/ee49626659188bad.jpg",
+  "/media/products/a6321fb83b611f74.jpg",
+  "/media/products/596987fd32b3232b.jpg",
+  "/media/products/44f850f67d03ed0b.jpg",
+  "/media/products/22e051758cc6c6d4.jpg"
+ ],
+ "pink-topaz-2ct-cushion-cut": [
+  "/media/products/3e24b1890474b86b.jpg",
+  "/media/products/1801f4616486a3f4.jpg",
+  "/media/products/ef45dbd6cd3ef5ce.jpg",
+  "/media/products/b0329c790fb1dde4.jpg",
+  "/media/products/4294021a759543f6.jpg"
+ ],
+ "emerald-5ct-mineral-specimen": [
+  "/media/products/f43f408b469bb5d4.jpg",
+  "/media/products/dd6c446c3eaf14fc.jpg",
+  "/media/products/4d4bf6456ead55fa.jpg",
+  "/media/products/179e6143c1a14624.jpg",
+  "/media/products/a7094b7cfc853159.jpg"
+ ],
+ "peridot-4-65ct-cushion-cut": [
+  "/media/products/30bcb4262e34ba58.jpg",
+  "/media/products/257176b4e147239b.jpg",
+  "/media/products/0fd4a8389beaed9f.jpg",
+  "/media/products/e51532f6d3230538.jpg",
+  "/media/products/9144cd43ac5bf4f5.jpg",
+  "/media/products/e4218894a132978f.jpg"
+ ],
+ "honey-citrine-22ct-mineral-specimen": [
+  "/media/products/1c4f9c6dfec506db.jpg",
+  "/media/products/5f7c9309f351426a.jpg",
+  "/media/products/3132fa01d0ba0134.jpg",
+  "/media/products/64c706177d453271.jpg",
+  "/media/products/b122637774a2d845.jpg",
+  "/media/products/9963b64f7a7204a7.jpg"
+ ],
+ "pigeon-blood-ruby-1-16ct-pear-cut": [
+  "/media/products/89134ab286232d52.jpg",
+  "/media/products/4e7bdd2789269311.jpg",
+  "/media/products/2f014713163edc35.jpg",
+  "/media/products/fc0362d3387ff7b2.jpg",
+  "/media/products/66dce80610eb8f0c.jpg",
+  "/media/products/69ab91c88af3d05b.jpg"
+ ],
+ "amethyst-88-74g-rough-crystal": [
+  "/media/products/45634b202a7be0c6.jpg",
+  "/media/products/a6634d6355c3aef2.jpg",
+  "/media/products/9aba28654f7af343.jpg",
+  "/media/products/4f616f7e080bf83e.jpg",
+  "/media/products/acd1ff4f0981d8b6.jpg"
+ ],
+ "swat-emerald-mineral-specimen-3544": [
+  "/media/products/5ce18cd0b8205c10.jpg",
+  "/media/products/42586e3c49c11993.jpg",
+  "/media/products/fa6bbdbe2a33d076.jpg",
+  "/media/products/06cee325fc06e56a.jpg",
+  "/media/products/0c5c6ff5446e3536.jpg",
+  "/media/products/c8ef551f0624da1a.jpg",
+  "/media/products/ce4b294db7eda37d.jpg"
+ ],
+ "purple-corundum-2-75ct-emerald-cut": [
+  "/media/products/f2f93de9b56c54a2.jpg",
+  "/media/products/77371a6b4ade39f2.jpg",
+  "/media/products/47d5fc7728335fc1.jpg",
+  "/media/products/b29c137f086c2dd1.jpg"
+ ],
+ "hessonite-garnet-6-65ct-trillion-cut": [
+  "/media/products/56540e09016db902.jpg",
+  "/media/products/c7d66a5b8bb96bbf.jpg",
+  "/media/products/ed5579856bcff9d0.jpg",
+  "/media/products/80c1874a446c28d3.jpg",
+  "/media/products/e879a16feb242f27.jpg"
+ ],
+ "peridot-4-6ct-emerald-cut": [
+  "/media/products/8855776453b0c37e.jpg",
+  "/media/products/34c84efcb123b804.jpg",
+  "/media/products/a3e309c2021c5ea6.jpg",
+  "/media/products/28b328f8b4049049.jpg",
+  "/media/products/6348946f9b00f8f8.jpg"
+ ],
+ "mens-rectangular-green-emerald-sterling-silver-ring": [
+  "/media/products/10ffa109af52e116.jpg",
+  "/media/products/83f73b69dcbf31d9.jpg",
+  "/media/products/0f245194c9bf6031.jpg",
+  "/media/products/176d6da5997607d8.jpg",
+  "/media/products/0a14d7cd6a0f80a0.jpg",
+  "/media/products/7db7ecf3f32a6b29.jpg",
+  "/media/products/e71a354b88a5cddf.jpg"
+ ],
+ "swat-emerald-0-57ct-emerald-cut": [
+  "/media/products/ac00657868676def.jpg",
+  "/media/products/1687062775f8b2ed.jpg",
+  "/media/products/bfe5c1e96a1ef584.jpg",
+  "/media/products/06940181be38f1f9.jpg"
+ ],
+ "honey-citrine-4-47ct-asscher-cut": [
+  "/media/products/840ef4db1a31b594.jpg",
+  "/media/products/bbb471d20a088b3b.jpg",
+  "/media/products/224303caa1c8507a.jpg",
+  "/media/products/aff9151c895820d5.jpg",
+  "/media/products/121b4bf9bf04048a.jpg"
+ ],
+ "ruby-1-25ct-emerald-cut": [
+  "/media/products/6d03730f4423e745.jpg",
+  "/media/products/9ccf6678cbeb8c68.jpg",
+  "/media/products/86cfad16354b6ee9.jpg",
+  "/media/products/b880763420086f4d.jpg",
+  "/media/products/7865c6c6a2c5c47c.jpg",
+  "/media/products/8312188a813b2bb2.jpg",
+  "/media/products/1142c10df1cc0f5f.jpg"
+ ],
+ "swat-emerald-0-56ct-emerald-cut-7239": [
+  "/media/products/5ad3dc233a30f85c.jpg",
+  "/media/products/6ef5813f54f01508.jpg",
+  "/media/products/c4a4a6473d6888a8.jpg",
+  "/media/products/32b32639ee764bc9.jpg",
+  "/media/products/11843d54496658ed.jpg",
+  "/media/products/7cc789c612ac610e.jpg",
+  "/media/products/fce6965985a4d1e0.jpg"
+ ],
+ "swat-emerald-0-76ct-emerald-cut": [
+  "/media/products/1ac579c31043ef23.jpg",
+  "/media/products/530240cef3fed7db.jpg",
+  "/media/products/65adf12636c921f8.jpg",
+  "/media/products/7f15418d3f3b6250.jpg",
+  "/media/products/9b9880d67ea30c62.jpg",
+  "/media/products/711e444e7d16af5d.jpg",
+  "/media/products/59220a8217f4df5c.jpg"
+ ],
+ "statement-red-ruby-sterling-silver-pendant": [
+  "/media/products/7b400f80925a0e67.jpg",
+  "/media/products/3d0920bcb7e78064.jpg",
+  "/media/products/a72b1948e4462b52.jpg",
+  "/media/products/a6767150e66c6b32.jpg",
+  "/media/products/72db013c9312166a.jpg",
+  "/media/products/fda318e088d86a5b.jpg"
+ ],
+ "womens-green-emerald-sterling-silver-ring": [
+  "/media/products/6c53c022f4b05df6.jpg",
+  "/media/products/01ba0264a112823a.jpg",
+  "/media/products/6a491f962b65c3a3.jpg",
+  "/media/products/fcb21f4768d0e599.jpg",
+  "/media/products/785d0cc4eafb9bb5.jpg",
+  "/media/products/d7a4e6ed99a5136b.jpg",
+  "/media/products/8834e1ef8536c892.jpg"
+ ],
+ "prasiolite-green-amethyst-75-9g-parcel": [
+  "/media/products/42ecc5d149f81885.jpg",
+  "/media/products/4321b0628d7c4940.jpg",
+  "/media/products/f30f6d6de6ea251d.jpg",
+  "/media/products/0958a1a458eeb1f0.jpg",
+  "/media/products/8b0082a084888065.jpg",
+  "/media/products/993ecb0a9e388d63.jpg"
+ ],
+ "spessartine-garnet-82-5ct-parcel": [
+  "/media/products/dd5717d2673db502.jpg",
+  "/media/products/486319e90e721beb.jpg",
+  "/media/products/c4b70f605648c88e.jpg",
+  "/media/products/aa62db4801bd0259.jpg",
+  "/media/products/ef996cb2bdcf0327.jpg"
+ ],
+ "aquamarine-16-19g-parcel": [
+  "/media/products/6a86355fbb33305e.jpg",
+  "/media/products/31afbbbfedbb9ca5.jpg",
+  "/media/products/10419d1c7b7bb25b.jpg",
+  "/media/products/61087302ebe54f80.jpg"
+ ],
+ "sky-blue-topaz-emerald-cut": [
+  "/media/products/b979f046ae54ac45.jpg",
+  "/media/products/cd527ce49d14ee61.jpg",
+  "/media/products/25d5d754ce9d00c6.jpg",
+  "/media/products/f472f5fe7739e279.jpg",
+  "/media/products/e0ebea19d90c6386.jpg",
+  "/media/products/8f07aea5a4be5e57.jpg"
+ ],
+ "ruby-0-55ct-oval-cut": [
+  "/media/products/78a50b18a93bf0e7.jpg",
+  "/media/products/4b7aa88303160e1e.jpg",
+  "/media/products/118a57c35925892f.jpg",
+  "/media/products/5ca422cc121c437f.jpg",
+  "/media/products/a961ea56b4768058.jpg",
+  "/media/products/b5c77c8c04e20124.jpg"
+ ],
+ "swat-emerald-0-63ct-emerald-cut": [
+  "/media/products/8d8331f5f36463ac.jpg",
+  "/media/products/39c3c78f29f5db3c.jpg",
+  "/media/products/98786fd5f3722416.jpg",
+  "/media/products/a8cb403c3bc91a17.jpg",
+  "/media/products/7a0bf3671fcbbbe2.jpg"
+ ],
+ "hessonite-garnet-21-4g-parcel": [
+  "/media/products/89f256b27b3680f9.jpg",
+  "/media/products/be14a79f03e1062f.jpg",
+  "/media/products/d26197483e3efb2a.jpg",
+  "/media/products/23237b18677a4e9f.jpg",
+  "/media/products/e97df92f35f7451f.jpg",
+  "/media/products/3418d582e9d719a3.jpg",
+  "/media/products/7d41e3145669f98e.jpg"
+ ],
+ "sapphire-1ct-oval-cut": [
+  "/media/products/518ec5279a527e4e.jpg",
+  "/media/products/1f5869609e7ced2c.jpg",
+  "/media/products/467e8978f9303479.jpg",
+  "/media/products/00c44a6c659351d1.jpg",
+  "/media/products/1545d20d5f4dbd19.jpg"
+ ],
+ "mens-bezel-garnet-sterling-silver-ring": [
+  "/media/products/f6f2446a61ee4c94.jpg",
+  "/media/products/11ebc337c18c538d.jpg",
+  "/media/products/0a2637fb2d6c0ad3.jpg",
+  "/media/products/17afafb369bccac8.jpg",
+  "/media/products/32be85742a493903.jpg"
+ ],
+ "sky-blue-topaz-11-22ct-cushion-cut": [
+  "/media/products/13ae11e09c3d87b4.jpg",
+  "/media/products/b2ee8c34cba423b8.jpg",
+  "/media/products/80ccbf4cb93877d8.jpg",
+  "/media/products/1394ea9410effbb3.jpg",
+  "/media/products/3e60ac14760b631e.jpg"
+ ],
+ "yellow-citrine-14-03ct-radiant-cut": [
+  "/media/products/5e31c0e92e139362.jpg",
+  "/media/products/923cbffb21ad9c4a.jpg",
+  "/media/products/012d089228b1bf73.jpg",
+  "/media/products/e301f9fa7a755030.jpg",
+  "/media/products/90eebb7df1a94e42.jpg"
+ ],
+ "emerald-0-75ct-emerald-cut": [
+  "/media/products/4d5f537a9ee2aa92.jpg",
+  "/media/products/978beb2b813fba2f.jpg",
+  "/media/products/9cdff70360df68f3.jpg",
+  "/media/products/ad319cee4f5ef081.jpg",
+  "/media/products/bd932a0c1bcb860d.jpg",
+  "/media/products/c34aff6bc8a5b2e4.jpg"
+ ],
+ "swat-emerald-emerald-cut": [
+  "/media/products/a51b518ab1c0fc69.jpg",
+  "/media/products/c277876e99735045.jpg",
+  "/media/products/f781c481082b1ed9.jpg",
+  "/media/products/2f3faa5fa708bec3.jpg",
+  "/media/products/f1ec146308b26f44.jpg",
+  "/media/products/3cbde4b602cd0de8.jpg"
+ ],
+ "rubellite-tourmaline-1-75ct-oval-cut": [
+  "/media/products/4a491bec8f97bf36.jpg",
+  "/media/products/cfc0bbf133674341.jpg",
+  "/media/products/37db1fb14f3fd17d.jpg",
+  "/media/products/32ef0fcc92642b1e.jpg",
+  "/media/products/988755b19065611e.jpg",
+  "/media/products/d8f85a38f5c57f7a.jpg"
+ ],
+ "peridot-4-4ct-radiant-cut": [
+  "/media/products/103da1234d5eb4a3.jpg",
+  "/media/products/95cbcbde823f0c82.jpg",
+  "/media/products/8585ef1b6ecee035.jpg",
+  "/media/products/b712ec1b525c691d.jpg",
+  "/media/products/2685fcc51ac0305e.jpg"
+ ],
+ "amethyst-27-25ct-diamond-cut": [
+  "/media/products/d7a197d7f183be88.jpg",
+  "/media/products/50abcacbe9a7b6e9.jpg",
+  "/media/products/9d9c10b169853a75.jpg",
+  "/media/products/406829feb3d04d2d.jpg",
+  "/media/products/29e4a119891d3c3f.jpg",
+  "/media/products/a347e1da47405116.jpg"
+ ],
+ "rhodolite-garnet-2-7ct-radiant-cut": [
+  "/media/products/e2f90ef33b8315a2.jpg",
+  "/media/products/86f4eba8ee0db86c.jpg",
+  "/media/products/d481eaec7e6cdcc6.jpg",
+  "/media/products/27dfea6d76063bed.jpg",
+  "/media/products/f0bee648c5629ba5.jpg",
+  "/media/products/acdb3ad60b45eab7.jpg"
+ ],
+ "imperial-topaz-11-55ct-cushion-cut": [
+  "/media/products/a35f99bec3a3f504.jpg",
+  "/media/products/1cf388c2e23d773a.jpg",
+  "/media/products/7f2bcc7875df8182.jpg",
+  "/media/products/369cf387d859859d.jpg",
+  "/media/products/c5f218f2ad49baf3.jpg"
+ ],
+ "peridot-1-95ct-emerald-cut": [
+  "/media/products/c2b6707c35487190.jpg",
+  "/media/products/e29a245f455ead2d.jpg",
+  "/media/products/921a6c27f17f1567.jpg",
+  "/media/products/e5c9d92a278918db.jpg",
+  "/media/products/befc6c6fe103f35e.jpg"
+ ],
+ "amethyst-10ct-oval-cut": [
+  "/media/products/223b9898464ab971.jpg",
+  "/media/products/a8956b47ae47a746.jpg",
+  "/media/products/8c04848ac5f06ca5.jpg",
+  "/media/products/7af32eb1f9cba6d0.jpg",
+  "/media/products/9994b4e2f568b4c0.jpg"
+ ],
+ "peridot-2-05ct-oval-cut": [
+  "/media/products/5175b438a520cad0.jpg",
+  "/media/products/f0fb798a392957fa.jpg",
+  "/media/products/1f155f527f5c0c93.jpg",
+  "/media/products/c74dbfefac235a39.jpg",
+  "/media/products/558a62196caef94c.jpg"
+ ],
+ "prasiolite-green-amethyst-7-4ct-radiant-cut": [
+  "/media/products/5345fe01703e0594.jpg",
+  "/media/products/c574bf59c6a84ea3.jpg",
+  "/media/products/ad07dbb69be3ec4e.jpg",
+  "/media/products/c6c425e684b356f9.jpg",
+  "/media/products/dd7737b6c96519b6.jpg"
+ ],
+ "sky-blue-topaz-8-4ct-radiant-cut": [
+  "/media/products/52f8479780aeb31e.jpg",
+  "/media/products/0ba28243e72ca53c.jpg",
+  "/media/products/0ee394e8280df707.jpg",
+  "/media/products/a77edd4646773cb0.jpg",
+  "/media/products/ef969c73d3623e9b.jpg",
+  "/media/products/014dfe15cc0f20c3.jpg"
+ ],
+ "emerald-mineral-specimen-9100": [
+  "/media/products/9e6cd4ef21b7eda7.jpg",
+  "/media/products/736e8eaf3d80444a.jpg",
+  "/media/products/b468c35d087ea471.jpg",
+  "/media/products/3f21bfadc0faff04.jpg",
+  "/media/products/a7a3e7034b81ed82.jpg"
+ ],
+ "sky-blue-topaz-13-22ct-radiant-cut": [
+  "/media/products/2020b6273a97a64c.jpg",
+  "/media/products/92def03ea2856809.jpg",
+  "/media/products/8c1f68945c64385f.jpg",
+  "/media/products/4ef9da40bc3a4c26.jpg",
+  "/media/products/9930006232e83133.jpg"
+ ],
+ "imperial-topaz-5-35ct-cushion-cut": [
+  "/media/products/c1f9c11eac286a26.jpg",
+  "/media/products/7fa9d030f6c58bed.jpg",
+  "/media/products/01c757ca6eb30059.jpg",
+  "/media/products/328533885cc5f581.jpg",
+  "/media/products/e356f77d26c20109.jpg",
+  "/media/products/31809dc86a493bb5.jpg",
+  "/media/products/dd86f67e1f410726.jpg"
+ ],
+ "peridot-3-4ct-emerald-cut": [
+  "/media/products/91469d87376ac08d.jpg",
+  "/media/products/263f74a857e6c248.jpg",
+  "/media/products/21fc7cfe2957df0a.jpg",
+  "/media/products/ff146b56742faa57.jpg",
+  "/media/products/2a3898087fca0f99.jpg",
+  "/media/products/c742219024bd5bde.jpg"
+ ],
+ "sapphire-2-75ct-oval-cut": [
+  "/media/products/a94b5b65702f5c57.jpg",
+  "/media/products/b09f0153ba057e83.jpg",
+  "/media/products/6e5f74688db78fe1.jpg",
+  "/media/products/5d296e40f2287139.jpg"
+ ],
+ "amethyst-21-1ct-cushion-cut": [
+  "/media/products/55d8a6104c11c65b.jpg",
+  "/media/products/1f79981751cf53ea.jpg",
+  "/media/products/d9fbff986574f25c.jpg",
+  "/media/products/2c56ffe4550fc849.jpg",
+  "/media/products/39cc9ad5ba2521e8.jpg"
+ ],
+ "imperial-topaz-17-9ct-cushion-cut": [
+  "/media/products/11f4076a9e412a3a.jpg",
+  "/media/products/634bf6a8257e8ddd.jpg",
+  "/media/products/722f812722c0edaf.jpg",
+  "/media/products/7002c3b0e946e81d.jpg",
+  "/media/products/f02ad39323f8ccdf.jpg"
+ ],
+ "peridot-4-3ct-emerald-cut": [
+  "/media/products/517f19136859bc06.jpg",
+  "/media/products/e9a6089fc1b75df6.jpg",
+  "/media/products/dc6ed5734927224c.jpg",
+  "/media/products/6d7933ffc63594f1.jpg",
+  "/media/products/9d1b276070c734a3.jpg",
+  "/media/products/1b25cc1f5a5d3972.jpg",
+  "/media/products/97f8b739dd443c0d.jpg"
+ ],
+ "honey-citrine-5-75ct-octagon-cut": [
+  "/media/products/03a70808c9304751.jpg",
+  "/media/products/4ab35c8f47f6cee5.jpg",
+  "/media/products/4814889a43f2ec6c.jpg",
+  "/media/products/a1b39847b8d90e75.jpg",
+  "/media/products/e6c2eea00c648e89.jpg",
+  "/media/products/33f060f25c55f28a.jpg",
+  "/media/products/44307949371de57e.jpg",
+  "/media/products/776d29ebbc6e9e72.jpg"
+ ],
+ "yellow-citrine-13-75ct-pixel-cut": [
+  "/media/products/faf844b71b0b59cb.jpg",
+  "/media/products/c650332620badbd2.jpg",
+  "/media/products/120385c8174b65c1.jpg",
+  "/media/products/7b8e002685c0941b.jpg",
+  "/media/products/50882c46a39021f6.jpg"
+ ],
+ "london-blue-topaz-6ct-emerald-cut": [
+  "/media/products/e7554827d1ee1720.jpg",
+  "/media/products/f551ee8849a9a9fe.jpg",
+  "/media/products/19bd60fa14e9b38e.jpg",
+  "/media/products/68bae00a454c242a.jpg",
+  "/media/products/4269005d2091dcc1.jpg",
+  "/media/products/c57a3f2e05df3367.jpg"
+ ],
+ "emerald-3-8ct-cabochon-cut": [
+  "/media/products/a6517bb8c6d3e419.jpg",
+  "/media/products/26fb75c316f0df45.jpg",
+  "/media/products/96b851bf5bc0691c.jpg",
+  "/media/products/462ce6b4f05cc854.jpg"
+ ],
+ "yellow-citrine-29ct-diamond-cut": [
+  "/media/products/68644ac9d0f8b58b.jpg",
+  "/media/products/5897ab8bc631c905.jpg",
+  "/media/products/04d99f4261e9ab10.jpg",
+  "/media/products/88f2960bc89e76a5.jpg",
+  "/media/products/a240c7fa6e1d11aa.jpg",
+  "/media/products/41d8b5081f26d65c.jpg",
+  "/media/products/b0161091e22638ca.jpg"
+ ],
+ "rhodolite-garnet-44-28g-parcel": [
+  "/media/products/d12c8b13e9c36e68.jpg",
+  "/media/products/3416a97517cb9359.jpg",
+  "/media/products/7801d0f2ec0ead57.jpg",
+  "/media/products/3439123a1d93f402.jpg",
+  "/media/products/6ca8fcbf0ec0c027.jpg"
+ ],
+ "amethyst-21-7ct-radiant-cut": [
+  "/media/products/de6902f31b015632.jpg",
+  "/media/products/0ed33b496d159912.jpg",
+  "/media/products/f14f44294e48a7ad.jpg",
+  "/media/products/f4c4064ce2b2f53d.jpg",
+  "/media/products/87c6aafb49afc4a8.jpg",
+  "/media/products/a9682df9ad5680ae.jpg"
+ ],
+ "yellow-sapphire-2ct-oval-cut": [
+  "/media/products/ce8ec33d114ad1ed.jpg",
+  "/media/products/5e3b2177d0c852f3.jpg",
+  "/media/products/3f94cd33b9581d85.jpg",
+  "/media/products/11b3d4794bc24672.jpg",
+  "/media/products/46025d0ac156157c.jpg"
+ ],
+ "spessartine-garnet-0-85ct-oval-cut": [
+  "/media/products/3ed0c950310a66dc.jpg",
+  "/media/products/992279a8b2111c7e.jpg",
+  "/media/products/598f6f5c0440ef25.jpg",
+  "/media/products/41b189e104e56025.jpg",
+  "/media/products/3a760c5fac10048f.jpg"
+ ],
+ "honey-citrine-16-2ct-radiant-cut": [
+  "/media/products/dd860df5a0099dff.jpg",
+  "/media/products/3aef7d57bccd404d.jpg",
+  "/media/products/e42994db629051e6.jpg",
+  "/media/products/92d38150fbbcf90b.jpg",
+  "/media/products/61df2d779bb33d9d.jpg"
+ ],
+ "rhodolite-garnet-43-7g-parcel": [
+  "/media/products/4a50be579fd64a80.jpg",
+  "/media/products/29b51ca102f83dc4.jpg",
+  "/media/products/eef8bed4fb714a4c.jpg",
+  "/media/products/3b18981a12e2343e.jpg",
+  "/media/products/f473fd08522886bd.jpg"
+ ],
+ "amethyst-29-5ct": [
+  "/media/products/de53934f832ba869.jpg",
+  "/media/products/e25757cd474b7a6b.jpg",
+  "/media/products/a5f55a7c1e808b02.jpg",
+  "/media/products/d997b5a6cefb7c86.jpg",
+  "/media/products/08532fa68202a390.jpg"
+ ],
+ "indicolite-tourmaline-45-55g-parcel": [
+  "/media/products/3cf75a5ac2641702.jpg",
+  "/media/products/62e45fa026ee8f3f.jpg",
+  "/media/products/ca24918b105ddbda.jpg",
+  "/media/products/c2d688ccea781aba.jpg",
+  "/media/products/8de6467f62d15806.jpg"
+ ],
+ "yellow-sapphire-2-1ct-oval-cut": [
+  "/media/products/c6785810ace90a40.jpg",
+  "/media/products/cf9ed03cfd87fda5.jpg",
+  "/media/products/1a5c2c645aab97ba.jpg",
+  "/media/products/3c68945acfe8228f.jpg",
+  "/media/products/8913e4ec5375d3fd.jpg"
+ ],
+ "sapphire-2-5ct-pear-cut": [
+  "/media/products/121633e8020abfac.jpg",
+  "/media/products/00105fb952cc5761.jpg",
+  "/media/products/ef6d23459f820781.jpg",
+  "/media/products/d3fc42568ad50e58.jpg",
+  "/media/products/4968c69585b86ccd.jpg",
+  "/media/products/e90fcf270b911004.jpg",
+  "/media/products/8b7c17e95d75da83.jpg"
+ ],
+ "rhodolite-garnet-2ct-oval-cut": [
+  "/media/products/b125c3957ff87441.jpg",
+  "/media/products/146a010be378cf6d.jpg",
+  "/media/products/c2f6313866a3cd8b.jpg",
+  "/media/products/5a6f2cc6cee5e7c6.jpg",
+  "/media/products/5eb9dd4899f27755.jpg"
+ ],
+ "ametrine-5-38ct-emerald-cut": [
+  "/media/products/84cf4d82668709ec.jpg",
+  "/media/products/e7cca093c283e87e.jpg",
+  "/media/products/783322238c55ca8e.jpg",
+  "/media/products/c7308d3df0a013ed.jpg",
+  "/media/products/7046b16c98756cf6.jpg"
+ ],
+ "smoky-quartz-36-75ct-emerald-cut": [
+  "/media/products/1d0176756a972381.jpg",
+  "/media/products/a17adf46cecefbbc.jpg",
+  "/media/products/bb63fe246eb76fb9.jpg",
+  "/media/products/8b0d32ca9e96db77.jpg",
+  "/media/products/2547519dfecb3c2a.jpg"
+ ],
+ "purple-corundum-3-35ct-cushion-cut": [
+  "/media/products/bd1b7b53e88f6eda.jpg",
+  "/media/products/b40fede86590bd1d.jpg",
+  "/media/products/b2ff7d5cc71a95f7.jpg",
+  "/media/products/5ff4bdeb8f79f75d.jpg",
+  "/media/products/a42b5348a65b71c8.jpg"
+ ],
+ "sky-blue-topaz-round-brilliant-cut": [
+  "/media/products/bcd8a105c8fd7fc9.jpg",
+  "/media/products/96ba4bffa8e3352d.jpg",
+  "/media/products/ae2c1a70d737d0a8.jpg",
+  "/media/products/a280bc98180dc69c.jpg",
+  "/media/products/3088f3abcfc07477.jpg",
+  "/media/products/d9199550915d62a2.jpg",
+  "/media/products/c905b9251c17c413.jpg"
+ ],
+ "teal-tourmaline-emerald-cut": [
+  "/media/products/1ab6fbcdb652f2b3.jpg",
+  "/media/products/34b83f6c9c9fdd26.jpg",
+  "/media/products/9e170554f2a32215.jpg",
+  "/media/products/aea2ee2a5577679c.jpg",
+  "/media/products/9334f3393f01b556.jpg",
+  "/media/products/c180899b666033eb.jpg"
+ ],
+ "fluorite-17-95ct-oval-cut": [
+  "/media/products/029b0c7ed7426e7e.jpg",
+  "/media/products/71ef9555e65e18cb.jpg",
+  "/media/products/dcfa2c9f4d9e02c3.jpg",
+  "/media/products/28d6c34f35cc2a55.jpg",
+  "/media/products/d0f7442c7acf2adc.jpg"
+ ],
+ "mens-statement-green-tourmaline-sterling-silver-ring": [
+  "/media/products/80fee0b92396a189.jpg",
+  "/media/products/3602ee1bf9e18449.jpg",
+  "/media/products/b64266f2aae8cffb.jpg",
+  "/media/products/9ef95dbb46c5d034.jpg",
+  "/media/products/ef7b64150ae41634.jpg",
+  "/media/products/3bc7886948c7fc95.jpg"
+ ],
+ "teal-tourmaline-1-26ct-emerald-cut": [
+  "/media/products/ddcb8388272a3300.jpg",
+  "/media/products/66e4f3b6e12f49b0.jpg",
+  "/media/products/79d5f4c5111404ca.jpg",
+  "/media/products/bcfcecf01f0ce1f8.jpg",
+  "/media/products/d6dca12ababe6016.jpg"
+ ],
+ "amethyst-12-65ct-radiant-cut": [
+  "/media/products/e97d8c68be0e5af0.jpg",
+  "/media/products/8b74426f1b869bc6.jpg",
+  "/media/products/b37e060aa66cbd11.jpg",
+  "/media/products/40958d65002da353.jpg",
+  "/media/products/6a7442c5d5227682.jpg"
+ ],
+ "spinel-44-7ct": [
+  "/media/products/1d930416c58f1c9a.jpg",
+  "/media/products/2b5059f78f172015.jpg",
+  "/media/products/c9a600eb3b0315d2.jpg",
+  "/media/products/0e2d31557f57072b.jpg",
+  "/media/products/b5eddf059aa4b9f0.jpg",
+  "/media/products/5c5deb3c1e96d701.jpg"
+ ],
+ "womens-statement-pink-tourmaline-sterling-silver-ring": [
+  "/media/products/96e4e9f40ef2973d.jpg",
+  "/media/products/705e10d8912a5fc3.jpg",
+  "/media/products/e1a3ffc5d10e2150.jpg",
+  "/media/products/b65e8314f4c06f17.jpg",
+  "/media/products/78dbf21d50286423.jpg",
+  "/media/products/566554c703cc08e9.jpg"
+ ],
+ "sapphire-1-8ct-oval-cut": [
+  "/media/products/aed793c029dfa638.jpg",
+  "/media/products/88c636f3cbb5f181.jpg",
+  "/media/products/6738dcc659b422af.jpg",
+  "/media/products/3c3edcd00338ae24.jpg",
+  "/media/products/2704cb9aaf84f0d6.jpg",
+  "/media/products/5398de8bd288cf4c.jpg"
+ ],
+ "peridot-3-3ct-diamond-cut": [
+  "/media/products/d7582aeb2de3f394.jpg",
+  "/media/products/468aa0caa3668473.jpg",
+  "/media/products/065c384e625f04f0.jpg",
+  "/media/products/370d8258c92fe7ca.jpg",
+  "/media/products/730cae2810e3bd2b.jpg"
+ ],
+ "yellow-citrine-pixel-cut": [
+  "/media/products/237838e3d1d65d2f.jpg",
+  "/media/products/410cca081a0642d3.jpg",
+  "/media/products/015555fa6a22c125.jpg",
+  "/media/products/d44dd7fa59ac2301.jpg"
+ ],
+ "rhodolite-garnet-baguette-cut": [
+  "/media/products/eef7c4d371c6f811.jpg",
+  "/media/products/bf1a86eb4b6b592a.jpg",
+  "/media/products/581c924d26eb5fe9.jpg",
+  "/media/products/ea9dd175d4d0309f.jpg",
+  "/media/products/1fe5e4faaddd1108.jpg",
+  "/media/products/93f678e47070f048.jpg"
+ ],
+ "purple-corundum-2-75ct-oval-cut": [
+  "/media/products/fb3e8ac652ae321e.jpg",
+  "/media/products/7e771326caf15829.jpg",
+  "/media/products/bd73a841a7aedd3a.jpg",
+  "/media/products/264f1d068ee24038.jpg",
+  "/media/products/9fc0ef585c430a9f.jpg"
+ ],
+ "sky-blue-topaz-88-74g-rough-crystal": [
+  "/media/products/cad82bf4c7294a28.jpg",
+  "/media/products/f234bd344a1bd2c7.jpg",
+  "/media/products/94ecfa7fa6eb0b57.jpg",
+  "/media/products/d91341d8fede5c3b.jpg"
+ ],
+ "spessartine-garnet-1-3ct-oval-cut": [
+  "/media/products/6c94f4c3224e0f49.jpg",
+  "/media/products/4cafa13c5a69818c.jpg",
+  "/media/products/106a6bd6c9d36a3c.jpg",
+  "/media/products/72d9dce21ff99b3f.jpg",
+  "/media/products/414f4542dd3714a4.jpg",
+  "/media/products/601749c7939b1fe9.jpg"
+ ],
+ "peridot-cushion-cut": [
+  "/media/products/f177b1a385574bfc.jpg",
+  "/media/products/bc45aab5335c951d.jpg",
+  "/media/products/cc0884fda9e241d4.jpg",
+  "/media/products/4b6bce39d0f5d74f.jpg",
+  "/media/products/d6892cc64d1942e5.jpg"
+ ],
+ "sky-blue-topaz-emerald-cut-8118": [
+  "/media/products/68b4b03c4b734be0.jpg",
+  "/media/products/c603713cc3b139d9.jpg",
+  "/media/products/f92181f7721e5ae8.jpg",
+  "/media/products/a9eaa021a386a3f9.jpg"
+ ],
+ "spessartine-garnet-2-15ct-oval-cut": [
+  "/media/products/e79eec4b1cfb7e49.jpg",
+  "/media/products/eccb044690fd318a.jpg",
+  "/media/products/581e4cc6862c8cce.jpg",
+  "/media/products/f76f071c107037a5.jpg",
+  "/media/products/4b9795cad3488ec0.jpg"
+ ],
+ "electric-blue-topaz-cushion-cut": [
+  "/media/products/aced4d5b943cee98.jpg",
+  "/media/products/57d2ea24082d67fb.jpg",
+  "/media/products/cb728a7f2a2947c2.jpg",
+  "/media/products/71d949b6d7f614cb.jpg",
+  "/media/products/b67450d1a99fa9a5.jpg"
+ ],
+ "tourmaline-14-05g-rough-crystal": [
+  "/media/products/e2a33cb3791848e7.jpg",
+  "/media/products/c59a942b5d34ee64.jpg",
+  "/media/products/179046327402c626.jpg",
+  "/media/products/d2b8b382874c3425.jpg",
+  "/media/products/6924e7a657845ad1.jpg"
  ]
 }
