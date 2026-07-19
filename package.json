@@ -25,6 +25,8 @@
     "db:import-stores": "tsx scripts/import-stores.ts",
     "seed:order": "tsx scripts/seed-order.ts",
     "grant:admin": "tsx scripts/grant-admin.ts",
+    "import:sheet": "node scripts/import-sheet.mjs",
+    "own:images": "node scripts/own-images.mjs",
     "gemystic:sync": "node scripts/gemysticgems-sync.mjs",
     "normalize": "node scripts/normalize.mjs",
     "backup": "node scripts/backup.mjs",

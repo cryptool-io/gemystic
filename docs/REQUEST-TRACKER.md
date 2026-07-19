@@ -207,6 +207,17 @@ Maintained from now on; last updated 18 July 2026.
 | Live on production | ✅ | Deployed to gems.cryptool.io and verified there |
 | Studio was publicly reachable | ✅ | Found while doing the header work: /studio had noindex but no role check, so cost prices and margins were open to anyone with the URL. Now staff-only |
 
+## Turn 18: inventory intake, sheet import, image ownership
+
+| Request | Status | Notes |
+|---|---|---|
+| Inventory intake matching the real sheet | ✅ | /admin/inventory has the intake form. SKU codes are generated from the sheet's own system (G cut, P pair, SP specimen, RP rough parcel, plus a pinned species abbreviation), never typed. Measurement fields switch on stone type: carats and millimetres for cut stones, grams for specimens, a weight range with per-gram pricing and a computed total for parcels |
+| Eight sales channels | ✅ | A product_channels row per stone and channel, each with its own state and listing URL, covering Web, Etsy, eBay, Instagram, TikTok, Gem Rock, eRock and 1stDibs. "What is live on TikTok" is now a query |
+| Photo workflow | ✅ | The sheet's own four states (pending images, filter images, in draft, uploaded), with counts on the inventory page |
+| Cost price | ✅ | Asked for at intake, and the page reports how many stones still lack one, because Finances cannot show a real margin without it |
+| Import the sheet | ✅ | `npm run import:sheet` reads all three tabs; `--apply` writes them. 68 stones imported with their codes, weights, Drive folders and existing Etsy links. 11 rows were reported and skipped because they carry no price in the sheet yet, rather than being guessed at |
+| Image ownership | ✅ | `npm run own:images` downloaded all 1,072 hotlinked photos (778 from the compromised WordPress site, 294 from Etsy's CDN) into our own storage and rewrote every reference: 147 catalogue products, the galleries, and 777 database images. Zero failures. The shop no longer depends on either site staying up |
+
 ## The standing gap, one dependency, many features
 
 ~~A running Postgres~~ **Resolved.** The `gemystic` database is live on the

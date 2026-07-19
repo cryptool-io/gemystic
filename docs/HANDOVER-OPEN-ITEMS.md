@@ -339,9 +339,29 @@ What this tells us that the current build does not model:
 6. **Pairs matter** (the "Pair" column on tab 1): matched stones sold together
    are a distinct thing from a single stone.
 
-None of this is built yet. It is the specification for the intake form in
-pipeline step 1, and it should be built before any bulk import, because
-importing into the wrong shape twice costs more than modelling it once.
+**BUILT 19 July 2026.** All six points are now modelled and live:
+
+- `lib/inventory/intake.ts` owns the vocabulary: stone types with their SKU
+  prefixes (G cut, P pair, SP specimen, RP rough parcel), the species code
+  table pinned to the sheet's existing abbreviations, the four-state photo
+  workflow, and the eight channels.
+- SKUs are generated, never typed, so the numbering cannot drift.
+- `/admin/inventory` has the intake form. Measurement fields switch on stone
+  type: carats and millimetres for cut stones, grams for specimens, a weight
+  range plus per-gram pricing for parcels, with the total computed as it is
+  typed. Cost price is asked for at intake, since Finances cannot report a real
+  margin without it, and the page says how many stones are still missing it.
+- Channel presence is a `product_channels` row per (stone, channel), each with
+  its own state and listing URL, so "what is live on TikTok" is a query rather
+  than a spreadsheet column.
+- `npm run import:sheet` reads all three tabs and loads them. It refuses rows
+  without a price or a code rather than guessing: 68 stones imported, 11 rows
+  reported and skipped because they are not priced in the sheet yet.
+
+Remaining from this section: photographs still live in Drive folders, which the
+intake form records as a link. Pulling the actual files out of Drive needs a
+Google service-account credential (the same one the sheet importer would use
+for live sync), which is an owner action.
 
 ## F. How the next session starts
 

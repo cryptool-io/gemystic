@@ -184,6 +184,34 @@ model Product {
   widthMm     Decimal? @map("width_mm") @db.Decimal(10, 2)
   heightMm    Decimal? @map("height_mm") @db.Decimal(10, 2)
 
+  // ── Intake fields, from the owner's working inventory sheet ──────────────
+  //
+  // The sheet is the team's real vocabulary, so the model uses its words.
+  // A parcel is priced per gram and its stones vary in size, which is why
+  // weight is a range plus an overall figure rather than one number, and why
+  // price needs a unit alongside the total.
+
+  /** Bench workflow: pending_images | filter_images | in_draft | uploaded */
+  intakeStatus String @default("pending_images") @map("intake_status")
+  /** cut | pair | specimen | rough_parcel, the SKU prefix and the field set. */
+  stoneType    String @default("cut") @map("stone_type")
+
+  diameterMm  Decimal? @map("diameter_mm") @db.Decimal(10, 2)
+  /** Parcels: lightest and heaviest stone in the lot, in grams. */
+  weightFromG Decimal? @map("weight_from_g") @db.Decimal(10, 3)
+  weightToG   Decimal? @map("weight_to_g") @db.Decimal(10, 3)
+
+  /** Price per gram or per carat; `price` stays the total the buyer pays. */
+  unitPrice     Decimal? @map("unit_price") @db.Decimal(12, 2)
+  priceUnit     String?  @map("price_unit") // gram | carat | piece
+  /** What the stone cost us. Without it, margin in Finances is guesswork. */
+  costPrice     Decimal? @map("cost_price") @db.Decimal(12, 2)
+
+  shape        String?
+  /** One Google Drive folder of photographs per stone, as the sheet holds it. */
+  mediaFolder  String? @map("media_folder")
+  intakeNotes  String? @map("intake_notes")
+
   caratWeight       Decimal? @map("carat_weight") @db.Decimal(10, 3)
   cut               String?
   colour            String?
@@ -224,6 +252,7 @@ model Product {
   category Category        @relation(fields: [categoryId], references: [id], onDelete: Restrict)
   species  SpeciesRef?     @relation(fields: [speciesId], references: [id], onDelete: SetNull)
   images   ProductImage[]
+  channels ProductChannel[]
   variants ProductVariant[]
   orderItems OrderItem[]
   reviews  Review[]
@@ -232,6 +261,33 @@ model Product {
   @@index([speciesId, status])
   @@index([status, publishedAt])
   @@map("products")
+}
+
+/**
+ * Where a stone is listed. The owner's sheet tracks eight channels, not the
+ * two the storefront originally assumed, and each one carries its own listing
+ * URL and its own state. A row per (product, channel) keeps "what is live on
+ * TikTok" answerable without widening the product table every time a channel
+ * is added.
+ */
+model ProductChannel {
+  id        String    @id @default(uuid()) @db.Uuid
+  productId String    @map("product_id") @db.Uuid
+  // web | etsy | ebay | instagram | tiktok | gemrock | erock | firstdibs
+  channel   String
+  status    String    @default("not_listed") // not_listed | draft | listed | sold | ended
+  listingId String?   @map("listing_id")
+  listingUrl String?  @map("listing_url")
+  listedAt  DateTime? @map("listed_at")
+  notes     String?
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, channel])
+  @@index([channel, status])
+  @@map("product_channels")
 }
 
 model ProductImage {
