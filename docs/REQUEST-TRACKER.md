@@ -192,6 +192,21 @@ Maintained from now on; last updated 18 July 2026.
 | Redirect manager (WordPress migration) | ✅ | Add a redirect by pasting an old URL or path; a hit counter shows which old addresses still pull traffic. Handled by a catch-all route rather than middleware, because middleware runs on the edge runtime and cannot reach Postgres. Verified: /product-category/emeralds/ lands on /shop?species=emerald, unknown paths still 404 |
 | "analytics section to track where visitors and buyers come from" | ✅ | First-party tracking (anonymous browser id, no fingerprinting, no third party) writing visitor_sessions and page_views, with channel classification that includes AI assistants. /admin/analytics reports visitors, page views, channel mix, most viewed pages and stones. Verified: a Google referrer classified as organic |
 
+## Turn 17: discounts, header rework, carousel, passwords
+
+| Request | Status | Notes |
+|---|---|---|
+| "they have discounts, we need to copy the discounts" | ✅ | The legacy shop's sale prices are imported rather than lost, as a per-listing was-price |
+| "when we add listings we can add or edit discounts per listing" | ✅ | Every listing takes its own was-price, entered directly or by picking a percentage, previewed before saving. A shop-wide code never stacks: a campaign is measured against the pre-discount price and whichever gives the buyer the lower price wins |
+| "to many tabs in the headers... maybe contact in the footer" | ✅ | Nine nav items down to four. The six categories moved into one Shop panel that weights them honestly (one category holds two thirds of the stock) and adds the entry point buyers actually use, the stone itself. Contact is in the footer and the mobile drawer; Studio left the public nav; the measure-and-overflow More menu was deleted rather than tuned |
+| "make all of these the same height" | ✅ | Search, currency, cart and account are all 40px; the search box was the one tall element |
+| "this is not a carrousal" | ✅ | Just listed is now a real carousel: arrows, snap scrolling, touch swipe and keyboard, instead of an endless auto-scroll that could not be stopped or reversed |
+| "allow users to change pw" | ✅ | Change password on the account page; it signs out every other device. A Google-only account can set a first password there |
+| "add billah0997@gmail.com as admin" + temp pass | ✅ | Created on production with the admin role; password handed over separately. `npm run grant:admin <email> [role]` does this repeatably |
+| Inventory spreadsheet, all tabs | ✅ | Read and documented in docs/HANDOVER-OPEN-ITEMS.md section I. It changes the inventory model: SKU code system, eight sales channels (not two), a four-state photo workflow, Drive folders per stone, per-gram pricing with totals, and matched pairs |
+| Live on production | ✅ | Deployed to gems.cryptool.io and verified there |
+| Studio was publicly reachable | ✅ | Found while doing the header work: /studio had noindex but no role check, so cost prices and margins were open to anyone with the URL. Now staff-only |
+
 ## The standing gap, one dependency, many features
 
 ~~A running Postgres~~ **Resolved.** The `gemystic` database is live on the

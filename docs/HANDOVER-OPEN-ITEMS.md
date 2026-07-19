@@ -301,6 +301,48 @@ Refinements agreed by analysis (each is an addition, not a change of intent):
 Shipping → Finances (+ the existing Reviews/Discounts/Team/SEO/Settings).
 Each screen states which step it is.
 
+## I. The owner's real inventory sheet (read 19 July 2026)
+
+The owner shared the working inventory spreadsheet. It has three tabs, and it
+changes what the inventory module has to hold. Everything below is from the
+sheet itself, not assumed.
+
+**Tab 1, cut stones (73 rows).** Columns: #, Gemstone name, O, Pair, Colour,
+Code, Price in USD, Status, Dimensions (length, width, thickness, diameter in
+mm), Weight in carats, Comments, Shape, Media.
+Species present: Amethyst, Amethyst (Prasiolite), Ametrine, Aquamarine,
+Citrine, Emerald, Morganite, Peridot, Rhodolite Garnet, Topaz, Tourmaline.
+
+**Tab 2, specimens (3 rows)** and **Tab 3, rough and parcels (9 rows).**
+Same idea, different measurements: price per unit AND a total, weight in grams
+as a range (from, to) plus an overall weight, and for rough an extra radius
+column. Tab 3 also carries live Etsy listing URLs.
+
+What this tells us that the current build does not model:
+
+1. **SKU codes are a real system**: GAMT001, PAMT001, SPEMD001, RPAMT001. The
+   prefix encodes the type (G cut, P pair, SP specimen, RP rough parcel), then
+   a species abbreviation, then a sequence. Intake should generate these, not
+   ask for them.
+2. **Eight sales channels, not two.** The sheet has a "Listed" block with
+   columns for Web, Etsy, Ebay, IG, TikTok, Gemrock, Erock and 1stDibs. The
+   listing editor currently models site plus Etsy only. Channel presence per
+   stone belongs on the inventory item.
+3. **Status is a workflow**, not a flag: Uploaded, In Draft, Filter Images,
+   Pending Images. These describe how far the photography and listing prep has
+   got. Intake should use these words, they are already the team's vocabulary.
+4. **Photos live in Google Drive**, one folder per stone (71 of 73 cut stones
+   have a folder). The image-ownership job should pull from those folders, not
+   only from the web shops.
+5. **Parcels price per gram with a total**, so the inventory item needs unit
+   price, unit of measure and computed total, not a single price field.
+6. **Pairs matter** (the "Pair" column on tab 1): matched stones sold together
+   are a distinct thing from a single stone.
+
+None of this is built yet. It is the specification for the intake form in
+pipeline step 1, and it should be built before any bulk import, because
+importing into the wrong shape twice costs more than modelling it once.
+
 ## F. How the next session starts
 
 1. Read this file, then docs/NEXT-SESSION.md sections 1 and 4.

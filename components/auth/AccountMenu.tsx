@@ -44,7 +44,7 @@ export function AccountMenu() {
 
   if (!user) {
     return (
-      <Link href="/login" className="btn-ghost shrink-0 px-3" aria-label="Sign in">
+      <Link href="/login" className="btn-ghost h-10 shrink-0 px-3 py-0" aria-label="Sign in">
         <UserIcon />
         <span className="hidden sm:inline">Sign in</span>
       </Link>
