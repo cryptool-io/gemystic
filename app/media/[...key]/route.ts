@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readFile, stat } from 'node:fs/promises';
-import { join, normalize, extname } from 'node:path';
+import { join, normalize, resolve, extname, sep } from 'node:path';
 import { config } from '@/lib/config';
 
 export const runtime = 'nodejs';
@@ -26,11 +26,14 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ key
   const { key } = await params;
   const rel = key.join('/');
 
-  // Path traversal guard: resolve, then confirm the result is still inside the
-  // uploads root before touching the filesystem.
-  const root = normalize(join(process.cwd(), config.paths.uploads));
+  // resolve(), not join(): UPLOAD_DIR is relative in development but absolute
+  // on the server, and join() would have produced cwd + the absolute path
+  // rather than honouring it.
+  const root = resolve(process.cwd(), config.paths.uploads);
   const target = normalize(join(root, rel));
-  if (!target.startsWith(root)) {
+  // Traversal guard, with the separator so /var/uploads-elsewhere cannot pass
+  // a plain prefix check.
+  if (target !== root && !target.startsWith(root + sep)) {
     return new NextResponse('Forbidden', { status: 403 });
   }
 
